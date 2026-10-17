@@ -8,21 +8,7 @@ import { useDiagnosticStore } from '@/features/diagnostic/state/diagnosticStore'
 import { DiagnosticPage } from '@/features/diagnostic/ui/DiagnosticPage';
 import { makeQuestion } from '../../helpers/question';
 import { createMemoryDiagnosticRepository } from '../../helpers/memoryDiagnosticRepository';
-import { renderWithProviders } from '../../helpers/render';
-
-/**
- * Nota sobre `act`:
- * se usa `fireEvent` (envuelto en `act` por RTL) y NO `user-event`/`findBy*`,
- * porque el `asyncWrapper` de RTL desactiva `IS_REACT_ACT_ENVIRONMENT` y
- * provoca avisos espurios en React 19. Aquí se vacían las tareas pendientes
- * dentro de un `act` explícito.
- */
-
-async function settle(): Promise<void> {
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0));
-  });
-}
+import { renderWithProviders, settle } from '../../helpers/render';
 
 afterEach(() => {
   // El reset del store notifica a los suscriptores: debe ocurrir dentro de `act`.

@@ -8,6 +8,7 @@
 import Dexie, { type EntityTable } from 'dexie';
 import type { Card, Review } from '@/domain/card';
 import type { DiagnosticAttempt } from '@/domain/diagnostic';
+import type { LessonProgress } from '@/domain/lesson';
 
 export const DATABASE_NAME = 'shieldup';
 
@@ -15,6 +16,7 @@ export class ShieldUpDatabase extends Dexie {
   cards!: EntityTable<Card, 'id'>;
   reviews!: EntityTable<Review, 'id'>;
   diagnosticAttempts!: EntityTable<DiagnosticAttempt, 'id'>;
+  lessonProgress!: EntityTable<LessonProgress, 'lessonId'>;
 
   constructor() {
     super(DATABASE_NAME);
@@ -28,6 +30,11 @@ export class ShieldUpDatabase extends Dexie {
     // v2: historial de tests de diagnóstico. Las tablas no declaradas se heredan.
     this.version(2).stores({
       diagnosticAttempts: 'id, completedAt',
+    });
+
+    // v3: progreso de las lecciones de microlearning.
+    this.version(3).stores({
+      lessonProgress: 'lessonId, domain, status, updatedAt',
     });
   }
 }

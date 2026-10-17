@@ -1,0 +1,70 @@
+[
+  {
+    "id": "d3-l1",
+    "domain": 3,
+    "objectives": ["3.2", "3.3"],
+    "title": "Diseñar la segmentación de una red plana",
+    "summary": "Por qué una red plana convierte un equipo comprometido en un incidente de toda la empresa.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": ["segmentacion", "movimiento-lateral", "dmz"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Una red, 500 equipos",
+        "prompt": "La red corporativa es un único rango plano con 500 equipos: estaciones, servidores de base de datos, impresoras y cámaras IP. Un portátil de marketing se infecta con un gusano a las 10:00; a las 10:40 el servidor de base de datos también está cifrado.",
+        "explanation": "El gusano no fue especialmente sofisticado: le bastó con que todo estuviera en el mismo segmento para hablar directamente con la base de datos.",
+        "takeaway": "La red plana es el multiplicador de daño más barato de eliminar."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "La causa raíz del impacto",
+        "prompt": "¿Qué permitió que un portátil comprometido alcanzara la base de datos en 40 minutos?",
+        "options": [
+          { "id": "a", "text": "La ausencia de segmentación: todo el tráfico este-oeste era libre" },
+          { "id": "b", "text": "Que el antivirus estaba desactualizado" },
+          { "id": "c", "text": "Que el firewall perimetral no filtraba la salida a Internet" },
+          { "id": "d", "text": "Que no había VPN" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "El perímetro no tiene nada que ver: el ataque nunca salió de la red interna. Sin controles este-oeste, cualquier host habla con cualquier host.",
+        "takeaway": "El firewall perimetral no protege del movimiento lateral. Para eso hace falta control interno."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Por dónde empiezas",
+        "prompt": "Tienes presupuesto para dos segmentaciones este trimestre. ¿Cuáles priorizas?",
+        "options": [
+          { "id": "a", "text": "Servidores de datos en un segmento propio, sin acceso desde estaciones de trabajo" },
+          { "id": "b", "text": "Dispositivos IoT (cámaras, impresoras) en una VLAN aislada con salida restringida" },
+          { "id": "c", "text": "Separar las impresoras por fabricante" },
+          { "id": "d", "text": "Separar las estaciones de trabajo por departamento, empezando por RRHH" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "Se segmenta por criticidad y por superficie de ataque, no por organigrama. Los datos y los dispositivos IoT (históricamente inseguros) son el mayor retorno inmediato.",
+        "takeaway": "Segmenta por criticidad del activo y por su superficie de ataque."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Control dentro del segmento",
+        "prompt": "Ya tienes la VLAN de servidores separada del resto. ¿Qué control añades DENTRO de esa VLAN?",
+        "options": [
+          { "id": "a", "text": "Microsegmentación: políticas entre cargas de trabajo individuales" },
+          { "id": "b", "text": "Un firewall perimetral más grande" },
+          { "id": "c", "text": "Deshabilitar el cifrado interno para simplificar el análisis" },
+          { "id": "d", "text": "Ampliar la VLAN para incluir también las estaciones" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Una VLAN sigue siendo un dominio de confianza plano. La microsegmentación limita qué carga de trabajo puede hablar con cuál, incluso dentro del segmento.",
+        "takeaway": "Segmentar es el primer paso; microsegmentar es el que limita el daño real."
+      }
+    ]
+  }
+]

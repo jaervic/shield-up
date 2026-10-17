@@ -9,12 +9,14 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
 
 ## Estado del proyecto
 
-**Fases 1 y 2 completadas.**
+**Fases 1, 2 y 3 completadas.**
 
 - **Fase 1 — Arquitectura base + motor de Spaced Repetition.** Dominio tipado, motor SM-2 puro
   y testeado, persistencia offline-first, sesión de repaso funcional y dashboard de métricas.
 - **Fase 2 — Test de diagnóstico + ruta de estudio personalizada.** Banco de 41 preguntas
   ponderadas por el peso del examen, motor de selección/corrección y ruta ordenada por impacto.
+- **Fase 3 — Microlearning.** 8 lecciones-problema (28 pasos) basadas en *active recall*,
+  progreso reanudable y recomendaciones ligadas a la ruta de estudio.
 
 ## Stack
 
@@ -59,12 +61,18 @@ src/
 │  │  ├─ data/   # DiagnosticRepository + servicio
 │  │  ├─ state/  # store del test y hooks de lectura
 │  │  └─ ui/     # DiagnosticPage, QuestionCard, DiagnosticResults
-│  └─ dashboard/ui/  # DashboardPage, ReadinessPanel
-├─ shared/       # ui/, hooks/, utils/ reutilizables (random, interleave, date, math)
+│  ├─ microlearning/
+│  │  ├─ engine/ # LÓGICA PURA: scoring, progress, recommend
+│  │  ├─ data/   # LessonRepository + servicio (reanudable)
+│  │  ├─ state/  # store de la sesión de lección y hooks del catálogo
+│  │  └─ ui/     # LessonsPage, LessonPage, LessonStepView, LessonResults
+│  └─ dashboard/ui/  # DashboardPage, ReadinessPanel, RecommendedLessonsPanel
+├─ shared/       # ui/, hooks/, utils/ reutilizables (answer, random, interleave, date, math)
 └─ styles/       # tokens.css, reset.css, global.css
 content/
 ├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program)
-└─ questions/    # banco de preguntas del diagnóstico (d1..d5)
+├─ questions/    # banco de preguntas del diagnóstico (d1..d5)
+└─ lessons/      # lecciones de microlearning (d1..d5)
 ```
 
 ### Regla de oro
@@ -158,6 +166,42 @@ muestra la preparación estimada y el top 3 de la ruta.
 
 ---
 
+## Microlearning (Fase 3)
+
+### Principio: problema antes que explicación
+
+Cada lección alterna dos tipos de paso:
+
+- **`scenario`** — plantea una situación real y no se evalúa. El usuario pulsa «Ver
+  explicación» cuando ya se ha formado una opinión.
+- **`decision`** — el usuario decide y recibe feedback inmediato (`single` o `multiple`),
+  con la respuesta correcta marcada visualmente y una «idea clave» al final.
+
+No hay texto que leer de principio a fin: la explicación llega **después** del intento de
+recuerdo, que es lo que consolida la memoria.
+
+### Evaluación
+
+`evaluateLesson` cuenta únicamente los pasos `decision` (los `scenario` son informativos) y
+exige un **80%** de aciertos para dar la lección por superada. Una decisión múltiple solo
+cuenta si el conjunto marcado coincide exactamente con el correcto.
+
+### Progreso reanudable
+
+El progreso se persiste **paso a paso** (`lessonProgress` en Dexie, migración v3), no solo al
+final: `beginLesson` reanuda en `currentStepIndex` si la lección quedó a medias, y
+`restartLesson` la reinicia descartando las respuestas. Una lección ya superada empieza limpia
+al volver a abrirla.
+
+### Recomendaciones ligadas a la ruta
+
+`recommendLessons` hereda la prioridad por dominio de la ruta del diagnóstico y ordena dentro
+de cada dominio las lecciones pendientes antes que las superadas. La ruta se pasa **como
+parámetro** (`buildRecommendations(route)`), de modo que el microlearning no depende del módulo
+de diagnóstico y la UI decide qué intento usar.
+
+---
+
 ## Pesos oficiales del examen (SY0-701)
 
 | Dominio | Peso |
@@ -184,7 +228,7 @@ muestra la preparación estimada y el top 3 de la ruta.
 
 - [x] **Fase 1** — Arquitectura + motor SRS
 - [x] **Fase 2** — Dashboard de diagnóstico + test inicial que personaliza la ruta
-- [ ] **Fase 3** — Microlearning (lecciones-problema)
+- [x] **Fase 3** — Microlearning (lecciones-problema)
 - [ ] **Fase 4** — PBQ: drag & drop (`dnd-kit`) + terminal simulada (`xterm.js`)
 - [ ] **Fase 5** — Simulador de examen (90 preguntas / 90 min / marcado para revisión)
 - [ ] **Fase 6** — Sync multidispositivo y cuentas

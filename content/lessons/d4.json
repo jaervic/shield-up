@@ -1,0 +1,154 @@
+[
+  {
+    "id": "d4-l1",
+    "domain": 4,
+    "objectives": ["4.8"],
+    "title": "Las primeras horas de un incidente",
+    "summary": "Contención, evidencia y orden de volatilidad: tres decisiones que se juzgan a posteriori y no admiten ensayo.",
+    "estimatedMinutes": 7,
+    "difficulty": "hard",
+    "tags": ["respuesta-a-incidentes", "forense", "contencion"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Alerta del EDR",
+        "prompt": "A las 09:20 el EDR alerta de volcado de credenciales (LSASS) en el equipo de un analista de finanzas. El usuario está conectado y el equipo tiene sesión abierta en el ERP.",
+        "explanation": "El incidente está confirmado por una fuente de alta fidelidad. A partir de aquí, cada decisión o reduce el alcance o lo destruye sin querer.",
+        "takeaway": "Con una alerta de alta fidelidad, la prioridad es contener sin destruir la evidencia."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "La primera acción",
+        "prompt": "¿Qué haces primero?",
+        "options": [
+          { "id": "a", "text": "Aislar el equipo de la red y revocar las sesiones y credenciales del usuario" },
+          { "id": "b", "text": "Apagar el equipo de inmediato para detener el malware" },
+          { "id": "c", "text": "Ejecutar un análisis antivirus completo" },
+          { "id": "d", "text": "Notificar al usuario y pedirle que cierre sesión" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Aislar corta el movimiento lateral y revocar credenciales corta la reutilización. Es la contención mínima que no destruye nada.",
+        "takeaway": "Contén en dos direcciones: el host y las credenciales."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El atajo peligroso",
+        "prompt": "Un compañero sugiere apagar el equipo ahora mismo, «que ya lo investigamos luego». ¿Cuál es el problema?",
+        "options": [
+          { "id": "a", "text": "Se pierde la memoria volátil: procesos, conexiones y claves en RAM" },
+          { "id": "b", "text": "El equipo podría no volver a encender" },
+          { "id": "c", "text": "Se incumple la política de apagado" },
+          { "id": "d", "text": "Ninguno, apagar es siempre lo correcto" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "La RAM contiene la evidencia más volátil: procesos en ejecución, conexiones activas y a veces claves. Apagar la destruye para siempre.",
+        "takeaway": "Aísla por red manteniendo la energía; apaga solo si hay riesgo físico o de propagación incontrolable."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Contención completa",
+        "prompt": "El host está aislado y con energía. ¿Qué dos acciones completan la contención?",
+        "options": [
+          { "id": "a", "text": "Revocar tokens de sesión y rotar las credenciales que estaban en memoria" },
+          { "id": "b", "text": "Revisar qué otros equipos usaron esas mismas credenciales en las últimas horas" },
+          { "id": "c", "text": "Borrar los archivos maliciosos del disco del analista" },
+          { "id": "d", "text": "Formatear el equipo para devolverlo cuanto antes" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "Si el atacante tiene credenciales, el host aislado da igual: hay que invalidarlas y ver dónde más se usaron. Borrar y formatear destruyen evidencia y no cierran la puerta.",
+        "takeaway": "Contener credenciales es tan importante como contener el host."
+      },
+      {
+        "id": "s5",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Cierre del incidente",
+        "prompt": "El servicio está restaurado y el host reconstruido. ¿Cuándo se hace el análisis de lecciones aprendidas?",
+        "options": [
+          { "id": "a", "text": "Tras la recuperación, con informe de causa raíz y acciones con responsable y fecha" },
+          { "id": "b", "text": "Solo si el incidente tuvo impacto en clientes" },
+          { "id": "c", "text": "Cuando lo pida la auditoría" },
+          { "id": "d", "text": "No hace falta si ya se resolvió" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "La fase de lecciones aprendidas convierte el incidente en mejora: sin informe con acciones asignadas y fechas, el mismo incidente vuelve.",
+        "takeaway": "Un incidente sin lecciones aprendidas documentadas es un incidente que se repetirá."
+      }
+    ]
+  },
+  {
+    "id": "d4-l2",
+    "domain": 4,
+    "objectives": ["4.4"],
+    "title": "Cuando el SIEM no para de gritar",
+    "summary": "La fatiga de alertas no es una molestia: es un fallo de detección que se mide y se corrige.",
+    "estimatedMinutes": 5,
+    "difficulty": "medium",
+    "tags": ["siem", "alertas", "soc"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "900 alertas al día",
+        "prompt": "El SIEM genera 900 alertas diarias. El equipo de dos analistas cierra el 92% como falso positivo y el 60% sin investigar. El mes pasado una intrusión real pasó tres días inadvertida.",
+        "explanation": "El problema no es la falta de detección: es el exceso de ruido. Una alerta real se pierde entre cientos de irrelevantes.",
+        "takeaway": "La fatiga de alertas degrada la detección igual que un sensor averiado."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "La consecuencia directa",
+        "prompt": "¿Qué es exactamente lo que provoca este volumen?",
+        "options": [
+          { "id": "a", "text": "Que las alertas reales dejen de investigarse por saturación" },
+          { "id": "b", "text": "Que el SIEM consuma más almacenamiento" },
+          { "id": "c", "text": "Que los logs lleguen con retraso" },
+          { "id": "d", "text": "Que los analistas tengan que trabajar por turnos" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "El coste real es de detección: cuando todo es urgente, nada lo es. Es exactamente lo que permitió que la intrusión pasara desapercibida.",
+        "takeaway": "El coste del ruido se mide en detecciones perdidas, no en licencias."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Recuperar la señal",
+        "prompt": "¿Qué dos acciones mejoran de verdad la relación señal/ruido?",
+        "options": [
+          { "id": "a", "text": "Ajustar umbrales y correlaciones de las reglas más ruidosas, con revisión periódica" },
+          { "id": "b", "text": "Añadir contexto a las alertas: criticidad del activo, identidad y si hay exposición externa" },
+          { "id": "c", "text": "Silenciar las reglas que más disparan" },
+          { "id": "d", "text": "Contratar más analistas sin tocar ninguna regla" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "Ajustar reduce el volumen y el contexto permite priorizar lo que queda. Silenciar elimina la detección y contratar sin ajustar solo escala el problema.",
+        "takeaway": "Tuning más contexto. Silenciar no es una opción, es una renuncia."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Demostrar la mejora",
+        "prompt": "¿Cómo demuestras que el ajuste ha funcionado?",
+        "options": [
+          { "id": "a", "text": "Midiendo tasa de falsos positivos y tiempo medio de triaje antes y después" },
+          { "id": "b", "text": "Comprobando que los analistas están menos cansados" },
+          { "id": "c", "text": "Contando cuántas reglas se modificaron" },
+          { "id": "d", "text": "Preguntando al equipo si les parece mejor" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Sin métricas antes/después no hay mejora demostrable, solo percepción. Los indicadores del SOC son medibles por definición.",
+        "takeaway": "Si no puedes medirlo, no puedes defenderlo ante la dirección."
+      }
+    ]
+  }
+]

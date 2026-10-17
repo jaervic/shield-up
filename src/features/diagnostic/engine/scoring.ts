@@ -7,6 +7,7 @@
 
 import type { DiagnosticAttempt } from '@/domain/diagnostic';
 import type { AnswerRecord, Question } from '@/domain/question';
+import { matchesCorrectSet } from '@/shared/utils/answer';
 import { computeProficiency, computeReadiness } from './proficiency';
 import { buildStudyRoute } from './route';
 
@@ -16,9 +17,7 @@ import { buildStudyRoute } from './route';
  * acertar una parte.
  */
 export function gradeAnswer(question: Question, selectedOptionIds: readonly string[]): boolean {
-  const correct = new Set(question.correctOptionIds);
-  if (selectedOptionIds.length !== correct.size) return false;
-  return selectedOptionIds.every((id) => correct.has(id));
+  return matchesCorrectSet(question.correctOptionIds, selectedOptionIds);
 }
 
 export interface AttemptMeta {

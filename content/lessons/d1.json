@@ -1,0 +1,138 @@
+[
+  {
+    "id": "d1-l1",
+    "domain": 1,
+    "objectives": ["1.2"],
+    "title": "La tríada CIA en un incidente real",
+    "summary": "Un ransomware con doble extorsión obliga a distinguir qué propiedad de la tríada se rompe en cada momento.",
+    "estimatedMinutes": 6,
+    "difficulty": "easy",
+    "tags": ["cia", "ransomware", "fundamentos"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "03:14 de la madrugada",
+        "prompt": "Un atacante cifra la base de datos de facturación. Dos horas después publica una muestra de clientes en un foro para presionar el pago.",
+        "explanation": "Antes de actuar hay que separar los dos daños: el cifrado rompe la disponibilidad y la publicación rompe la confidencialidad. Son incidentes distintos con respuestas distintas.",
+        "takeaway": "Ante un incidente, lo primero es clasificar el daño: no se mitiga igual una caída de servicio que una fuga de datos."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Clasifica el daño",
+        "prompt": "La publicación de la muestra de clientes en el foro compromete de forma principal…",
+        "options": [
+          { "id": "a", "text": "La confidencialidad" },
+          { "id": "b", "text": "La integridad" },
+          { "id": "c", "text": "La disponibilidad" },
+          { "id": "d", "text": "El no repudio" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Los datos han quedado expuestos a quien no debía verlos: eso es confidencialidad. La disponibilidad ya se rompió antes, con el cifrado.",
+        "takeaway": "Cifrado → disponibilidad. Fuga → confidencialidad."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Un daño silencioso",
+        "prompt": "En la investigación se descubre que el atacante modificó 40 importes de facturas antes de cifrar. ¿Qué propiedad se comprometió ahí?",
+        "options": [
+          { "id": "a", "text": "Confidencialidad" },
+          { "id": "b", "text": "Integridad" },
+          { "id": "c", "text": "Disponibilidad" },
+          { "id": "d", "text": "Autenticación" }
+        ],
+        "correctOptionIds": ["b"],
+        "explanation": "Los datos siguen ahí y siguen siendo legibles, pero ya no son fiables: han sido alterados sin autorización. Eso es integridad.",
+        "takeaway": "La integridad es el daño más silencioso: no rompe el servicio, rompe la confianza en el dato."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Reducir el impacto de la próxima vez",
+        "prompt": "¿Qué dos medidas reducen más el impacto si esto vuelve a ocurrir?",
+        "options": [
+          { "id": "a", "text": "Copias de seguridad inmutables y fuera de línea, con pruebas de restauración" },
+          { "id": "b", "text": "MFA en todos los accesos remotos y cuentas privilegiadas" },
+          { "id": "c", "text": "Comprar más licencias de antivirus" },
+          { "id": "d", "text": "Aumentar el ancho de banda del enlace principal" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "El backup inmutable decide si pagas o restauras; el MFA decide si el atacante entra. Lo demás no toca ni la entrada ni la recuperación.",
+        "takeaway": "Contra el ransomware solo hay dos preguntas: cómo entró y cómo recupero. Ahí van los recursos."
+      }
+    ]
+  },
+  {
+    "id": "d1-l2",
+    "domain": 1,
+    "objectives": ["1.1"],
+    "title": "Elegir el control adecuado",
+    "summary": "Distinguir categorías y funciones de control es la diferencia entre aprobar y fallar las preguntas de controles.",
+    "estimatedMinutes": 5,
+    "difficulty": "medium",
+    "tags": ["controles", "categorias", "gobierno"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Tres medidas para un mismo problema",
+        "prompt": "La organización quiere evitar que se saquen datos en memorias USB personales. Se aplican tres medidas distintas: una política, un bloqueo técnico y una revisión periódica.",
+        "explanation": "Cada medida es un control de categoría y función distinta. Clasificarlos bien importa: en el examen se pregunta constantemente por la categoría y por la función.",
+        "takeaway": "Categoría = de qué naturaleza es el control (directivo, operacional, técnico, físico). Función = qué hace (preventivo, detective, correctivo, disuasorio, compensatorio)."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "La política de USB",
+        "prompt": "La dirección publica una norma que prohíbe usar memorias USB personales. ¿Qué categoría de control es?",
+        "options": [
+          { "id": "a", "text": "Directivo (managerial)" },
+          { "id": "b", "text": "Técnico" },
+          { "id": "c", "text": "Operacional" },
+          { "id": "d", "text": "Físico" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Una política es un control directivo: orienta el comportamiento sin impedirlo técnicamente. Su fuerza está en la consecuencia disciplinaria y en la auditoría.",
+        "takeaway": "Políticas, procedimientos y normas son controles directivos."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El bloqueo de escritura",
+        "prompt": "Se despliega un agente que impide escribir en cualquier dispositivo de almacenamiento extraíble. ¿Qué categoría y función tiene?",
+        "options": [
+          { "id": "a", "text": "Directivo y correctivo" },
+          { "id": "b", "text": "Técnico y preventivo" },
+          { "id": "c", "text": "Operacional y detective" },
+          { "id": "d", "text": "Físico y disuasorio" }
+        ],
+        "correctOptionIds": ["b"],
+        "explanation": "Es técnico porque vive en el software, y preventivo porque impide la acción antes de que ocurra.",
+        "takeaway": "Si el control impide la acción, es preventivo. Si la detecta, detective. Si la corrige después, correctivo."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "La revisión matutina",
+        "prompt": "Cada mañana un analista revisa las grabaciones de las cámaras de la sala de servidores en busca de accesos no autorizados. ¿Qué función cumple esa revisión?",
+        "options": [
+          { "id": "a", "text": "Preventiva" },
+          { "id": "b", "text": "Detectiva" },
+          { "id": "c", "text": "Compensatoria" },
+          { "id": "d", "text": "Correctiva" }
+        ],
+        "correctOptionIds": ["b"],
+        "explanation": "La cámara no impide la entrada: registra lo ocurrido y permite descubrirlo. Como función, es detective. (La presencia visible de la cámara sí actúa como disuasión, pero eso es otro efecto.)",
+        "takeaway": "No confundas el efecto disuasorio con la función real del control."
+      }
+    ]
+  }
+]

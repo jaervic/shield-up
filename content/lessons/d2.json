@@ -1,0 +1,138 @@
+[
+  {
+    "id": "d2-l1",
+    "domain": 2,
+    "objectives": ["2.2", "2.4"],
+    "title": "Triaje de un correo sospechoso",
+    "summary": "Del primer indicador hasta la contención: el orden de las acciones decide si el incidente se apaga o se propaga.",
+    "estimatedMinutes": 7,
+    "difficulty": "medium",
+    "tags": ["phishing", "respuesta", "ingenieria-social"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Llega el correo",
+        "prompt": "Un empleado reenvía un correo de «rrhh@empresa-segura.co» con el asunto «Actualiza tu nómina antes del viernes» y un enlace a un formulario que pide usuario y contraseña corporativos.",
+        "explanation": "Hay varias señales, pero no todas valen lo mismo. Antes de tocar el enlace conviene identificar el indicador más fiable, porque de él saldrá el bloqueo para el resto de la organización.",
+        "takeaway": "En phishing, el indicador más accionable suele estar en el dominio remitente, no en el texto."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El indicador más fiable",
+        "prompt": "Sin abrir ningún enlace, ¿qué dato te permite bloquear el ataque para toda la organización?",
+        "options": [
+          { "id": "a", "text": "El dominio del remitente y el del formulario enlazado" },
+          { "id": "b", "text": "Que el saludo sea genérico" },
+          { "id": "c", "text": "Que el correo llegara a primera hora" },
+          { "id": "d", "text": "Que el asunto use mayúsculas" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "El dominio es un indicador técnico, verificable y bloqueable. Los demás son heurísticas útiles para el usuario, pero no permiten actuar sobre la infraestructura del atacante.",
+        "takeaway": "Distingue indicadores accionables (dominios, hashes, IPs) de señales de sospecha."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El usuario ya hizo clic",
+        "prompt": "El empleado confiesa que introdujo sus credenciales y descargó un ZIP con un archivo .js. ¿Cuál es tu primera acción?",
+        "options": [
+          { "id": "a", "text": "Aislar el equipo de la red y revocar las sesiones del usuario" },
+          { "id": "b", "text": "Ejecutar un análisis completo del antivirus y esperar" },
+          { "id": "c", "text": "Enviar un correo a toda la plantilla avisando" },
+          { "id": "d", "text": "Reinstalar el sistema operativo del equipo" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Primero se contiene: se corta la propagación y se invalidan las credenciales robadas. Analizar, avisar o reinstalar vienen después; el orden invertido es lo que convierte un incidente en una brecha.",
+        "takeaway": "Contener antes de investigar. Cada minuto sin aislar es movimiento lateral gratis para el atacante."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Análisis posterior",
+        "prompt": "El equipo está aislado. ¿Qué dos acciones corresponden al análisis del alcance?",
+        "options": [
+          { "id": "a", "text": "Revisar los logs de proxy y DNS para ver si otros usuarios accedieron al mismo dominio" },
+          { "id": "b", "text": "Consultar el hash del archivo .js en fuentes de threat intelligence" },
+          { "id": "c", "text": "Borrar el correo de todos los buzones para que nadie lo abra" },
+          { "id": "d", "text": "Formatear el equipo y devolverlo al usuario" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "El alcance se mide con telemetría (quién más tocó el dominio) y con inteligencia sobre el artefacto (qué es ese .js). Borrar y formatear destruyen evidencia y no miden nada.",
+        "takeaway": "Antes de remediar, mide el alcance. Sin alcance no sabes si el incidente sigue abierto."
+      }
+    ]
+  },
+  {
+    "id": "d2-l2",
+    "domain": 2,
+    "objectives": ["2.5", "2.3"],
+    "title": "Priorizar 300 vulnerabilidades",
+    "summary": "El CVSS mide severidad, no riesgo. Aprender a priorizar es lo que hace sostenible un programa de parcheo.",
+    "estimatedMinutes": 6,
+    "difficulty": "hard",
+    "tags": ["vulnerabilidades", "riesgo", "parcheo"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "El informe del escaneo",
+        "prompt": "El escaneo semanal devuelve 300 hallazgos en 180 activos. El equipo de sistemas pregunta por dónde empezar. Tienes el CVSS de cada uno, la criticidad del activo y si está expuesto a Internet.",
+        "explanation": "Ordenar por CVSS de mayor a menor es el error clásico: produce una lista que no cabe en el tiempo disponible y que ignora el contexto del negocio.",
+        "takeaway": "Riesgo = probabilidad × impacto. El CVSS solo aporta una parte de la probabilidad."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El criterio correcto",
+        "prompt": "¿Cómo ordenas los 300 hallazgos?",
+        "options": [
+          { "id": "a", "text": "Por exposición, criticidad del activo y explotabilidad conocida" },
+          { "id": "b", "text": "Por CVSS descendente, de 10.0 a 0.0" },
+          { "id": "c", "text": "Por orden alfabético del nombre del activo" },
+          { "id": "d", "text": "Por antigüedad del sistema operativo" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "Un 9.8 en un servidor interno aislado y sin datos vale menos que un 7.5 con exploit público en el portal expuesto. El contexto decide.",
+        "takeaway": "Prioriza por riesgo del negocio, no por severidad técnica."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Explotación activa",
+        "prompt": "Aparece una vulnerabilidad con exploit público, explotación activa observada y afecta a tu servidor web expuesto. Estás a mitad de semana y la ventana de cambios es el domingo.",
+        "options": [
+          { "id": "a", "text": "Activar el procedimiento de emergencia: parcheo con aprobación y plan de reversión" },
+          { "id": "b", "text": "Esperar al domingo para no romper el proceso de cambios" },
+          { "id": "c", "text": "Añadir la CVE a la lista y priorizar el próximo trimestre" },
+          { "id": "d", "text": "Apagar el servidor web hasta el domingo" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "La gestión de cambios contempla la vía de emergencia precisamente para esto. Esperar con explotación activa en un activo expuesto es asumir un riesgo injustificable.",
+        "takeaway": "Un proceso de cambios maduro tiene una vía de emergencia; si no la tiene, el problema es el proceso."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Cuando no puedes parchear",
+        "prompt": "Un sistema heredado no admite el parche y no puede sustituirse este año. ¿Qué dos medidas reducen el riesgo mientras tanto?",
+        "options": [
+          { "id": "a", "text": "Segmentarlo y restringir qué puede alcanzar y quién puede alcanzarlo" },
+          { "id": "b", "text": "Reglas virtuales en el IPS/WAF que bloqueen la explotación conocida" },
+          { "id": "c", "text": "Deshabilitar el registro de auditoría para reducir carga" },
+          { "id": "d", "text": "Documentar la excepción y no hacer nada más" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "Segmentar reduce la probabilidad de alcanzar el sistema y el impacto si cae; las reglas virtuales bloquean el vector conocido. Documentar sin actuar es aceptar el riesgo sin decirlo.",
+        "takeaway": "Cuando no puedes corregir, compensas: aíslas y bloqueas el vector."
+      }
+    ]
+  }
+]

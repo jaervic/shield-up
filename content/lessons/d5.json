@@ -1,0 +1,86 @@
+[
+  {
+    "id": "d5-l1",
+    "domain": 5,
+    "objectives": ["5.4", "5.2"],
+    "title": "Continuidad: RTO, RPO y la prueba que nadie hace",
+    "summary": "Un plan de continuidad que no se prueba no es un plan: es una carpeta con buenas intenciones.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": ["continuidad", "bcdr", "rto", "rpo"],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Lo que pide el negocio",
+        "prompt": "El análisis de impacto en el negocio concluye: facturación no puede estar caída más de 4 horas y no puede perder más de 15 minutos de pedidos. El plan actual hace una copia completa cada noche y tardaría 9 horas en restaurarla.",
+        "explanation": "El negocio ha fijado dos números: RTO (4 h de caída máxima) y RPO (15 min de datos máximos perdidos). El plan actual no cumple ninguno de los dos.",
+        "takeaway": "RTO es cuánto tiempo aguanta el negocio sin servicio; RPO, cuántos datos puede perder."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Traducir el RPO a tecnología",
+        "prompt": "Un RPO de 15 minutos obliga a que…",
+        "options": [
+          { "id": "a", "text": "La copia de datos y el envío de logs ocurran como máximo cada 15 minutos" },
+          { "id": "b", "text": "La restauración completa tarde menos de 15 minutos" },
+          { "id": "c", "text": "El equipo de guardia responda en 15 minutos" },
+          { "id": "d", "text": "El servidor de backup esté a menos de 15 minutos de distancia" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "El RPO es la ventana de datos que se puede perder, y eso lo determina la frecuencia de copia o de replicación. El tiempo de restauración pertenece al RTO.",
+        "takeaway": "RPO se compra con frecuencia de copia; RTO, con velocidad de recuperación."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "La brecha del plan",
+        "prompt": "Backups nocturnos y 9 horas de restauración frente a RTO 4 h y RPO 15 min. ¿Qué conclusión es correcta?",
+        "options": [
+          { "id": "a", "text": "El plan no cumple: hacen falta replicación continua y una estrategia de recuperación más rápida" },
+          { "id": "b", "text": "El plan cumple, porque hay backup diario" },
+          { "id": "c", "text": "Basta con comprar más cintas" },
+          { "id": "d", "text": "Hay que ampliar el RTO a 9 horas para que cuadre" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "El plan no cumple ni RPO ni RTO. Se corrige con replicación continua (RPO) y con recuperación rápida —réplica caliente, arranque desde imagen— (RTO). Ajustar los números al plan en vez del plan a los números es invertir la lógica.",
+        "takeaway": "Primero el requisito del negocio, después la tecnología. Nunca al revés."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Qué debe contener el plan",
+        "prompt": "¿Qué dos elementos son imprescindibles en el plan de continuidad?",
+        "options": [
+          { "id": "a", "text": "Roles, suplentes y cadena de contacto actualizada" },
+          { "id": "b", "text": "Procedimientos de recuperación escritos y probados periódicamente" },
+          { "id": "c", "text": "El listado completo de servidores con sus IPs" },
+          { "id": "d", "text": "La política de complejidad de contraseñas" }
+        ],
+        "correctOptionIds": ["a", "b"],
+        "explanation": "Un plan se cae por personas que no saben quién decide y por procedimientos nunca ejecutados. El inventario ayuda, pero sin roles ni pruebas no hay recuperación.",
+        "takeaway": "Personas y procedimientos probados. Lo demás es documentación de apoyo."
+      },
+      {
+        "id": "s5",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Validar sin arriesgar producción",
+        "prompt": "¿Cómo validas el plan este trimestre sin tocar producción?",
+        "options": [
+          { "id": "a", "text": "Ejercicio tabletop con los responsables más una prueba real de restauración en entorno aislado" },
+          { "id": "b", "text": "Revisando el documento en una reunión" },
+          { "id": "c", "text": "Simulando una caída en producción el viernes por la tarde" },
+          { "id": "d", "text": "Esperando a que ocurra un incidente real" }
+        ],
+        "correctOptionIds": ["a"],
+        "explanation": "El tabletop valida decisiones y comunicación; la restauración en aislado valida la parte técnica. Juntos cubren el plan sin riesgo, y son la evidencia que pide una auditoría.",
+        "takeaway": "Validar es decidir en una sala y restaurar en un entorno aislado. Nunca estrenar en producción."
+      }
+    ]
+  }
+]
