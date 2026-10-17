@@ -1,0 +1,124 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.dashboard h2 {
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-4);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.metric {
+  padding: var(--space-4);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.metric dt {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.metric dd {
+  margin: var(--space-1) 0 0;
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.domains {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin: 0;
+}
+
+.domainRow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.domainHeader {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.domainName {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 600;
+}
+
+.domainDot {
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+}
+
+.domainWeight,
+.domainMeta {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.bar {
+  height: 0.5rem;
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  background-color: var(--color-primary);
+  transition: width var(--transition-base);
+}
+
+.loadChart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-1);
+  height: 8rem;
+  margin: 0;
+  padding: var(--space-2);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.loadBar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  height: 100%;
+  gap: var(--space-1);
+}
+
+.loadBarFill {
+  width: 100%;
+  min-height: 2px;
+  background-color: var(--color-success);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.loadCount {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}

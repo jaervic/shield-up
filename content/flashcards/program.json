@@ -1,0 +1,66 @@
+[
+  {
+    "id": "gov-rto-rpo",
+    "domain": 5,
+    "type": "concept",
+    "front": "Diferencia entre RTO y RPO en un plan de continuidad",
+    "back": "RTO: tiempo máximo admisible de caída antes de reanudar el servicio. RPO: cantidad máxima de datos (en tiempo) que se puede perder. RTO mira el reloj, RPO mira los backups.",
+    "tags": ["continuidad", "bcdr", "recuperacion"]
+  },
+  {
+    "id": "gov-sle-ale-aro",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Cómo se calcula el ALE en un análisis cuantitativo de riesgo?",
+    "back": "ALE = SLE × ARO. SLE es el valor esperado de pérdida por incidente; ARO, la frecuencia anual estimada. ALE es la pérdida anual esperada.",
+    "tags": ["riesgo", "analisis-cuantitativo"]
+  },
+  {
+    "id": "gov-risk-register",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué cuatro estrategias existen para tratar un riesgo?",
+    "back": "Mitigar (reducir), Transferir (seguro, contrato), Evitar (eliminar la actividad) y Aceptar (asumir con justificación documentada).",
+    "tags": ["riesgo", "tratamiento"]
+  },
+  {
+    "id": "gov-third-party",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué documentos formalizan una relación con un tercero?",
+    "back": "SLA (nivel de servicio), MOU/MOA (entendimiento), BPA (socio de negocio), NDA (confidencialidad) y contrato con cláusulas de auditoría y derecho a revisión.",
+    "tags": ["terceros", "contratos", "sla"]
+  },
+  {
+    "id": "gov-compliance-frameworks",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Para qué sirven marcos como ISO 27001, NIST CSF y SOC 2?",
+    "back": "Estandarizan cómo gobernar y auditar la seguridad: ISO 27001 certifica un SGSI, NIST CSF organiza funciones (Identify/Protect/Detect/Respond/Recover) y SOC 2 reporta controles de confianza a clientes.",
+    "tags": ["compliance", "gobernanza", "auditoria"]
+  },
+  {
+    "id": "gov-data-classification",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Por qué es previa la clasificación de datos a cualquier control?",
+    "back": "Etiquetar los datos (público, interno, confidencial, restringido) determina los controles exigibles: cifrado, retención, acceso y destrucción. Sin clasificar, no hay política aplicable.",
+    "tags": ["clasificacion", "datos", "politicas"]
+  },
+  {
+    "id": "gov-awareness-training",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué diferencia hay entre entrenamiento de concienciación y simulación de phishing?",
+    "back": "El entrenamiento educa de forma periódica y obligatoria; la simulación mide la tasa de clic real y permite formación dirigida a quien falla. Juntos reducen el riesgo humano.",
+    "tags": ["concienciacion", "phishing", "personas"]
+  },
+  {
+    "id": "gov-mttr-mtbf",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué miden MTTR y MTBF?",
+    "back": "MTTR: tiempo medio de reparación (cuánto tardas en recuperar). MTBF: tiempo medio entre fallos (fiabilidad). Ambas alimentan el RTO y la selección de controles.",
+    "tags": ["disponibilidad", "metricas"]
+  }
+]

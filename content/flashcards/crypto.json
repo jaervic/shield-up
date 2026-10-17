@@ -1,0 +1,114 @@
+[
+  {
+    "id": "cry-aes",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué tipo de cifrado es AES y qué longitudes de clave admite?",
+    "back": "Simétrico por bloques de 128 bits, claves de 128, 192 o 256 bits. Estándar FIPS 197; el modo importa (GCM para autenticado).",
+    "tags": ["aes", "simetrico"]
+  },
+  {
+    "id": "cry-rsa",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué tipo de cifrado es RSA y para qué se usa principalmente?",
+    "back": "Asimétrico basado en la dificultad de factorizar primos grandes. Se usa para intercambio de claves y firmas; hoy con claves de 2048–4096 bits.",
+    "tags": ["rsa", "asimetrico"]
+  },
+  {
+    "id": "cry-ecc",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué ventaja aporta ECC frente a RSA?",
+    "back": "Criptografía de curva elíptica: seguridad equivalente con claves mucho más cortas (256 bits ECC ≈ 3072 bits RSA), ideal para móviles e IoT.",
+    "tags": ["ecc", "asimetrico"]
+  },
+  {
+    "id": "cry-sha256",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué es SHA-256 y garantiza confidencialidad?",
+    "back": "Función hash criptográfica de 256 bits (familia SHA-2). Aporta integridad, no confidencialidad: es irreversible y sensible a colisiones evitadas.",
+    "tags": ["sha", "hash", "integridad"]
+  },
+  {
+    "id": "cry-hmac",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué es HMAC y qué garantiza?",
+    "back": "Hash-based Message Authentication Code: combina una clave secreta con un hash para dar integridad Y autenticidad del mensaje.",
+    "tags": ["hmac", "integridad", "autenticacion"]
+  },
+  {
+    "id": "cry-dh",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Para qué sirve Diffie-Hellman?",
+    "back": "Intercambio de claves sobre canal inseguro sin transmitir la clave. Por sí solo no autentica: requiere certificados para evitar MITM.",
+    "tags": ["diffie-hellman", "intercambio-de-claves"]
+  },
+  {
+    "id": "cry-pfs",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué es Perfect Forward Secrecy y con qué se logra?",
+    "back": "Garantiza que comprometer la clave privada no descifre sesiones pasadas. Se consigue con intercambios efímeros como ECDHE.",
+    "tags": ["pfs", "ecdhe", "tls"]
+  },
+  {
+    "id": "cry-kdf",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué es el key stretching y qué algoritmos lo implementan?",
+    "back": "Derivar claves lentamente para frenar ataques de diccionario: PBKDF2, bcrypt, scrypt y Argon2. Siempre con salt único por contraseña.",
+    "tags": ["kdf", "password", "salt"]
+  },
+  {
+    "id": "cry-signature",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Cómo funciona una firma digital?",
+    "back": "El emisor hashea el mensaje y cifra ese hash con su clave privada; el receptor lo verifica con la clave pública. Da integridad, autenticidad y no repudio.",
+    "tags": ["firma-digital", "no-repudio"]
+  },
+  {
+    "id": "cry-pki",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué elementos componen una PKI?",
+    "back": "CA raíz, CAs intermedias, certificados X.509, CRL/OCSP para revocación y registro. La cadena de confianza ancla en la CA raíz.",
+    "tags": ["pki", "certificados", "x509"]
+  },
+  {
+    "id": "cry-iv-salt",
+    "domain": 1,
+    "type": "crypto",
+    "front": "Diferencia entre salt, IV y nonce",
+    "back": "Salt: aleatorio por contraseña en KDF. IV: valor inicial único por operación en cifrado por bloques. Nonce: número de un solo uso para evitar replay.",
+    "tags": ["iv", "salt", "nonce"]
+  },
+  {
+    "id": "cry-hsm",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué es un HSM y en qué se diferencia de un TPM?",
+    "back": "Hardware Security Module: appliance dedicado de alto rendimiento para custodia de claves y operaciones criptográficas. El TPM está integrado en un solo equipo; el HSM sirve a toda una organización.",
+    "tags": ["hsm", "tpm", "hardware"]
+  },
+  {
+    "id": "cry-steganography",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué es la esteganografía y en qué se diferencia del cifrado?",
+    "back": "Oculta la existencia del mensaje dentro de otro soporte (imagen, audio). El cifrado oculta el contenido; la esteganografía oculta que hay un mensaje.",
+    "tags": ["esteganografia", "ocultacion"]
+  },
+  {
+    "id": "cry-homomorphic",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué permite el cifrado homomórfico?",
+    "back": "Operar sobre datos cifrados sin descifrarlos, devolviendo un resultado que al descifrarse coincide con la operación sobre el texto claro. Clave para cloud y privacidad.",
+    "tags": ["homomorfico", "privacidad", "cloud"]
+  }
+]

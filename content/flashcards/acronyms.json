@@ -1,0 +1,130 @@
+[
+  {
+    "id": "acr-aaa",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué significa AAA y qué tres funciones agrupa?",
+    "back": "Authentication, Authorization, Accounting. Quién eres, qué puedes hacer y qué hiciste (auditoría).",
+    "tags": ["aaa", "control-de-acceso"]
+  },
+  {
+    "id": "acr-cia",
+    "domain": 1,
+    "type": "acronym",
+    "front": "¿Qué es la tríada CIA?",
+    "back": "Confidentiality, Integrity, Availability. Los tres objetivos primarios que toda medida de seguridad busca proteger.",
+    "tags": ["cia", "fundamentos"]
+  },
+  {
+    "id": "acr-acl",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es una ACL?",
+    "back": "Access Control List: reglas que permiten o deniegan tráfico o acceso a recursos, evaluadas por orden y con deny implícito final.",
+    "tags": ["acl", "control-de-acceso", "firewall"]
+  },
+  {
+    "id": "acr-mfa",
+    "domain": 1,
+    "type": "acronym",
+    "front": "¿Qué es MFA y qué factores combina?",
+    "back": "Multi-Factor Authentication: combina al menos dos factores distintos — algo que sabes, algo que tienes, algo que eres.",
+    "tags": ["mfa", "autenticacion"]
+  },
+  {
+    "id": "acr-nac",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es NAC?",
+    "back": "Network Access Control: evalúa la postura de un dispositivo (parches, AV, cumplimiento) antes de concederle acceso a la red.",
+    "tags": ["nac", "acceso-a-red"]
+  },
+  {
+    "id": "acr-dlp",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es DLP?",
+    "back": "Data Loss Prevention: inspecciona y bloquea la exfiltración de datos sensibles en endpoints, red y cloud.",
+    "tags": ["dlp", "prevencion-de-fuga"]
+  },
+  {
+    "id": "acr-edr",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es EDR y en qué se diferencia de un antivirus?",
+    "back": "Endpoint Detection and Response: telemetría continua, detección por comportamiento y respuesta (aislar, matar proceso, hacer rollback). El AV clásico se basa en firmas.",
+    "tags": ["edr", "endpoint", "deteccion"]
+  },
+  {
+    "id": "acr-siem",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es SIEM?",
+    "back": "Security Information and Event Management: centraliza logs, correlaciona eventos y genera alertas. Es el cerebro de la monitorización del SOC.",
+    "tags": ["siem", "soc", "logs"]
+  },
+  {
+    "id": "acr-soar",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es SOAR?",
+    "back": "Security Orchestration, Automation and Response: automatiza playbooks y respuestas (enriquecer alertas, abrir tickets, contener hosts) sobre el SIEM.",
+    "tags": ["soar", "automatizacion", "soc"]
+  },
+  {
+    "id": "acr-ioc",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es un IOC?",
+    "back": "Indicator of Compromise: artefacto observable que sugiere intrusión — hashes, IPs, dominios, claves de registro, firmas de tráfico.",
+    "tags": ["ioc", "threat-intel"]
+  },
+  {
+    "id": "acr-cve-cvss",
+    "domain": 2,
+    "type": "acronym",
+    "front": "Diferencia entre CVE y CVSS",
+    "back": "CVE es el identificador único de una vulnerabilidad; CVSS es la puntuación de severidad 0.0–10.0. CVE nombra, CVSS prioriza.",
+    "tags": ["cve", "cvss", "vulnerabilidades"]
+  },
+  {
+    "id": "acr-arp",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué es ARP y qué ataque lo explota?",
+    "back": "Address Resolution Protocol resuelve IP → MAC. ARP spoofing/poisoning permite MITM en la misma subred; se mitiga con DAI.",
+    "tags": ["arp", "mitm", "capa-2"]
+  },
+  {
+    "id": "acr-xss-csrf-sqli",
+    "domain": 2,
+    "type": "acronym",
+    "front": "Diferencia entre XSS, CSRF y SQL injection",
+    "back": "XSS inyecta script en el navegador de la víctima; CSRF fuerza acciones autenticadas sin consentimiento; SQLi manipula consultas a la base de datos.",
+    "tags": ["xss", "csrf", "sqli", "web"]
+  },
+  {
+    "id": "acr-rbac",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es RBAC y cómo se relaciona con el least privilege?",
+    "back": "Role-Based Access Control: los permisos se asignan a roles, no a personas. Facilita aplicar mínimo privilegio y separation of duties.",
+    "tags": ["rbac", "control-de-acceso"]
+  },
+  {
+    "id": "acr-tpm",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es un TPM?",
+    "back": "Trusted Platform Module: chip que almacena claves y mide la integridad del arranque. Habilita BitLocker, secure boot y attestation.",
+    "tags": ["tpm", "hardware", "cifrado"]
+  },
+  {
+    "id": "acr-zero-trust",
+    "domain": 1,
+    "type": "acronym",
+    "front": "¿Qué es el modelo Zero Trust?",
+    "back": "Nunca confiar, siempre verificar. El acceso se decide por identidad, dispositivo y contexto en cada solicitud; no por estar dentro de la red.",
+    "tags": ["zero-trust", "arquitectura"]
+  }
+]

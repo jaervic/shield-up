@@ -1,0 +1,163 @@
+[
+  {
+    "id": "port-ftp",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puertos usa FTP (canal de control y canal de datos)?",
+    "back": "TCP 21 (control) y TCP 20 (datos). FTP transmite credenciales en claro: sustituir por SFTP (22) o FTPS (990).",
+    "tags": ["ftp", "puertos", "protocolos"]
+  },
+  {
+    "id": "port-ssh",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué protocolo y puerto permiten administración remota cifrada?",
+    "back": "SSH en TCP 22. También transporta SFTP y SCP. Reemplaza a Telnet (23) por su cifrado.",
+    "hint": "Piensa en la alternativa segura a Telnet.",
+    "tags": ["ssh", "puertos", "cifrado"]
+  },
+  {
+    "id": "port-telnet",
+    "domain": 2,
+    "type": "port",
+    "front": "¿Qué puerto usa Telnet y por qué es una vulnerabilidad?",
+    "back": "TCP 23. Envía credenciales y sesión en texto plano → susceptible a sniffing y MITM.",
+    "tags": ["telnet", "puertos", "vulnerabilidades"]
+  },
+  {
+    "id": "port-smtp",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Puertos de envío y recepción de correo?",
+    "back": "SMTP TCP 25 (relay), 587 (sumisión autenticada), 465 (SMTPS). Recepción: POP3 110/995 e IMAP 143/993.",
+    "tags": ["smtp", "correo", "puertos"]
+  },
+  {
+    "id": "port-dns",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puerto usa DNS y cuándo usa cada transporte?",
+    "back": "UDP 53 para consultas normales y TCP 53 para transferencias de zona y respuestas grandes. DoT usa 853.",
+    "tags": ["dns", "puertos"]
+  },
+  {
+    "id": "port-dhcp",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puertos usa DHCP cliente y servidor?",
+    "back": "UDP 67 (servidor) y UDP 68 (cliente). Riesgo asociado: rogue DHCP server.",
+    "tags": ["dhcp", "puertos"]
+  },
+  {
+    "id": "port-tftp",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puerto usa TFTP?",
+    "back": "UDP 69. Sin autenticación ni cifrado; usado para arranque de dispositivos y transferencia de configuraciones.",
+    "tags": ["tftp", "puertos"]
+  },
+  {
+    "id": "port-http-https",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Puertos de HTTP y HTTPS?",
+    "back": "TCP 80 (HTTP, texto plano) y TCP 443 (HTTPS sobre TLS). Alternativos: 8080 y 8443.",
+    "tags": ["http", "https", "puertos"]
+  },
+  {
+    "id": "port-snmp",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Puertos de SNMP y SNMP trap?",
+    "back": "UDP 161 (consultas) y UDP 162 (traps/notificaciones). v3 aporta autenticación y cifrado; v1/v2c usan community strings.",
+    "tags": ["snmp", "monitorizacion", "puertos"]
+  },
+  {
+    "id": "port-ldap",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Puertos de LDAP y LDAPS?",
+    "back": "TCP 389 (LDAP) y TCP 636 (LDAPS sobre TLS). Directorio para autenticación y autorización centralizada.",
+    "tags": ["ldap", "directorio", "puertos"]
+  },
+  {
+    "id": "port-smb",
+    "domain": 2,
+    "type": "port",
+    "front": "¿Qué puerto usa SMB y por qué es un objetivo recurrente?",
+    "back": "TCP 445 (y 139 en NetBIOS). Vector clásico de ransomware y movimientos laterales (p. ej. EternalBlue/MS17-010).",
+    "tags": ["smb", "puertos", "ransomware"]
+  },
+  {
+    "id": "port-syslog",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Qué puerto usa Syslog?",
+    "back": "UDP 514 (y TCP 514 o 6514 con TLS). Base del envío de logs a un SIEM.",
+    "tags": ["syslog", "logs", "siem", "puertos"]
+  },
+  {
+    "id": "port-imaps-pop3s",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Puertos cifrados de IMAP y POP3?",
+    "back": "IMAPS TCP 993 y POP3S TCP 995. IMAP sincroniza el buzón en servidor; POP3 descarga y suele borrar del servidor.",
+    "tags": ["imap", "pop3", "correo", "puertos"]
+  },
+  {
+    "id": "port-rdp",
+    "domain": 2,
+    "type": "port",
+    "front": "¿Qué puerto usa RDP y qué riesgos implica?",
+    "back": "TCP/UDP 3389. Objetivo de fuerza bruta y ransomware; requiere MFA, segmentación y no exponerlo a Internet.",
+    "tags": ["rdp", "acceso-remoto", "puertos"]
+  },
+  {
+    "id": "port-mssql-mysql",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Puertos por defecto de Microsoft SQL Server y MySQL?",
+    "back": "MSSQL TCP 1433 (y UDP 1434 para el browser) y MySQL/MariaDB TCP 3306.",
+    "tags": ["bases-de-datos", "puertos"]
+  },
+  {
+    "id": "port-sip",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puertos usa SIP para VoIP?",
+    "back": "UDP/TCP 5060 (señalización) y 5061 (SIP sobre TLS). RTP transporta el audio en un rango dinámico.",
+    "tags": ["sip", "voip", "puertos"]
+  },
+  {
+    "id": "port-kerberos",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puertos usa Kerberos?",
+    "back": "TCP/UDP 88. Protocolo de autenticación mutua basado en tickets; base de Active Directory.",
+    "tags": ["kerberos", "autenticacion", "puertos"]
+  },
+  {
+    "id": "port-ntp",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Qué puerto usa NTP y por qué es crítico en seguridad?",
+    "back": "UDP 123. La sincronización horaria es requisito para validar certificados, correlacionar logs y detectar replay.",
+    "tags": ["ntp", "tiempo", "logs", "puertos"]
+  },
+  {
+    "id": "port-netflow-ipfix",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Qué puertos se asocian a NetFlow/IPFIX para telemetría de red?",
+    "back": "UDP 2055 (NetFlow) y UDP 4739 (IPFIX). Alimentan la monitorización de tráfico y el análisis de flujos.",
+    "tags": ["netflow", "ipfix", "monitorizacion", "puertos"]
+  },
+  {
+    "id": "port-l2tp-ipsec",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puertos usa IKE/IPsec para VPN?",
+    "back": "UDP 500 (IKE), UDP 4500 (NAT-T) y protocolo IP 50 (ESP). Alternativas: OpenVPN UDP 1194, WireGuard UDP 51820.",
+    "tags": ["vpn", "ipsec", "ike", "puertos"]
+  }
+]
