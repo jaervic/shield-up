@@ -1,6 +1,7 @@
 import { DOMAINS } from '@/domain/domain';
 import { formatPercent } from '@/shared/utils/format';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
+import { ReadinessPanel } from './ReadinessPanel';
 import styles from './DashboardPage.module.css';
 
 /** Dashboard de diagnóstico: estado del progreso y punto de entrada al repaso. */
@@ -20,6 +21,8 @@ export function DashboardPage() {
 
   return (
     <div className={styles.dashboard}>
+      <ReadinessPanel />
+
       <section aria-labelledby="overview-title">
         <h2 id="overview-title">Resumen</h2>
         <dl className={styles.metrics}>

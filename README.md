@@ -9,9 +9,12 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
 
 ## Estado del proyecto
 
-**Fase 1 completada: arquitectura base + motor de Spaced Repetition.**
-Incluye dominio tipado, motor SM-2 puro y testeado, persistencia offline-first,
-sesión de repaso funcional y un dashboard inicial de métricas.
+**Fases 1 y 2 completadas.**
+
+- **Fase 1 — Arquitectura base + motor de Spaced Repetition.** Dominio tipado, motor SM-2 puro
+  y testeado, persistencia offline-first, sesión de repaso funcional y dashboard de métricas.
+- **Fase 2 — Test de diagnóstico + ruta de estudio personalizada.** Banco de 41 preguntas
+  ponderadas por el peso del examen, motor de selección/corrección y ruta ordenada por impacto.
 
 ## Stack
 
@@ -43,19 +46,25 @@ npm run build      # build de producción
 ```
 src/
 ├─ app/          # router, providers, layout (AppShell)
-├─ domain/       # MODELOS PUROS: Card, Review, dominios y pesos del examen
-├─ data/         # Dexie (IndexedDB) y carga/validación del contenido
+├─ domain/       # MODELOS PUROS: Card, Review, Question, DiagnosticAttempt, dominios
+├─ data/         # Dexie (IndexedDB) y carga/validación del contenido (Zod)
 ├─ features/
 │  ├─ srs/
 │  │  ├─ engine/ # LÓGICA PURA: sm2, scheduler, queue, stats, cardFactory
 │  │  ├─ data/   # SrsRepository (interfaz) + adaptador Dexie + servicios
 │  │  ├─ state/  # store de Zustand y hooks de métricas
 │  │  └─ ui/     # FlashcardView, GradeButtons, ReviewSession
-│  └─ dashboard/ui/
-├─ shared/       # ui/, hooks/, utils/ reutilizables
+│  ├─ diagnostic/
+│  │  ├─ engine/ # LÓGICA PURA: selection, proficiency, scoring, route
+│  │  ├─ data/   # DiagnosticRepository + servicio
+│  │  ├─ state/  # store del test y hooks de lectura
+│  │  └─ ui/     # DiagnosticPage, QuestionCard, DiagnosticResults
+│  └─ dashboard/ui/  # DashboardPage, ReadinessPanel
+├─ shared/       # ui/, hooks/, utils/ reutilizables (random, interleave, date, math)
 └─ styles/       # tokens.css, reset.css, global.css
 content/
-└─ flashcards/   # contenido seed en JSON (ports, acronyms, crypto, program)
+├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program)
+└─ questions/    # banco de preguntas del diagnóstico (d1..d5)
 ```
 
 ### Regla de oro
@@ -112,6 +121,43 @@ consiste en implementar otro repositorio (p. ej. Supabase) y registrarlo con
 
 ---
 
+## Test de diagnóstico y ruta de estudio (Fase 2)
+
+### Selección de preguntas
+
+`selectDiagnosticQuestions` reparte 25 preguntas imitando la composición del examen:
+cuotas proporcionales a los pesos oficiales, con el remanente asignado a los dominios
+con mayor déficit. Es determinista dada una semilla y se intercala por dominio para no
+agrupar bloques temáticos.
+
+### Corrección
+
+`evaluateAttempt` normaliza las respuestas (toda pregunta tiene respuesta, aunque sea
+vacía), calcula la proficiencia por dominio y dos métricas:
+
+- `scorePercent`: proporción simple de aciertos.
+- `readinessPercent`: media ponderada por el peso de cada dominio en el examen,
+  **renormalizada sobre los dominios realmente evaluados** para que un dominio ausente
+  no penalice artificialmente.
+
+Una respuesta solo cuenta como correcta si el conjunto seleccionado coincide exactamente
+con el conjunto correcto: en preguntas de respuesta múltiple no vale acertar una parte.
+
+### Ruta de estudio
+
+`buildStudyRoute` ordena los dominios por **prioridad = peso en el examen × hueco de
+conocimiento**. Así, un 40% de aciertos en Operaciones de Seguridad (28%) genera más
+urgencia que el mismo 40% en Conceptos Generales (12%). Cada paso incluye el motivo en
+lenguaje natural y una estimación de tarjetas a trabajar.
+
+### Persistencia
+
+Los intentos se guardan en la tabla `diagnosticAttempts` (migración v2 de Dexie) tras la
+interfaz `DiagnosticRepository`. El dashboard lee el último intento con TanStack Query y
+muestra la preparación estimada y el top 3 de la ruta.
+
+---
+
 ## Pesos oficiales del examen (SY0-701)
 
 | Dominio | Peso |
@@ -137,7 +183,7 @@ consiste en implementar otro repositorio (p. ej. Supabase) y registrarlo con
 ## Hoja de ruta
 
 - [x] **Fase 1** — Arquitectura + motor SRS
-- [ ] **Fase 2** — Dashboard de diagnóstico + test inicial que personaliza la ruta
+- [x] **Fase 2** — Dashboard de diagnóstico + test inicial que personaliza la ruta
 - [ ] **Fase 3** — Microlearning (lecciones-problema)
 - [ ] **Fase 4** — PBQ: drag & drop (`dnd-kit`) + terminal simulada (`xterm.js`)
 - [ ] **Fase 5** — Simulador de examen (90 preguntas / 90 min / marcado para revisión)

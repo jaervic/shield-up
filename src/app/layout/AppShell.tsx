@@ -3,6 +3,7 @@ import styles from './AppShell.module.css';
 
 const NAV_ITEMS = [
   { to: '/', label: 'Dashboard', end: true },
+  { to: '/diagnostic', label: 'Diagnóstico', end: false },
   { to: '/review', label: 'Repaso', end: false },
 ];
 

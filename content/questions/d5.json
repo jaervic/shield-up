@@ -1,0 +1,138 @@
+[
+  {
+    "id": "d5-q01",
+    "domain": 5,
+    "objective": "5.2",
+    "type": "single",
+    "stem": "En un análisis cuantitativo de riesgo, si el SLE de un incidente es 10.000 € y el ARO es 0,5 al año, ¿cuál es el ALE?",
+    "options": [
+      { "id": "a", "text": "5.000 €" },
+      { "id": "b", "text": "10.000 €" },
+      { "id": "c", "text": "20.000 €" },
+      { "id": "d", "text": "0,5 €" }
+    ],
+    "correctOptionIds": ["a"],
+    "explanation": "ALE = SLE × ARO = 10.000 × 0,5 = 5.000 € anuales esperados. Es la cifra que se compara con el coste del control propuesto.",
+    "difficulty": "medium",
+    "tags": ["riesgo", "analisis-cuantitativo", "ale"]
+  },
+  {
+    "id": "d5-q02",
+    "domain": 5,
+    "objective": "5.2",
+    "type": "single",
+    "stem": "La organización contrata un seguro de ciberseguridad. ¿Qué estrategia de tratamiento del riesgo ha aplicado?",
+    "options": [
+      { "id": "a", "text": "Mitigar" },
+      { "id": "b", "text": "Transferir" },
+      { "id": "c", "text": "Evitar" },
+      { "id": "d", "text": "Aceptar" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El seguro traslada el impacto financiero a un tercero. No reduce la probabilidad del incidente, por lo que no sustituye a los controles técnicos.",
+    "difficulty": "easy",
+    "tags": ["riesgo", "seguro"]
+  },
+  {
+    "id": "d5-q03",
+    "domain": 5,
+    "objective": "5.4",
+    "type": "single",
+    "stem": "La dirección acepta hasta 4 horas de caída y hasta 15 minutos de pérdida de datos. ¿Qué representan esos valores?",
+    "options": [
+      { "id": "a", "text": "MTTR y MTBF" },
+      { "id": "b", "text": "RTO y RPO, respectivamente" },
+      { "id": "c", "text": "SLA y NDA" },
+      { "id": "d", "text": "SLE y ARO" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "RTO es el tiempo objetivo de recuperación (4 h); RPO, la pérdida máxima de datos tolerable (15 min), que determina la frecuencia de backup.",
+    "difficulty": "medium",
+    "tags": ["continuidad", "rto", "rpo"]
+  },
+  {
+    "id": "d5-q04",
+    "domain": 5,
+    "objective": "5.3",
+    "type": "single",
+    "stem": "¿Qué documento define los niveles de servicio exigibles a un proveedor externo?",
+    "options": [
+      { "id": "a", "text": "NDA" },
+      { "id": "b", "text": "SLA" },
+      { "id": "c", "text": "MOU" },
+      { "id": "d", "text": "BIA" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El Service Level Agreement fija disponibilidad, tiempos de respuesta y penalizaciones. El NDA cubre confidencialidad; el MOU, intenciones sin fuerza contractual plena.",
+    "difficulty": "easy",
+    "tags": ["terceros", "sla"]
+  },
+  {
+    "id": "d5-q05",
+    "domain": 5,
+    "objective": "5.3",
+    "type": "single",
+    "stem": "Antes de compartir arquitectura interna con un proveedor en evaluación, ¿qué acuerdo debe firmarse?",
+    "options": [
+      { "id": "a", "text": "SLA" },
+      { "id": "b", "text": "NDA" },
+      { "id": "c", "text": "BPA" },
+      { "id": "d", "text": "SOW" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El Non-Disclosure Agreement protege la información confidencial revelada durante la evaluación, antes de que exista contrato de servicio.",
+    "difficulty": "easy",
+    "tags": ["terceros", "nda", "confidencialidad"]
+  },
+  {
+    "id": "d5-q06",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Qué marco del NIST organiza la gestión de riesgos en funciones Identify, Protect, Detect, Respond y Recover?",
+    "options": [
+      { "id": "a", "text": "NIST SP 800-53" },
+      { "id": "b", "text": "NIST Cybersecurity Framework (CSF)" },
+      { "id": "c", "text": "ISO 27001" },
+      { "id": "d", "text": "PCI DSS" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El CSF estructura la postura en cinco funciones. La 800-53 es un catálogo de controles, ISO 27001 un estándar de SGSI y PCI DSS una norma sectorial de pagos.",
+    "difficulty": "medium",
+    "tags": ["gobernanza", "nist", "marcos"]
+  },
+  {
+    "id": "d5-q07",
+    "domain": 5,
+    "objective": "5.4",
+    "type": "single",
+    "stem": "¿Cuál es el propósito principal de un ejercicio de simulación (tabletop) del plan de continuidad?",
+    "options": [
+      { "id": "a", "text": "Cumplir un requisito de auditoría sin más" },
+      { "id": "b", "text": "Validar el plan, las roles y las comunicaciones sin afectar a producción" },
+      { "id": "c", "text": "Probar la velocidad real de los backups en cinta" },
+      { "id": "d", "text": "Sustituir al plan de respuesta a incidentes" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El tabletop revela lagunas en roles, decisiones y comunicación. Es un ensayo de bajo coste que precede a los ejercicios funcionales en producción.",
+    "difficulty": "medium",
+    "tags": ["continuidad", "tabletop", "bcdr"]
+  },
+  {
+    "id": "d5-q08",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "Bajo el RGPD, ¿en qué plazo debe notificarse una violación de seguridad con riesgo para los interesados?",
+    "options": [
+      { "id": "a", "text": "24 horas" },
+      { "id": "b", "text": "72 horas desde que se tiene conocimiento" },
+      { "id": "c", "text": "7 días naturales" },
+      { "id": "d", "text": "30 días" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El RGPD exige notificar a la autoridad de control en un máximo de 72 horas desde el conocimiento del incidente, salvo que no entrañe riesgo.",
+    "difficulty": "medium",
+    "tags": ["compliance", "gdpr", "notificacion"]
+  }
+]

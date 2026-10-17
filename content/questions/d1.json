@@ -1,0 +1,87 @@
+[
+  {
+    "id": "d1-q01",
+    "domain": 1,
+    "objective": "1.1",
+    "type": "single",
+    "stem": "Un sistema heredado no soporta MFA, así que la organización lo aísla en una VLAN restringida con reglas de firewall estrictas. ¿Qué tipo de control es esta VLAN?",
+    "options": [
+      { "id": "a", "text": "Control correctivo" },
+      { "id": "b", "text": "Control compensatorio" },
+      { "id": "c", "text": "Control directivo" },
+      { "id": "d", "text": "Control disuasorio" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Un control compensatorio sustituye a un control que no se puede aplicar en el sistema original. La VLAN mitiga el riesgo que el MFA ausente dejaba abierto.",
+    "difficulty": "medium",
+    "tags": ["controles", "categorias"]
+  },
+  {
+    "id": "d1-q02",
+    "domain": 1,
+    "objective": "1.2",
+    "type": "single",
+    "stem": "Un ransomware cifra la base de datos de producción y los usuarios no pueden consultarla durante horas. ¿Qué propiedad de la tríada CIA se ha visto comprometida de forma principal?",
+    "options": [
+      { "id": "a", "text": "Confidencialidad" },
+      { "id": "b", "text": "Integridad" },
+      { "id": "c", "text": "Disponibilidad" },
+      { "id": "d", "text": "No repudio" }
+    ],
+    "correctOptionIds": ["c"],
+    "explanation": "El impacto inmediato es la indisponibilidad del servicio. La confidencialidad solo se compromete si además hubo exfiltración (doble extorsión).",
+    "difficulty": "medium",
+    "tags": ["cia", "ransomware"]
+  },
+  {
+    "id": "d1-q03",
+    "domain": 1,
+    "objective": "1.2",
+    "type": "single",
+    "stem": "¿Qué mecanismo criptográfico garantiza de forma más directa el NO repudio de un documento?",
+    "options": [
+      { "id": "a", "text": "Cifrado simétrico con AES-256" },
+      { "id": "b", "text": "Función hash SHA-256" },
+      { "id": "c", "text": "Firma digital con la clave privada del emisor" },
+      { "id": "d", "text": "Túnel TLS entre las partes" }
+    ],
+    "correctOptionIds": ["c"],
+    "explanation": "Solo el titular de la clave privada puede generar la firma y cualquiera puede verificarla con la pública, lo que impide negar la autoría.",
+    "difficulty": "easy",
+    "tags": ["no-repudio", "firma-digital"]
+  },
+  {
+    "id": "d1-q04",
+    "domain": 1,
+    "objective": "1.2",
+    "type": "single",
+    "stem": "¿Cuál de los siguientes NO es un principio del modelo Zero Trust?",
+    "options": [
+      { "id": "a", "text": "Verificar explícitamente cada solicitud de acceso" },
+      { "id": "b", "text": "Aplicar el mínimo privilegio" },
+      { "id": "c", "text": "Asumir que la red interna es confiable" },
+      { "id": "d", "text": "Asumir el compromiso y diseñar para contenerlo" }
+    ],
+    "correctOptionIds": ["c"],
+    "explanation": "Zero Trust rompe precisamente con la idea de perímetro confiable: la confianza se evalúa por identidad, dispositivo y contexto en cada acceso.",
+    "difficulty": "easy",
+    "tags": ["zero-trust"]
+  },
+  {
+    "id": "d1-q05",
+    "domain": 1,
+    "objective": "1.3",
+    "type": "single",
+    "stem": "Antes de desplegar un parche crítico en producción, ¿qué elemento es imprescindible en la solicitud de cambio?",
+    "options": [
+      { "id": "a", "text": "El nombre del fabricante del parche" },
+      { "id": "b", "text": "Un plan de reversión (rollback) aprobado" },
+      { "id": "c", "text": "La captura de pantalla del escaneo de vulnerabilidades" },
+      { "id": "d", "text": "El coste de la licencia del software" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "La gestión de cambios exige aprobación, ventana de mantenimiento y un plan de reversión para poder volver atrás si el despliegue falla.",
+    "difficulty": "medium",
+    "tags": ["gestion-de-cambios", "parcheo"]
+  }
+]

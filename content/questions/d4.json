@@ -1,0 +1,189 @@
+[
+  {
+    "id": "d4-q01",
+    "domain": 4,
+    "objective": "4.4",
+    "type": "single",
+    "stem": "¿Cuál es la función principal de un SIEM?",
+    "options": [
+      { "id": "a", "text": "Bloquear el tráfico malicioso en el perímetro" },
+      { "id": "b", "text": "Centralizar logs, correlacionar eventos y generar alertas" },
+      { "id": "c", "text": "Cifrar los discos de los servidores" },
+      { "id": "d", "text": "Gestionar las identidades del directorio activo" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El SIEM agrega y correlaciona telemetría de múltiples fuentes para detectar patrones. El bloqueo lo hace el firewall o el IPS.",
+    "difficulty": "easy",
+    "tags": ["siem", "monitorizacion", "soc"]
+  },
+  {
+    "id": "d4-q02",
+    "domain": 4,
+    "objective": "4.8",
+    "type": "single",
+    "stem": "¿Cuál es el orden correcto de las fases de respuesta a incidentes?",
+    "options": [
+      { "id": "a", "text": "Preparación → Identificación → Contención → Erradicación → Recuperación → Lecciones aprendidas" },
+      { "id": "b", "text": "Identificación → Preparación → Recuperación → Contención → Erradicación → Lecciones aprendidas" },
+      { "id": "c", "text": "Contención → Identificación → Preparación → Erradicación → Lecciones aprendidas → Recuperación" },
+      { "id": "d", "text": "Preparación → Contención → Identificación → Recuperación → Erradicación → Lecciones aprendidas" }
+    ],
+    "correctOptionIds": ["a"],
+    "explanation": "Primero se prepara, luego se identifica, se contiene el daño, se erradica la causa, se recupera el servicio y se documentan lecciones aprendidas.",
+    "difficulty": "medium",
+    "tags": ["respuesta-a-incidentes", "proceso"]
+  },
+  {
+    "id": "d4-q03",
+    "domain": 4,
+    "objective": "4.8",
+    "type": "single",
+    "stem": "En la recolección de evidencia forense, ¿qué debe capturarse primero según el orden de volatilidad?",
+    "options": [
+      { "id": "a", "text": "Los discos duros" },
+      { "id": "b", "text": "La memoria RAM y el estado de la red" },
+      { "id": "c", "text": "Las cintas de backup" },
+      { "id": "d", "text": "Los logs archivados en el SIEM" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Se recoge de lo más volátil a lo menos volátil: memoria y conexiones primero, luego disco y por último medios de archivo. La RAM se pierde al apagar el equipo.",
+    "difficulty": "hard",
+    "tags": ["forense", "evidencia", "orden-de-volatilidad"]
+  },
+  {
+    "id": "d4-q04",
+    "domain": 4,
+    "objective": "4.3",
+    "type": "single",
+    "stem": "¿Cuál es el primer paso de un programa de gestión de vulnerabilidades?",
+    "options": [
+      { "id": "a", "text": "Lanzar el escaneo con Nessus" },
+      { "id": "b", "text": "Construir el inventario de activos (descubrimiento)" },
+      { "id": "c", "text": "Parchear los sistemas críticos" },
+      { "id": "d", "text": "Contratar un pentest externo" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "No se puede proteger ni priorizar lo que no se conoce. El inventario de activos y su criticidad es el cimiento del proceso.",
+    "difficulty": "medium",
+    "tags": ["gestion-de-vulnerabilidades", "inventario"]
+  },
+  {
+    "id": "d4-q05",
+    "domain": 4,
+    "objective": "4.6",
+    "type": "single",
+    "stem": "¿Qué hace un DLP en modo «bloqueo» frente al modo «alerta»?",
+    "options": [
+      { "id": "a", "text": "Registra el evento pero permite la transferencia" },
+      { "id": "b", "text": "Impide activamente la transferencia del dato sensible" },
+      { "id": "c", "text": "Cifra el dato antes de enviarlo" },
+      { "id": "d", "text": "Borra el dato del endpoint" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El modo alerta solo notifica y permite auditar antes de activar el bloqueo, que es la fase en la que la transferencia se impide realmente.",
+    "difficulty": "medium",
+    "tags": ["dlp", "prevencion-de-fuga"]
+  },
+  {
+    "id": "d4-q06",
+    "domain": 4,
+    "objective": "4.1",
+    "type": "single",
+    "stem": "¿Qué tipo de control es un sistema de videovigilancia (CCTV) revisado tras un incidente?",
+    "options": [
+      { "id": "a", "text": "Preventivo" },
+      { "id": "b", "text": "Detectivo" },
+      { "id": "c", "text": "Correctivo" },
+      { "id": "d", "text": "Compensatorio" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "La cámara registra lo ocurrido: detecta y documenta. Como control disuasorio actúa por su presencia visible, pero su función de registro es detective.",
+    "difficulty": "medium",
+    "tags": ["controles", "fisica"]
+  },
+  {
+    "id": "d4-q07",
+    "domain": 4,
+    "objective": "4.7",
+    "type": "single",
+    "stem": "¿Cuál es la diferencia entre un playbook y un runbook?",
+    "options": [
+      { "id": "a", "text": "Son sinónimos exactos" },
+      { "id": "b", "text": "El playbook es una guía estratégica de respuesta; el runbook es el procedimiento técnico detallado" },
+      { "id": "c", "text": "El runbook lo escribe siempre el proveedor cloud" },
+      { "id": "d", "text": "El playbook solo aplica a incidentes físicos" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El playbook define qué hacer y quién decide; el runbook detalla los pasos técnicos ejecutables. Ambos son la base de la automatización con SOAR.",
+    "difficulty": "medium",
+    "tags": ["playbook", "runbook", "soc"]
+  },
+  {
+    "id": "d4-q08",
+    "domain": 4,
+    "objective": "4.2",
+    "type": "single",
+    "stem": "¿Qué principio debe regir la creación de una cuenta de servicio usada por una aplicación?",
+    "options": [
+      { "id": "a", "text": "Otorgarle privilegios de administrador para evitar fallos" },
+      { "id": "b", "text": "Mínimo privilegio, con credenciales gestionadas y rotadas" },
+      { "id": "c", "text": "Compartir la contraseña con el equipo de operaciones" },
+      { "id": "d", "text": "Deshabilitar el registro de auditoría de esa cuenta" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Las cuentas de servicio son objetivos frecuentes. Deben tener solo los permisos necesarios, credenciales custodiadas (idealmente sin contraseña, con certificados) y auditoría activa.",
+    "difficulty": "medium",
+    "tags": ["iam", "cuentas-de-servicio", "minimo-privilegio"]
+  },
+  {
+    "id": "d4-q09",
+    "domain": 4,
+    "objective": "4.8",
+    "type": "single",
+    "stem": "¿Por qué se calcula el hash de una imagen forense y se documenta en la cadena de custodia?",
+    "options": [
+      { "id": "a", "text": "Para cifrar la evidencia" },
+      { "id": "b", "text": "Para demostrar que la evidencia no se ha alterado" },
+      { "id": "c", "text": "Para comprimir la imagen y ahorrar espacio" },
+      { "id": "d", "text": "Para identificar al atacante" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El hash actúa como huella de integridad: si coincide al verificar, se puede probar que la evidencia es idéntica a la original.",
+    "difficulty": "medium",
+    "tags": ["forense", "integridad", "cadena-de-custodia"]
+  },
+  {
+    "id": "d4-q10",
+    "domain": 4,
+    "objective": "4.2",
+    "type": "single",
+    "stem": "En un entorno Active Directory, ¿qué componente emite los tickets de autenticación Kerberos?",
+    "options": [
+      { "id": "a", "text": "El servidor LDAP" },
+      { "id": "b", "text": "El Key Distribution Center (KDC) del controlador de dominio" },
+      { "id": "c", "text": "El servidor RADIUS" },
+      { "id": "d", "text": "El TACACS+ del switch" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El KDC, que se ejecuta en el controlador de dominio, emite el TGT y los tickets de servicio. RADIUS y TACACS+ son para acceso a red y dispositivos.",
+    "difficulty": "hard",
+    "tags": ["kerberos", "active-directory", "autenticacion"]
+  },
+  {
+    "id": "d4-q11",
+    "domain": 4,
+    "objective": "4.4",
+    "type": "single",
+    "stem": "Una regla del SIEM genera 500 alertas diarias y todas resultan ser falsos positivos. ¿Cuál es la acción MÁS adecuada?",
+    "options": [
+      { "id": "a", "text": "Deshabilitar el SIEM para ese segmento" },
+      { "id": "b", "text": "Ajustar (tuning) la regla y añadir contexto para reducir el ruido" },
+      { "id": "c", "text": "Contratar más analistas para triaje" },
+      { "id": "d", "text": "Ignorar las alertas de esa regla indefinidamente" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "La fatiga de alertas degrada la detección. Se ajustan umbrales, correlaciones y listas de excepciones; deshabilitar o ignorar elimina la visibilidad.",
+    "difficulty": "medium",
+    "tags": ["siem", "alertas", "falsos-positivos"]
+  }
+]

@@ -15,3 +15,10 @@ export function formatPercent(value: number | null): string {
   if (value === null) return '—';
   return `${Math.round(value * 100)}%`;
 }
+
+/** Fecha y hora legibles en es-ES, a partir de una cadena ISO. */
+export function formatDateTime(iso: string): string {
+  return new Intl.DateTimeFormat('es-ES', { dateStyle: 'medium', timeStyle: 'short' }).format(
+    new Date(iso),
+  );
+}

@@ -7,12 +7,14 @@
 
 import Dexie, { type EntityTable } from 'dexie';
 import type { Card, Review } from '@/domain/card';
+import type { DiagnosticAttempt } from '@/domain/diagnostic';
 
 export const DATABASE_NAME = 'shieldup';
 
 export class ShieldUpDatabase extends Dexie {
   cards!: EntityTable<Card, 'id'>;
   reviews!: EntityTable<Review, 'id'>;
+  diagnosticAttempts!: EntityTable<DiagnosticAttempt, 'id'>;
 
   constructor() {
     super(DATABASE_NAME);
@@ -21,6 +23,11 @@ export class ShieldUpDatabase extends Dexie {
       // Índices: dueAt para la cola diaria, domain/type para filtros y stats.
       cards: 'id, dueAt, domain, type, repetitions, lastReviewedAt, suspended',
       reviews: 'id, cardId, reviewedAt',
+    });
+
+    // v2: historial de tests de diagnóstico. Las tablas no declaradas se heredan.
+    this.version(2).stores({
+      diagnosticAttempts: 'id, completedAt',
     });
   }
 }

@@ -1,0 +1,172 @@
+[
+  {
+    "id": "d2-q01",
+    "domain": 2,
+    "objective": "2.4",
+    "type": "single",
+    "stem": "Un atacante en la misma subred envía respuestas ARP falsas para asociar su MAC con la IP del gateway. ¿Qué ataque está ejecutando?",
+    "options": [
+      { "id": "a", "text": "DNS poisoning" },
+      { "id": "b", "text": "Ataque on-path (MITM) mediante ARP spoofing" },
+      { "id": "c", "text": "Smurf attack" },
+      { "id": "d", "text": "Cross-site scripting" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Envenenar la caché ARP permite situarse en medio de la comunicación. Se mitiga con Dynamic ARP Inspection y segmentación.",
+    "difficulty": "medium",
+    "tags": ["arp", "on-path", "capa-2"]
+  },
+  {
+    "id": "d2-q02",
+    "domain": 2,
+    "objective": "2.3",
+    "type": "single",
+    "stem": "¿Cuál es la mitigación MÁS eficaz contra la inyección SQL?",
+    "options": [
+      { "id": "a", "text": "WAF en modo detección" },
+      { "id": "b", "text": "Consultas parametrizadas (prepared statements)" },
+      { "id": "c", "text": "Cifrado de la base de datos en reposo" },
+      { "id": "d", "text": "Rotación periódica de las contraseñas de la aplicación" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Separar el código de los datos impide que la entrada del usuario se interprete como SQL. El WAF es defensa en profundidad, no la corrección de raíz.",
+    "difficulty": "medium",
+    "tags": ["sqli", "aplicaciones-web"]
+  },
+  {
+    "id": "d2-q03",
+    "domain": 2,
+    "objective": "2.2",
+    "type": "single",
+    "stem": "Un empleado recibe un correo del supuesto director financiero pidiendo comprar tarjetas regalo de forma urgente y confidencial. ¿Qué ataque es?",
+    "options": [
+      { "id": "a", "text": "Vishing" },
+      { "id": "b", "text": "Compromiso de correo empresarial (BEC) con pretexto" },
+      { "id": "c", "text": "Watering hole" },
+      { "id": "d", "text": "Tailgating" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El BEC suplanta a una autoridad interna y usa urgencia y secreto para saltarse los controles. La defensa combina verificación fuera de canal y formación.",
+    "difficulty": "easy",
+    "tags": ["ingenieria-social", "bec"]
+  },
+  {
+    "id": "d2-q04",
+    "domain": 2,
+    "objective": "2.3",
+    "type": "single",
+    "stem": "Un script malicioso publicado en el campo de comentarios se almacena en el servidor y se ejecuta en el navegador de TODOS los visitantes de la página. ¿Qué tipo de XSS es?",
+    "options": [
+      { "id": "a", "text": "Reflected XSS" },
+      { "id": "b", "text": "DOM-based XSS" },
+      { "id": "c", "text": "Stored (persistent) XSS" },
+      { "id": "d", "text": "CSRF" }
+    ],
+    "correctOptionIds": ["c"],
+    "explanation": "El XSS almacenado persiste en el servidor y afecta a cualquier visitante. Se mitiga con validación de entrada y codificación de salida.",
+    "difficulty": "medium",
+    "tags": ["xss", "aplicaciones-web"]
+  },
+  {
+    "id": "d2-q05",
+    "domain": 2,
+    "objective": "2.4",
+    "type": "single",
+    "stem": "Un atacante prueba una única contraseña común (por ejemplo «Verano2026») contra cientos de cuentas distintas. ¿Qué técnica es?",
+    "options": [
+      { "id": "a", "text": "Credential stuffing" },
+      { "id": "b", "text": "Password spraying" },
+      { "id": "c", "text": "Rainbow table" },
+      { "id": "d", "text": "Brute force dirigido" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El spraying usa pocas contraseñas contra muchas cuentas para evitar el bloqueo por intentos fallidos. Se mitiga con MFA y bloqueo inteligente.",
+    "difficulty": "medium",
+    "tags": ["credenciales", "fuerza-bruta"]
+  },
+  {
+    "id": "d2-q06",
+    "domain": 2,
+    "objective": "2.4",
+    "type": "single",
+    "stem": "Un atacante despliega un punto de acceso con el mismo SSID que la red legítima de la cafetería para capturar tráfico. ¿Qué es?",
+    "options": [
+      { "id": "a", "text": "Evil twin" },
+      { "id": "b", "text": "Deauthentication attack" },
+      { "id": "c", "text": "Bluejacking" },
+      { "id": "d", "text": "Rogue DHCP" }
+    ],
+    "correctOptionIds": ["a"],
+    "explanation": "El gemelo malvado imita el SSID legítimo para que los clientes se conecten. Se mitiga con WPA3/802.1X y perfiles gestionados de red.",
+    "difficulty": "easy",
+    "tags": ["wireless", "evil-twin"]
+  },
+  {
+    "id": "d2-q07",
+    "domain": 2,
+    "objective": "2.1",
+    "type": "single",
+    "stem": "Un desarrollador descontento deja código que borrará registros si su cuenta deja de existir en la nómina. ¿Qué tipo de malware es?",
+    "options": [
+      { "id": "a", "text": "Rootkit" },
+      { "id": "b", "text": "Bomba lógica" },
+      { "id": "c", "text": "Gusano" },
+      { "id": "d", "text": "Adware" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Una bomba lógica se activa al cumplirse una condición. Aquí la condición es la baja del empleado en el sistema de nómina.",
+    "difficulty": "easy",
+    "tags": ["malware", "insider"]
+  },
+  {
+    "id": "d2-q08",
+    "domain": 2,
+    "objective": "2.5",
+    "type": "single",
+    "stem": "Un escaneo reporta una CVE con CVSS 9.8 en un servidor interno aislado y sin datos sensibles. ¿Cuál es el siguiente paso MÁS apropiado?",
+    "options": [
+      { "id": "a", "text": "Parchear de inmediato fuera de la ventana de mantenimiento" },
+      { "id": "b", "text": "Priorizar según riesgo real: exposición, criticidad del activo y explotabilidad" },
+      { "id": "c", "text": "Ignorarla, porque el CVSS es solo una estimación" },
+      { "id": "d", "text": "Desconectar el servidor de forma indefinida" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "El CVSS mide severidad técnica, no riesgo del negocio. La gestión de vulnerabilidades prioriza combinando severidad, exposición y criticidad del activo.",
+    "difficulty": "hard",
+    "tags": ["vulnerabilidades", "riesgo", "cvss"]
+  },
+  {
+    "id": "d2-q09",
+    "domain": 2,
+    "objective": "2.2",
+    "type": "single",
+    "stem": "Una actualización legítima de un proveedor incluye código malicioso que despliega una puerta trasera en miles de clientes. ¿Qué tipo de ataque es?",
+    "options": [
+      { "id": "a", "text": "Supply chain attack" },
+      { "id": "b", "text": "Phishing dirigido" },
+      { "id": "c", "text": "SQL injection" },
+      { "id": "d", "text": "Cross-site request forgery" }
+    ],
+    "correctOptionIds": ["a"],
+    "explanation": "El compromiso de la cadena de suministro explota la confianza en el proveedor (p. ej. SolarWinds). Se mitiga con verificación de integridad y SBOM.",
+    "difficulty": "medium",
+    "tags": ["cadena-de-suministro", "terceros"]
+  },
+  {
+    "id": "d2-q10",
+    "domain": 2,
+    "objective": "2.5",
+    "type": "single",
+    "stem": "¿Cuál es la medida MÁS directa para reducir la superficie de ataque de un servidor expuesto?",
+    "options": [
+      { "id": "a", "text": "Instalar un antivirus con firmas actualizadas" },
+      { "id": "b", "text": "Deshabilitar servicios, puertos y cuentas que no se utilizan" },
+      { "id": "c", "text": "Aumentar la longitud mínima de las contraseñas" },
+      { "id": "d", "text": "Habilitar auditoría de accesos" }
+    ],
+    "correctOptionIds": ["b"],
+    "explanation": "Cada servicio o cuenta innecesaria es un vector potencial. La reducción de superficie ataca la causa: menos componentes expuestos.",
+    "difficulty": "medium",
+    "tags": ["hardening", "superficie-de-ataque"]
+  }
+]
