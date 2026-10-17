@@ -71,7 +71,7 @@
 
 .optionChecked {
   border-color: var(--color-primary);
-  background-color: rgba(79, 156, 249, 0.14);
+  background-color: var(--color-primary-soft);
 }
 
 .input {

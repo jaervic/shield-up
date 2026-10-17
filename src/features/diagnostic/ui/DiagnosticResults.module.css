@@ -43,6 +43,7 @@
 
 .table {
   width: 100%;
+  min-width: 26rem; /* en móvil, la tabla se desplaza en lugar de aplastarse */
   border-collapse: collapse;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -170,15 +171,27 @@
 
 .primaryLink:hover {
   background-color: var(--color-primary-strong);
-  color: var(--color-text);
+  color: var(--color-primary-strong-text);
 }
 
 .secondaryButton {
   background-color: var(--color-surface-2);
-  border-color: var(--color-border);
+  border-color: var(--color-border-strong);
   color: var(--color-text);
 }
 
 .secondaryButton:hover {
   border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+@media (max-width: 30rem) {
+  .actions {
+    flex-direction: column;
+  }
+
+  .primaryLink,
+  .secondaryButton {
+    width: 100%;
+  }
 }

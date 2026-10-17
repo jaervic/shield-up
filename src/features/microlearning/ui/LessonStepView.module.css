@@ -77,17 +77,17 @@
 
 .optionChecked {
   border-color: var(--color-primary);
-  background-color: rgba(79, 156, 249, 0.14);
+  background-color: var(--color-primary-soft);
 }
 
 .optionCorrect {
   border-color: var(--color-success);
-  background-color: rgba(53, 196, 138, 0.16);
+  background-color: var(--color-success-soft);
 }
 
 .optionWrong {
   border-color: var(--color-danger);
-  background-color: rgba(242, 104, 107, 0.16);
+  background-color: var(--color-danger-soft);
 }
 
 .input {

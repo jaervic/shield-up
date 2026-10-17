@@ -12,9 +12,12 @@
 
 import type { Card, Review } from '@/domain/card';
 import { DOMAIN_IDS, type DomainId } from '@/domain/domain';
-import { addDays, fullDaysBetween, isDue, toDateKey } from '@/shared/utils/date';
+import { addDays, fullDaysBetween, isDue, startOfDay, toDateKey } from '@/shared/utils/date';
 
 export const MATURE_INTERVAL_DAYS = 21;
+
+/** Objetivo diario de repasos: suficiente para progresar sin agobiar. */
+export const DAILY_REVIEW_GOAL = 20;
 
 export interface DomainStats {
   domain: DomainId;
@@ -47,6 +50,71 @@ export interface SrsStats {
 export interface ReviewLoadPoint {
   date: string;
   count: number;
+}
+
+/** Racha de días consecutivos con al menos un repaso. */
+export interface StudyStreak {
+  /** Días seguidos contando hoy (o ayer, si aún no has estudiado hoy). */
+  current: number;
+  longest: number;
+  /** Última fecha con actividad (YYYY-MM-DD) o null. */
+  lastStudyDate: string | null;
+  studiedToday: boolean;
+}
+
+/**
+ * Calcula la racha a partir del histórico de repasos.
+ *
+ * Se trabaja en fechas UTC (coherente con `toDateKey`). La racha no se rompe
+ * hasta que se pierde un día completo: si hoy aún no has estudiado, sigue
+ * contando la de ayer.
+ */
+export function computeStudyStreak(
+  reviews: readonly Review[],
+  now: Date = new Date(),
+): StudyStreak {
+  const days = new Set(reviews.map((review) => toDateKey(new Date(review.reviewedAt))));
+
+  if (days.size === 0) {
+    return { current: 0, longest: 0, lastStudyDate: null, studiedToday: false };
+  }
+
+  const studiedToday = days.has(toDateKey(now));
+
+  let current = 0;
+  let cursor = startOfDay(now);
+  if (!studiedToday) {
+    cursor = addDays(cursor, -1);
+  }
+  while (days.has(toDateKey(cursor))) {
+    current += 1;
+    cursor = addDays(cursor, -1);
+  }
+
+  const sortedDays = [...days].sort();
+  let longest = 0;
+  let run = 0;
+  let previous: Date | null = null;
+
+  for (const key of sortedDays) {
+    const day = new Date(`${key}T00:00:00.000Z`);
+    run = previous && fullDaysBetween(previous, day) === 1 ? run + 1 : 1;
+    longest = Math.max(longest, run);
+    previous = day;
+  }
+
+  return {
+    current,
+    longest,
+    lastStudyDate: sortedDays[sortedDays.length - 1] ?? null,
+    studiedToday,
+  };
+}
+
+/** Repasos realizados en la fecha indicada (día UTC). */
+export function countReviewsOn(reviews: readonly Review[], date: Date): number {
+  const key = toDateKey(date);
+  return reviews.filter((review) => toDateKey(new Date(review.reviewedAt)) === key).length;
 }
 
 function average(values: readonly number[]): number {

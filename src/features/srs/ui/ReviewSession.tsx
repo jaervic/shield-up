@@ -15,6 +15,19 @@ const KEY_TO_GRADE: Record<string, Grade> = {
   '4': 'easy',
 };
 
+/** Devolución cualitativa al cerrar la sesión: refuerza el método, no la nota. */
+function sessionFeedback(reviewed: number, correct: number): string {
+  if (reviewed === 0) return '';
+  const accuracy = correct / reviewed;
+  if (accuracy >= 0.9) {
+    return 'Precisión excelente. Estas tarjetas tardarán bastante en volver.';
+  }
+  if (accuracy >= 0.7) {
+    return 'Buen resultado. Las que has fallado volverán antes: así es como funciona el sistema.';
+  }
+  return 'Ha costado, y es normal al principio. Las tarjetas difíciles reaparecerán pronto y se irán suavizando.';
+}
+
 /**
  * Sesión de repaso: única pieza con estado. Toda la lógica de programación vive
  * en `engine/` y la persistencia en `data/`; aquí solo se orquesta la interacción.
@@ -103,20 +116,23 @@ export function ReviewSession() {
             No hay tarjetas pendientes hoy. Vuelve mañana o añade contenido nuevo.
           </p>
         ) : (
-          <dl className={styles.summaryList}>
-            <div>
-              <dt>Repasadas</dt>
-              <dd>{sessionReviewed}</dd>
-            </div>
-            <div>
-              <dt>Aciertos</dt>
-              <dd>{sessionCorrect}</dd>
-            </div>
-            <div>
-              <dt>Precisión</dt>
-              <dd>{accuracy}%</dd>
-            </div>
-          </dl>
+          <>
+            <dl className={styles.summaryList}>
+              <div>
+                <dt>Repasadas</dt>
+                <dd>{sessionReviewed}</dd>
+              </div>
+              <div>
+                <dt>Aciertos</dt>
+                <dd>{sessionCorrect}</dd>
+              </div>
+              <div>
+                <dt>Precisión</dt>
+                <dd>{accuracy}%</dd>
+              </div>
+            </dl>
+            <p className={styles.feedback}>{sessionFeedback(sessionReviewed, sessionCorrect)}</p>
+          </>
         )}
         <Button variant="primary" onClick={reset}>
           Volver

@@ -5,11 +5,22 @@ export function ReviewPage() {
   return (
     <div className={styles.page}>
       <header className={styles.header}>
-        <h2>Repaso espaciado</h2>
+        <h1>Repaso espaciado</h1>
         <p>
-          Recuerda activamente antes de revelar. La dificultad que marques ajusta cuándo volverás
-          a ver esta tarjeta.
+          Intenta recordar la respuesta antes de revelarla. La calificación que elijas ajusta
+          cuándo volverás a ver esta tarjeta: acertar la aleja, fallar la trae de vuelta antes.
         </p>
+        <ul className={styles.shortcuts} role="list">
+          <li>
+            <kbd>Espacio</kbd> revela la respuesta
+          </li>
+          <li>
+            <kbd>1</kbd>
+            <kbd>2</kbd>
+            <kbd>3</kbd>
+            <kbd>4</kbd> califican: Otra vez · Difícil · Bien · Fácil
+          </li>
+        </ul>
       </header>
       <ReviewSession />
     </div>

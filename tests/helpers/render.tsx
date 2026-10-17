@@ -32,3 +32,18 @@ export async function settle(): Promise<void> {
   });
 }
 
+/**
+ * Repite `settle` hasta que se cumpla `predicate`.
+ *
+ * Necesario porque React Query agrupa sus notificaciones con `setTimeout(0)`:
+ * el primer tick puede no bastar para que la consulta llegue a `success`.
+ * Determinista y sin `waitFor` (que desactivaría el entorno de `act`).
+ */
+export async function settleUntil(predicate: () => boolean, tries = 25): Promise<void> {
+  for (let attempt = 0; attempt < tries; attempt += 1) {
+    if (predicate()) return;
+    await settle();
+  }
+  throw new Error('settleUntil: la condición no se cumplió en el número de intentos esperado.');
+}
+

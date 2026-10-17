@@ -1,15 +1,42 @@
 @import './tokens.css';
 @import './reset.css';
 
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--text-base);
+  line-height: var(--leading-base);
+  /* Evita el desplazamiento horizontal por elementos anchos en móvil. */
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: var(--leading-tight);
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
 
 a {
   color: var(--color-primary);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
 }
 
 :focus-visible {
@@ -34,15 +61,28 @@ a {
 .skip-link {
   position: absolute;
   left: var(--space-4);
-  top: -3rem;
-  z-index: 10;
-  padding: var(--space-2) var(--space-4);
+  top: -4rem;
+  z-index: 40;
+  padding: var(--space-3) var(--space-4);
   background-color: var(--color-primary);
   color: var(--color-on-primary);
   border-radius: var(--radius-sm);
+  font-weight: 600;
   transition: top var(--transition-fast);
 }
 
 .skip-link:focus {
   top: var(--space-4);
+}
+
+/* Región desplazable accesible para tablas anchas (WCAG 1.4.10). */
+.scroll-region {
+  overflow-x: auto;
+  /* Permite recorrer la tabla con el teclado. */
+  scrollbar-width: thin;
+}
+
+.scroll-region:focus-visible {
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-md);
 }

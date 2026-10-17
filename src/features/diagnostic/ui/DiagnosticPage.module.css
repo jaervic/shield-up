@@ -7,7 +7,7 @@
   max-width: 60ch;
 }
 
-.intro h2 {
+.intro h1 {
   font-size: var(--text-xl);
 }
 
@@ -50,4 +50,15 @@
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--color-danger);
+}
+
+/* En móvil los botones de navegación ocupan el ancho disponible. */
+@media (max-width: 30rem) {
+  .nav {
+    flex-direction: column-reverse;
+  }
+
+  .nav button {
+    width: 100%;
+  }
 }

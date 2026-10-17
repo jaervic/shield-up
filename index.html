@@ -1,13 +1,35 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta
       name="description"
       content="ShieldUp: preparación activa para la certificación CompTIA Security+ SY0-701 con repetición espaciada, microlearning y simulador de examen."
     />
+    <meta name="theme-color" content="#0b1120" />
     <title>ShieldUp · CompTIA Security+ SY0-701</title>
+    <script>
+      /* Fija el tema antes del primer pintado para evitar el destello (FOUC).
+         Se duplica a propósito la clave usada en src/app/theme/theme.ts. */
+      (function () {
+        try {
+          var stored = window.localStorage.getItem('shieldup.theme');
+          var prefersDark =
+            typeof window.matchMedia === 'function' &&
+            window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme =
+            stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', theme);
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) {
+            meta.setAttribute('content', theme === 'dark' ? '#0b1120' : '#f4f7fb');
+          }
+        } catch (error) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

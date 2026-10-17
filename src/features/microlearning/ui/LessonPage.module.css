@@ -51,6 +51,16 @@
   justify-content: flex-end;
 }
 
+@media (max-width: 30rem) {
+  .actions {
+    justify-content: stretch;
+  }
+
+  .actions button {
+    width: 100%;
+  }
+}
+
 .state {
   display: flex;
   flex-direction: column;

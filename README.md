@@ -9,7 +9,7 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
 
 ## Estado del proyecto
 
-**Fases 1, 2 y 3 completadas.**
+**Fases 1, 2 y 3 completadas, más una pasada de diseño y accesibilidad.**
 
 - **Fase 1 — Arquitectura base + motor de Spaced Repetition.** Dominio tipado, motor SM-2 puro
   y testeado, persistencia offline-first, sesión de repaso funcional y dashboard de métricas.
@@ -17,6 +17,8 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   ponderadas por el peso del examen, motor de selección/corrección y ruta ordenada por impacto.
 - **Fase 3 — Microlearning.** 8 lecciones-problema (28 pasos) basadas en *active recall*,
   progreso reanudable y recomendaciones ligadas a la ruta de estudio.
+- **Diseño** — Sistema de temas claro/oscuro, interfaz mobile-first con barra inferior, y un
+  entorno orientado al estudio (objetivo diario, racha y explicación del método).
 
 ## Stack
 
@@ -47,8 +49,8 @@ npm run build      # build de producción
 
 ```
 src/
-├─ app/          # router, providers, layout (AppShell)
-├─ domain/       # MODELOS PUROS: Card, Review, Question, DiagnosticAttempt, dominios
+├─ app/          # router, providers, layout (AppShell) y tema (theme/)
+├─ domain/       # MODELOS PUROS: Card, Review, Question, Lesson, DiagnosticAttempt
 ├─ data/         # Dexie (IndexedDB) y carga/validación del contenido (Zod)
 ├─ features/
 │  ├─ srs/
@@ -68,7 +70,7 @@ src/
 │  │  └─ ui/     # LessonsPage, LessonPage, LessonStepView, LessonResults
 │  └─ dashboard/ui/  # DashboardPage, ReadinessPanel, RecommendedLessonsPanel
 ├─ shared/       # ui/, hooks/, utils/ reutilizables (answer, random, interleave, date, math)
-└─ styles/       # tokens.css, reset.css, global.css
+└─ styles/       # tokens.css (temas claro/oscuro), reset.css, global.css
 content/
 ├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program)
 ├─ questions/    # banco de preguntas del diagnóstico (d1..d5)
@@ -199,6 +201,51 @@ al volver a abrirla.
 de cada dominio las lecciones pendientes antes que las superadas. La ruta se pasa **como
 parámetro** (`buildRecommendations(route)`), de modo que el microlearning no depende del módulo
 de diagnóstico y la UI decide qué intento usar.
+
+---
+
+## Diseño, temas y accesibilidad
+
+### Tema claro y oscuro
+
+El tema se aplica con el atributo `data-theme` en `<html>` y se resuelve en tres pasos:
+
+1. Un **script inline en `index.html`** fija el atributo antes del primer pintado (evita el
+   destello de tema incorrecto) leyendo `localStorage` y, si no hay preferencia, el sistema.
+2. `src/app/theme/theme.ts` contiene la lógica pura (`resolveTheme`, `otherTheme`), testeada.
+3. `themeStore.ts` pinta el DOM y persiste; mientras el usuario no elija, sigue los cambios de
+   `prefers-color-scheme` en caliente.
+
+**Regla de oro de color:** los componentes nunca escriben colores literales, solo variables
+semánticas. `src/styles/tokens.css` define la paleta oscura en `:root` (base y *fallback* si
+faltara el atributo) y el tema claro como única sobreescritura. Añadir un tema nuevo es añadir
+un bloque de ~25 líneas.
+
+Contraste verificado ≥ 4.5:1 para texto en ambos temas, incluidos enlaces, botones y estados
+de acierto/error.
+
+### Mobile-first
+
+- **Barra de navegación inferior** fija en pantallas < 48 rem, con iconos, estado activo
+  reforzado con forma (no solo color) y `aria-current` que aporta React Router.
+- **Áreas táctiles de 44 px mínimo** (`--tap-min`) en botones y navegación.
+- **Tipografía fluida** con `clamp()`: no hay saltos de tamaño entre móvil y escritorio.
+- **`viewport-fit=cover`** y `env(safe-area-inset-*)` para el notch y la barra gestual.
+- **Tablas y gráficos anchos** se envuelven en regiones desplazables con `tabindex="0"` y
+  etiqueta accesible, de modo que también se recorren con el teclado (WCAG 1.4.10).
+- Botones de acción a ancho completo en pantallas estrechas.
+
+### Entorno de aprendizaje
+
+- **Objetivo diario y racha** (`computeStudyStreak`): la constancia es lo que hace funcionar la
+  repetición espaciada, así que el panel abre con lo único que hay que hacer hoy.
+- **Microcopy que orienta**, no que felicita en abstracto: cambia según el estado real
+  («te quedan 19 repasos», «empezar es lo más difícil», «todo al día»).
+- **Explicación del método** («Cómo aprovechar ShieldUp»): un alumno rinde más cuando entiende
+  *por qué* decide antes de leer la respuesta.
+- **Feedback cualitativo al cerrar la sesión**, centrado en el proceso y no en la nota.
+- **Atajos de teclado visibles** (`Espacio`, `1`–`4`) y estado de reanudación explícito cuando
+  se retoma una lección a medias.
 
 ---
 

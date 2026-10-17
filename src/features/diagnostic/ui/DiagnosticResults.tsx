@@ -33,41 +33,48 @@ export function DiagnosticResults({ attempt, onRetake }: DiagnosticResultsProps)
 
       <section aria-labelledby="domains-title">
         <h2 id="domains-title">Rendimiento por dominio</h2>
-        <table className={styles.table}>
-          <caption className="visually-hidden">
-            Aciertos y precisión por dominio del examen
-          </caption>
-          <thead>
-            <tr>
-              <th scope="col">Dominio</th>
-              <th scope="col">Peso</th>
-              <th scope="col">Aciertos</th>
-              <th scope="col">Precisión</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.values(attempt.proficiencyByDomain).map((entry) => {
-              const domain = getDomain(entry.domain);
-              return (
-                <tr key={entry.domain}>
-                  <th scope="row">
-                    <span
-                      className={styles.dot}
-                      style={{ backgroundColor: `var(--domain-${entry.domain})` }}
-                      aria-hidden="true"
-                    />
-                    D{entry.domain} · {domain.nameEs}
-                  </th>
-                  <td>{Math.round(domain.weight * 100)}%</td>
-                  <td>
-                    {entry.correct}/{entry.asked}
-                  </td>
-                  <td>{entry.evaluated ? formatPercent(entry.accuracy) : '—'}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div
+          className="scroll-region"
+          role="region"
+          aria-label="Tabla de rendimiento por dominio"
+          tabIndex={0}
+        >
+          <table className={styles.table}>
+            <caption className="visually-hidden">
+              Aciertos y precisión por dominio del examen
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">Dominio</th>
+                <th scope="col">Peso</th>
+                <th scope="col">Aciertos</th>
+                <th scope="col">Precisión</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Object.values(attempt.proficiencyByDomain).map((entry) => {
+                const domain = getDomain(entry.domain);
+                return (
+                  <tr key={entry.domain}>
+                    <th scope="row">
+                      <span
+                        className={styles.dot}
+                        style={{ backgroundColor: `var(--domain-${entry.domain})` }}
+                        aria-hidden="true"
+                      />
+                      D{entry.domain} · {domain.nameEs}
+                    </th>
+                    <td>{Math.round(domain.weight * 100)}%</td>
+                    <td>
+                      {entry.correct}/{entry.asked}
+                    </td>
+                    <td>{entry.evaluated ? formatPercent(entry.accuracy) : '—'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </section>
 
       <section aria-labelledby="route-title">

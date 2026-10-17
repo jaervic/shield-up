@@ -22,3 +22,10 @@ export function formatDateTime(iso: string): string {
     new Date(iso),
   );
 }
+
+/** Día y mes abreviados (para etiquetas compactas de gráficos). */
+export function formatDayMonth(dateKey: string): string {
+  return new Intl.DateTimeFormat('es-ES', { day: 'numeric', month: 'short' }).format(
+    new Date(`${dateKey}T00:00:00.000Z`),
+  );
+}

@@ -48,7 +48,7 @@ export function DiagnosticPage() {
   if (status === 'idle') {
     return (
       <section className={styles.intro} aria-labelledby="diagnostic-intro-title">
-        <h2 id="diagnostic-intro-title">Test de diagnóstico</h2>
+        <h1 id="diagnostic-intro-title">Test de diagnóstico</h1>
         <p>
           Un test corto de {DEFAULT_DIAGNOSTIC_LENGTH} preguntas que mide tu nivel en los cinco
           dominios del SY0-701 y genera una ruta de estudio ordenada por impacto en el examen.

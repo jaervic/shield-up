@@ -7,9 +7,12 @@ export interface MemoryRepository extends SrsRepository {
 }
 
 /** Repositorio en memoria para tests: misma interfaz, sin IndexedDB. */
-export function createMemoryRepository(initialCards: Card[] = []): MemoryRepository {
+export function createMemoryRepository(
+  initialCards: Card[] = [],
+  initialReviews: Review[] = [],
+): MemoryRepository {
   const cards = [...initialCards];
-  const reviews: Review[] = [];
+  const reviews = [...initialReviews];
 
   return {
     cards,

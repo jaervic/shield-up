@@ -48,8 +48,16 @@
 
 .summaryList {
   display: flex;
-  gap: var(--space-6);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-5);
   margin: 0;
+}
+
+.feedback {
+  max-width: 45ch;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
 }
 
 .summaryList div {

@@ -1,11 +1,16 @@
 import { DOMAINS } from '@/domain/domain';
-import { formatPercent } from '@/shared/utils/format';
+import { formatDayMonth, formatPercent } from '@/shared/utils/format';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
+import { DailyGoalPanel } from './DailyGoalPanel';
+import { HowItWorksPanel } from './HowItWorksPanel';
 import { ReadinessPanel } from './ReadinessPanel';
 import { RecommendedLessonsPanel } from './RecommendedLessonsPanel';
 import styles from './DashboardPage.module.css';
 
-/** Dashboard de diagnóstico: estado del progreso y punto de entrada al repaso. */
+/**
+ * Panel principal. El orden es deliberado: primero lo accionable hoy, después
+ * el diagnóstico y las recomendaciones, y al final los datos de apoyo.
+ */
 export function DashboardPage() {
   const { data, isPending, isError } = useSrsStats();
 
@@ -22,6 +27,12 @@ export function DashboardPage() {
 
   return (
     <div className={styles.dashboard}>
+      <header className={styles.pageHeader}>
+        <h1>Panel de estudio</h1>
+        <p>Tu progreso hacia el CompTIA Security+ SY0-701.</p>
+      </header>
+
+      <DailyGoalPanel />
       <ReadinessPanel />
       <RecommendedLessonsPanel />
 
@@ -82,19 +93,33 @@ export function DashboardPage() {
 
       <section aria-labelledby="load-title">
         <h2 id="load-title">Carga de repaso (14 días)</h2>
-        <ul className={styles.loadChart} role="list">
-          {load.map((point) => (
-            <li key={point.date} className={styles.loadBar}>
-              <span
-                className={styles.loadBarFill}
-                style={{ height: `${(point.count / maxLoad) * 100}%` }}
-                title={`${point.date}: ${point.count} tarjetas`}
-              />
-              <span className={styles.loadCount}>{point.count}</span>
-            </li>
-          ))}
-        </ul>
+        <div
+          className="scroll-region"
+          role="region"
+          aria-label="Carga de repaso de los próximos 14 días"
+          tabIndex={0}
+        >
+          <ul className={styles.loadChart} role="list">
+            {load.map((point) => (
+              <li key={point.date} className={styles.loadBar}>
+                <span
+                  className={styles.loadBarFill}
+                  style={{ height: `${(point.count / maxLoad) * 100}%` }}
+                  aria-hidden="true"
+                />
+                <span className={styles.loadCount} aria-hidden="true">
+                  {point.count}
+                </span>
+                <span className="visually-hidden">
+                  {formatDayMonth(point.date)}: {point.count} tarjetas
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
+
+      <HowItWorksPanel />
     </div>
   );
 }

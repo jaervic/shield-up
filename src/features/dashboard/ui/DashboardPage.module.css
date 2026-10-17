@@ -1,7 +1,16 @@
 .dashboard {
   display: flex;
   flex-direction: column;
-  gap: var(--space-7);
+  gap: var(--space-6);
+}
+
+.pageHeader h1 {
+  font-size: var(--text-2xl);
+}
+
+.pageHeader p {
+  margin-top: var(--space-1);
+  color: var(--color-text-muted);
 }
 
 .dashboard h2 {
@@ -11,8 +20,8 @@
 
 .metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: var(--space-3);
   margin: 0;
 }
 
@@ -30,7 +39,7 @@
 
 .metric dd {
   margin: var(--space-1) 0 0;
-  font-size: var(--text-2xl);
+  font-size: var(--text-xl);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -92,6 +101,8 @@
   display: flex;
   align-items: flex-end;
   gap: var(--space-1);
+  /* En móvil el gráfico se desplaza en lugar de comprimirse. */
+  min-width: 26rem;
   height: 8rem;
   margin: 0;
   padding: var(--space-2);
