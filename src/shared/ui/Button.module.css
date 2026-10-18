@@ -51,7 +51,7 @@
 
 .secondary:hover:not(:disabled) {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .ghost {
@@ -97,6 +97,17 @@
 .danger:hover:not(:disabled) {
   background-color: var(--color-danger);
   color: var(--color-surface);
+}
+
+/* Acento violeta (color secundario de la paleta CompTIA). */
+.accent {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.accent:hover:not(:disabled) {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 /* En pantallas estrechas los botones ocupan el ancho disponible. */

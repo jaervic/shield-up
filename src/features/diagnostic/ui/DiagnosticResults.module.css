@@ -182,7 +182,7 @@
 
 .secondaryButton:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 @media (max-width: 30rem) {

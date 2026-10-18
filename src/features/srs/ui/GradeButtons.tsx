@@ -7,11 +7,19 @@ export interface GradeButtonsProps {
   disabled?: boolean;
 }
 
+/**
+ * Rampa de calificación: ámbar → neutro → verde → violeta.
+ *
+ * El rojo queda fuera a propósito. En esta app el rojo es el color de MARCA
+ * (navegación, acciones, progreso), y usar el mismo tono para "lo has fallado"
+ * haría que marca y error se confundieran. Además, "Otra vez" en ámbar lee
+ * como "esto vuelve pronto", que es exactamente lo que hace el sistema.
+ */
 const TONE_BY_GRADE: Record<Grade, ButtonTone> = {
-  again: 'danger',
-  hard: 'warning',
+  again: 'warning',
+  hard: 'neutral',
   good: 'success',
-  easy: 'neutral',
+  easy: 'accent',
 };
 
 const SHORTCUT_BY_GRADE: Record<Grade, string> = {

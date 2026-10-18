@@ -166,13 +166,13 @@
 
   .navLinkActive {
     background-color: transparent;
-    color: var(--color-primary);
+    color: var(--color-primary-text);
     /* Marca superior: refuerza el estado activo sin depender solo del color. */
     box-shadow: inset 0 2px 0 0 var(--color-primary);
   }
 
   .navLinkActive .navIcon {
-    color: var(--color-primary);
+    color: var(--color-primary-text);
   }
 
   .navLabel {

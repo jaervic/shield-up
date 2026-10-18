@@ -24,7 +24,7 @@
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--color-primary);
+  color: var(--color-primary-text);
 }
 
 .position {
@@ -85,9 +85,10 @@
   background-color: var(--color-success-soft);
 }
 
+/* Feedback de "no era la mejor opción": ámbar, no rojo (el rojo es la marca). */
 .optionWrong {
-  border-color: var(--color-danger);
-  background-color: var(--color-danger-soft);
+  border-color: var(--color-warning);
+  background-color: var(--color-warning-soft);
 }
 
 .input {

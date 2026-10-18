@@ -9,8 +9,8 @@ export const THEME_STORAGE_KEY = 'shieldup.theme';
 
 /** Color de la barra del navegador en cada tema (coincide con index.html). */
 export const THEME_COLORS: Readonly<Record<ThemeMode, string>> = {
-  light: '#f4f7fb',
-  dark: '#0b1120',
+  light: '#f6f7f9',
+  dark: '#0d1013',
 };
 
 export const DEFAULT_THEME: ThemeMode = 'dark';

@@ -1,18 +1,26 @@
 /* ============================================================================
    Design tokens de ShieldUp
    ----------------------------------------------------------------------------
+   Paleta anclada a la identidad de CompTIA (muestreada de comptia.org):
+     rojo de marca #c8102e · rojo oscuro #b70f2a · carbón #20282f / #0d1013
+     gris claro #f6f7f9 · acentos violeta #4e25a1 y naranja #cf4400
+
    El tema se aplica con el atributo `data-theme` en <html> ("light" | "dark").
-   Un script inline en index.html lo fija antes del primer pintado para evitar
-   el destello de tema incorrecto (FOUC).
+   Un script inline en index.html lo fija antes del primer pintado (anti-FOUC).
 
    Estructura:
      :root                  → tokens estructurales + paleta OSCURA (base y
-                              fallback: si faltara el atributo, la app sigue
-                              siendo legible).
+                              fallback si faltara el atributo).
      :root[data-theme=light] → sobrescribe solo los colores.
 
-   Todas las variables son SEMÁNTICAS: los componentes nunca escriben colores
-   literales, de modo que ambos temas se mantienen por construcción.
+   Reglas del sistema:
+     1. Los componentes NUNCA escriben colores literales, solo estos tokens.
+     2. `--color-primary` es un color de RELLENO (botones, barras, bordes).
+        Para texto y enlaces se usa `--color-primary-text`, porque el rojo de
+        marca no alcanza 4.5:1 como texto sobre fondo oscuro.
+     3. El rojo queda reservado a la MARCA y a acciones destructivas. El
+        feedback de "incorrecto" usa ámbar, para que marca y error no se
+        confundan (ver README).
    ========================================================================== */
 
 :root {
@@ -58,83 +66,98 @@
   /* ===================== PALETA OSCURA (base / fallback) =================== */
   color-scheme: dark;
 
-  --color-bg: #0b1120;
-  --color-bg-accent: #101a2e;
-  --color-surface: #131c31;
-  --color-surface-2: #1c2942;
-  --color-border: #2a3a56;
-  --color-border-strong: #3b4f72;
+  --color-bg: #0d1013;
+  --color-bg-accent: #16191d;
+  --color-surface: #20282f;
+  --color-surface-2: #2a333c;
+  --color-border: #333d47;
+  --color-border-strong: #7d8a96;
 
-  --color-text: #eef2f8;
-  --color-text-muted: #a7b4c9;
+  --color-text: #f6f7f9;
+  --color-text-muted: #a8b2bb;
 
-  --color-primary: #4f9cf9;
-  --color-primary-strong: #1f6fd0;
-  --color-primary-strong-text: #eef2f8;
-  --color-primary-soft: rgba(79, 156, 249, 0.16);
-  --color-on-primary: #04121f;
+  /* Marca: relleno y texto se separan a propósito (ver regla 2).
+     En oscuro la marca se aclara y el texto encima pasa a ser oscuro: así el
+     rojo también sirve como borde perceptible sobre las superficies
+     (WCAG 1.4.11) sin perder contraste como texto. */
+  --color-primary: #ff4d63;
+  --color-primary-text: #ff4d63;
+  --color-primary-strong: #e8394f;
+  --color-primary-strong-text: #0d1013;
+  --color-primary-soft: rgba(255, 77, 99, 0.18);
+  --color-on-primary: #0d1013;
+
+  /* Acento violeta (secundario de la paleta CompTIA). */
+  --color-accent: #b98cf5;
+  --color-accent-soft: rgba(185, 140, 245, 0.18);
+  --color-on-accent: #0d1013;
 
   --color-success: #35c48a;
   --color-success-soft: rgba(53, 196, 138, 0.16);
-  --color-warning: #f2b23e;
-  --color-warning-soft: rgba(242, 178, 62, 0.18);
+  --color-warning: #ff8a3d;
+  --color-warning-soft: rgba(255, 138, 61, 0.18);
   --color-danger: #f2686b;
   --color-danger-soft: rgba(242, 104, 107, 0.16);
 
-  --color-focus: #8ec5ff;
-  --focus-ring: 0 0 0 3px rgba(142, 197, 255, 0.55);
+  --color-focus: #ff4d63;
+  --focus-ring: 0 0 0 3px rgba(255, 77, 99, 0.55);
 
-  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-2: 0 10px 28px rgba(0, 0, 0, 0.35);
-  --shadow-up: 0 -6px 18px rgba(0, 0, 0, 0.4);
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
+  --shadow-2: 0 10px 28px rgba(0, 0, 0, 0.4);
+  --shadow-up: 0 -6px 18px rgba(0, 0, 0, 0.45);
 
-  --domain-1: #4f9cf9;
-  --domain-2: #f2686b;
-  --domain-3: #b98cf5;
+  /* Dominios: cinco tonos distinguibles que NO usan el rojo de marca. */
+  --domain-1: #6ba3f0;
+  --domain-2: #ff8a3d;
+  --domain-3: var(--color-accent);
   --domain-4: #35c48a;
-  --domain-5: #f2b23e;
+  --domain-5: #45c8c8;
 }
 
 /* ============================== TEMA CLARO ================================= */
-/* Los colores están ajustados para superar 4.5:1 sobre su superficie. */
 :root[data-theme='light'] {
   color-scheme: light;
 
-  --color-bg: #f4f7fb;
-  --color-bg-accent: #e8eefa;
+  --color-bg: #f6f7f9;
+  --color-bg-accent: #eef0f3;
   --color-surface: #ffffff;
-  --color-surface-2: #eef3fa;
-  --color-border: #d2dceb;
-  --color-border-strong: #b6c3d8;
+  --color-surface-2: #eef0f3;
+  --color-border: #d8dde3;
+  --color-border-strong: #7a8590;
 
-  --color-text: #111a2b;
-  --color-text-muted: #55637a;
+  --color-text: #0d1013;
+  --color-text-muted: #505c66;
 
-  --color-primary: #1a63bd;
-  --color-primary-strong: #124a8f;
+  --color-primary: #c8102e;
+  --color-primary-text: #c8102e;
+  --color-primary-strong: #b70f2a;
   --color-primary-strong-text: #ffffff;
-  --color-primary-soft: rgba(26, 99, 189, 0.12);
+  --color-primary-soft: rgba(200, 16, 46, 0.1);
   --color-on-primary: #ffffff;
+
+  --color-accent: #6f3fb5;
+  --color-accent-soft: rgba(111, 63, 181, 0.12);
+  --color-on-accent: #ffffff;
 
   --color-success: #17795a;
   --color-success-soft: rgba(23, 121, 90, 0.14);
-  --color-warning: #8a5a00;
-  --color-warning-soft: rgba(138, 90, 0, 0.14);
+  --color-warning: #b35300;
+  --color-warning-soft: rgba(179, 83, 0, 0.14);
   --color-danger: #b3261e;
   --color-danger-soft: rgba(179, 38, 30, 0.12);
 
-  --color-focus: #1a63bd;
-  --focus-ring: 0 0 0 3px rgba(26, 99, 189, 0.45);
+  --color-focus: #c8102e;
+  --focus-ring: 0 0 0 3px rgba(200, 16, 46, 0.4);
 
-  --shadow-1: 0 1px 2px rgba(17, 26, 43, 0.08);
-  --shadow-2: 0 10px 28px rgba(17, 26, 43, 0.1);
-  --shadow-up: 0 -6px 18px rgba(17, 26, 43, 0.1);
+  --shadow-1: 0 1px 2px rgba(13, 16, 19, 0.08);
+  --shadow-2: 0 10px 28px rgba(13, 16, 19, 0.1);
+  --shadow-up: 0 -6px 18px rgba(13, 16, 19, 0.1);
 
   --domain-1: #1a63bd;
-  --domain-2: #c2321f;
-  --domain-3: #6f3fb5;
+  --domain-2: #b35300;
+  --domain-3: var(--color-accent);
   --domain-4: #17795a;
-  --domain-5: #8a5a00;
+  --domain-5: #0f6f7a;
 }
 
 /* Respeto por la preferencia de movimiento reducido (WCAG 2.3.3). */
