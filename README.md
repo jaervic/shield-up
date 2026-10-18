@@ -24,8 +24,8 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   constancia y modo concentración.
 - **Fase 5 — Simulador de examen.** Cuenta atrás, preguntas marcadas para revisar, entrega
   automática al agotarse el tiempo y **puntuación escalada sobre 900 con 750 para aprobar**,
-  como el examen real. Con **89 preguntas** repartidas por dominio en la proporción exacta del
-  examen (11/20/16/25/17), resultado por dominio y repaso de lo fallado.
+  como el examen real. Con **139 preguntas** repartidas por dominio en la proporción del examen
+  (17/32/24/39/27), respuesta múltiple incluida, resultado por dominio y repaso de lo fallado.
 
 ## Stack
 
