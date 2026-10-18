@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { DEFAULT_DIAGNOSTIC_LENGTH } from '../engine/selection';
-import {
+import { DEFAULT_DIAGNOSTIC_LENGTH } from '../engine/selection';import {
   latestDiagnosticQueryKey,
   useLatestDiagnostic,
 } from '../state/useDiagnostic';
@@ -17,7 +16,12 @@ import { DiagnosticResults } from './DiagnosticResults';
 import { QuestionCard } from './QuestionCard';
 import styles from './DiagnosticPage.module.css';
 
-/** Test de diagnóstico: mide los 5 dominios y genera la ruta de estudio. */
+/**
+ * Test de diagnóstico: mide los 5 dominios y genera la ruta de estudio.
+ *
+ * Todos los estados exponen un `h1`, para que la página siempre tenga un título
+ * que oriente a quien navega con lector de pantalla.
+ */
 export function DiagnosticPage() {
   const status = useDiagnosticStore((state) => state.status);
   const error = useDiagnosticStore((state) => state.error);
@@ -75,42 +79,59 @@ export function DiagnosticPage() {
 
   if (status === 'loading') {
     return (
-      <p className={styles.state} role="status">
-        Preparando las preguntas…
-      </p>
+      <>
+        <h1 className="visually-hidden">Test de diagnóstico</h1>
+        <p className={styles.state} role="status">
+          Preparando las preguntas…
+        </p>
+      </>
     );
   }
 
   if (status === 'error') {
     return (
-      <div className={styles.state} role="alert">
-        <p>No se pudo completar el test.</p>
-        <p className={styles.errorDetail}>{error}</p>
-        <Button variant="primary" onClick={() => void start()}>
-          Reintentar
-        </Button>
-      </div>
+      <>
+        <h1 className="visually-hidden">Test de diagnóstico</h1>
+        <div className={styles.state} role="alert">
+          <p>No se pudo completar el test.</p>
+          <p className={styles.errorDetail}>{error}</p>
+          <Button variant="primary" onClick={() => void start()}>
+            Reintentar
+          </Button>
+        </div>
+      </>
     );
   }
 
   if (status === 'submitting') {
     return (
-      <p className={styles.state} role="status">
-        Evaluando tus respuestas…
-      </p>
+      <>
+        <h1 className="visually-hidden">Test de diagnóstico</h1>
+        <p className={styles.state} role="status">
+          Evaluando tus respuestas…
+        </p>
+      </>
     );
   }
 
   if (status === 'completed' && attempt) {
-    return <DiagnosticResults attempt={attempt} onRetake={() => void start()} />;
+    return (
+      <>
+        <h1 className="visually-hidden">Test de diagnóstico</h1>
+        <DiagnosticResults attempt={attempt} onRetake={() => void start()} />
+      </>
+    );
   }
 
   if (!question) {
     return (
-      <div className={styles.state} role="alert">
-        <p>No hay preguntas disponibles.</p>
-        <Button onClick={reset}>Volver</Button>
-      </div>
+      <>
+        <h1 className="visually-hidden">Test de diagnóstico</h1>
+        <div className={styles.state} role="alert">
+          <p>No hay preguntas disponibles.</p>
+          <Button onClick={reset}>Volver</Button>
+        </div>
+      </>
     );
   }
 
@@ -118,6 +139,7 @@ export function DiagnosticPage() {
 
   return (
     <section className={styles.test} aria-label="Test de diagnóstico">
+      <h1 className="visually-hidden">Test de diagnóstico</h1>
       <ProgressBar
         value={answeredCount}
         max={total}

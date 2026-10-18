@@ -3,11 +3,13 @@ import { act, fireEvent, screen } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { AppShell } from '@/app/layout/AppShell';
 import { applyThemeDom, useThemeStore } from '@/app/theme/themeStore';
+import { useFocusMode } from '@/shared/state/focusMode';
 import { renderWithProviders, settle } from '../../helpers/render';
 
 afterEach(() => {
   act(() => {
     useThemeStore.setState({ mode: 'dark' });
+    useFocusMode.getState().setActive(false);
   });
   applyThemeDom('dark');
   window.localStorage.clear();
@@ -92,5 +94,21 @@ describe('AppShell', () => {
     await settle();
 
     expect(screen.getByText(/no está afiliado ni respaldado por CompTIA/i)).toBeInTheDocument();
+  });
+
+  it('activa el modo concentración durante una sesión sin ocultar la navegación', async () => {
+    const { container } = renderShell();
+    await settle();
+
+    const shell = container.firstElementChild;
+    expect(shell?.className).not.toMatch(/focus/);
+
+    act(() => {
+      useFocusMode.getState().setActive(true);
+    });
+    expect(shell?.className).toMatch(/focus/);
+
+    // La navegación sigue disponible: es la vía de salida de la sesión.
+    expect(screen.getByRole('navigation', { name: 'Navegación principal' })).toBeInTheDocument();
   });
 });

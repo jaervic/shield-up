@@ -17,6 +17,10 @@ export interface ConfidencePromptProps {
  * en metacognición: entrena la capacidad de saber lo que uno sabe, y permite
  * detectar la "ilusión de saber". Cada botón revela a la vez, así que no añade
  * un clic extra respecto al flujo anterior.
+ *
+ * Los dos botones son NEUTROS a propósito: son una autoevaluación, no un
+ * resultado. Pintar "lo tenía seguro" en verde daría a entender que es correcto
+ * antes de saberlo, que es justo el juicio que estamos midiendo.
  */
 export function ConfidencePrompt({ onDeclare, onReveal, firstButtonRef }: ConfidencePromptProps) {
   return (
@@ -24,12 +28,10 @@ export function ConfidencePrompt({ onDeclare, onReveal, firstButtonRef }: Confid
       <p className={styles.question}>Antes de ver la respuesta: ¿lo tenías?</p>
 
       <div className={styles.actions}>
-        <Button ref={firstButtonRef} tone="success" onClick={() => onDeclare('sure')}>
+        <Button ref={firstButtonRef} onClick={() => onDeclare('sure')}>
           Lo tenía seguro
         </Button>
-        <Button tone="warning" onClick={() => onDeclare('unsure')}>
-          Dudaba
-        </Button>
+        <Button onClick={() => onDeclare('unsure')}>Dudaba</Button>
       </div>
 
       <div className={styles.skip}>

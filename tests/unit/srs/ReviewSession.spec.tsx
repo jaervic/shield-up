@@ -22,6 +22,12 @@ async function startSession(): Promise<void> {
   await settle();
 }
 
+/** Texto del titular del plan ("N tarjetas · ~M min"). */
+function headlineText(): string {
+  const node = screen.getByText(/tarjetas · ~\d+ min/).closest('p');
+  return (node?.textContent ?? '').replace(/\s+/g, ' ').trim();
+}
+
 describe('ReviewSession (integración store + servicio + UI)', () => {
   it('presenta el plan de la sesión antes de empezar', async () => {
     setSrsRepository(
@@ -100,5 +106,36 @@ describe('ReviewSession (integración store + servicio + UI)', () => {
 
     expect(screen.getByRole('heading', { name: 'No hay nada pendiente' })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /ver lecciones/i })).toHaveAttribute('href', '/lessons');
+  });
+
+  it('permite la práctica dirigida por dominio', async () => {
+    setSrsRepository(
+      createMemoryRepository([
+        makeCard({ id: 'd4-a', domain: 4 }),
+        makeCard({ id: 'd4-b', domain: 4 }),
+        makeCard({ id: 'd1-a', domain: 1 }),
+      ]),
+    );
+
+    renderWithProviders(<ReviewSession />);
+    await settleUntil(() => screen.queryByRole('button', { name: /empezar sesión/i }) !== null);
+
+    // Sin filtro: las tres tarjetas.
+    expect(headlineText()).toBe('3 tarjetas · ~1 min');
+
+    const domainChip = screen.getByRole('button', { name: /^D4/ });
+    expect(domainChip).toHaveAttribute('aria-pressed', 'false');
+
+    fireEvent.click(domainChip);
+    await settleUntil(() => screen.queryByText(/práctica dirigida/i) !== null);
+
+    expect(screen.getByRole('button', { name: /^D4/ })).toHaveAttribute('aria-pressed', 'true');
+    expect(headlineText()).toBe('2 tarjetas · ~1 min · práctica dirigida');
+
+    fireEvent.click(screen.getByRole('button', { name: /empezar sesión/i }));
+    await settle();
+
+    // La sesión arranca solo con tarjetas del dominio elegido.
+    expect(screen.getByText(/Dominio 4/)).toBeInTheDocument();
   });
 });

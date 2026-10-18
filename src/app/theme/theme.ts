@@ -13,8 +13,6 @@ export const THEME_COLORS: Readonly<Record<ThemeMode, string>> = {
   dark: '#0d1013',
 };
 
-export const DEFAULT_THEME: ThemeMode = 'dark';
-
 export function isThemeMode(value: unknown): value is ThemeMode {
   return value === 'light' || value === 'dark';
 }

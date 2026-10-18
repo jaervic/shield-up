@@ -34,7 +34,6 @@ export interface SrsState {
   /** Declara la confianza y revela en un solo gesto. */
   declareConfidence: (confidence: Confidence) => void;
   grade: (grade: Grade) => Promise<void>;
-  skip: () => void;
   reset: () => void;
 }
 
@@ -125,18 +124,6 @@ export const useSrsStore = create<SrsState>((set, get) => ({
         error: error instanceof Error ? error.message : 'Error desconocido al calificar.',
       });
     }
-  },
-
-  skip() {
-    const { queue, index, status } = get();
-    if (status !== 'reviewing') return;
-    const nextIndex = index + 1;
-    set({
-      index: nextIndex,
-      revealed: false,
-      confidence: null,
-      status: nextIndex >= queue.length ? 'finished' : 'reviewing',
-    });
   },
 
   reset() {

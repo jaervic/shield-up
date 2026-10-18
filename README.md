@@ -18,9 +18,10 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
 - **Fase 3 — Microlearning.** 8 lecciones-problema (28 pasos) basadas en *active recall*,
   progreso reanudable y recomendaciones ligadas a la ruta de estudio.
 - **Diseño** — Paleta anclada a la identidad de CompTIA, temas claro/oscuro, interfaz
-  mobile-first con barra inferior, **test automático de contraste WCAG** y un entorno orientado
-  al estudio: plan de sesión, confianza antes de revelar con calibración, objetivo diario, racha,
-  anillos de dominio e hitos.
+  mobile-first con barra inferior, **test automático de contraste WCAG** (4 familias de pares) y
+  un entorno orientado al estudio: plan de sesión, práctica dirigida por dominio, confianza antes
+  de revelar con calibración, objetivo diario, racha, anillos de dominio, hitos, mapa de calor de
+  constancia y modo concentración.
 
 ## Stack
 
@@ -247,12 +248,25 @@ propio (`BrandMark.tsx`) y el aviso de no afiliación es visible en la cabecera
 ### Test de contraste automático
 
 `tests/unit/theme/contrast.spec.ts` **lee `tokens.css`**, resuelve las referencias `var(--x)` y
-comprueba la ratio WCAG de cada par semántico: 4.5:1 para texto y 3:1 para bordes e indicadores.
-Si un retoque de color rompe la accesibilidad, **rompe el build**.
+comprueba la ratio WCAG de **cuatro familias de pares**:
 
-Ese test ya detectó y corrigió tres problemas reales durante su implementación: el rojo de marca
-como borde sobre superficies (2.54:1), y `--color-border-strong` por debajo de 3:1 en ambos
-temas. La accesibilidad dejó de depender de una revisión a ojo.
+| Familia | Exigencia | Qué cubre |
+|---|---|---|
+| Texto sobre fondo | 4.5:1 | Párrafos, etiquetas, enlaces |
+| Bordes e indicadores | 3:1 | Fronteras de controles y barras |
+| Texto sobre relleno de acento | 4.5:1 | Estados *hover* de los botones |
+| Texto sobre fondo translúcido | 4.5:1 | Opciones marcadas e insignias |
+
+El cuarto caso es el que más rinde: los tokens `*-soft` son `rgba`, así que su contraste real
+depende del fondo sobre el que se **componen**. El test compone el color y lo comprueba.
+
+También verifica que **no hay tokens definidos y sin usar** y, para no pasar por la razón
+equivocada, incluye pruebas de la propia aritmética (negro sobre blanco = 21:1, el gris límite
+`#767676` = 4.54:1, y la composición de un alfa).
+
+**Defectos reales que ha detectado:** el rojo de marca como borde sobre superficies (2.54:1),
+`--color-border-strong` por debajo de 3:1 en ambos temas, y dos combinaciones de texto sobre
+fondo translúcido (ámbar 4.24:1 y verde 4.36:1 en tema claro). Todos corregidos.
 
 ### Mobile-first
 
@@ -270,18 +284,29 @@ temas. La accesibilidad dejó de depender de una revisión a ojo.
 - **Plan de sesión antes de empezar** (`summarizeQueue`): cuántas tarjetas son, de qué dominios
   y cuánto se tarda. Una sesión de duración conocida se empieza mucho más fácil que una de
   longitud incierta.
+- **Práctica dirigida por dominio**: desde el plan se puede limitar la sesión a uno o varios
+  dominios (`onlyDomains`). Útil para machacar el que más pesa en el examen.
 - **Confianza antes de revelar** (`ConfidencePrompt`): declarar si lo sabías o dudabas revela en
   el mismo gesto, así que no añade un clic. Es *metacognición*, y alimenta
   `computeCalibration`, que cruza la predicción con el resultado real para detectar la
   **ilusión de saber** —el error de estudio más común—. Es opcional: se puede revelar sin valorar.
+  Los dos botones son **neutros a propósito**: son una autoevaluación, no un resultado, y
+  pintarlos de verde/rojo prejuzgaría la respuesta.
 - **Objetivo diario y racha** (`computeStudyStreak`): el panel abre con lo único que hay que
   hacer hoy. La racha no se rompe hasta perder un día completo.
 - **Anillo de dominio** (`computeDomainMastery`): una tarjeta madura cuenta 1 y una joven 0.5.
   Ver el anillo llenarse motiva más que leer un porcentaje.
+- **Mapa de calor de constancia** (`computeActivityHeatmap`): 12 semanas de actividad. El gráfico
+  es `role="img"` con resumen textual, así que la intensidad del color es una señal redundante
+  y no el único canal de información.
 - **Hitos** (`computeMilestones`): derivados de datos que ya existen, sin tabla de logros.
+- **Modo concentración**: durante la sesión la cabecera deja de ser fija y el pie desaparece.
+  La navegación **no** se oculta: quitarla dejaría al usuario sin vía de salida.
 - **Explicación del método**: un alumno rinde más cuando entiende *por qué* decide antes de leer
   la respuesta.
 - **Micro-animaciones** en el contenido revelado, solo si el usuario no pidió movimiento reducido.
+- **Foco y desplazamiento gestionados**: al cambiar de tarjeta o de paso, el foco vuelve a la
+  acción principal y la vista sube arriba, para que el recorrido con teclado no se pierda.
 - **Feedback cualitativo al cerrar la sesión**, centrado en el proceso y no en la nota.
 
 ---

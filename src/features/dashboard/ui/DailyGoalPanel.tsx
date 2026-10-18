@@ -92,7 +92,7 @@ export function DailyGoalPanel() {
           <dd>{pending}</dd>
         </div>
         <div className={styles.stat}>
-          <dt>Nuevas</dt>
+          <dt>Sin empezar</dt>
           <dd>{stats.newCards}</dd>
         </div>
         <div className={styles.stat}>

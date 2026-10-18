@@ -31,6 +31,11 @@ export interface QueueOptions {
   seed?: number;
   /** Pesos por dominio; por defecto los del blueprint del examen. */
   weights?: Readonly<Record<DomainId, number>>;
+  /**
+   * Limita la sesión a estos dominios (práctica dirigida). Vacío o ausente
+   * significa "todos los dominios".
+   */
+  onlyDomains?: readonly DomainId[];
 }
 
 export interface DailyQueue {
@@ -92,10 +97,16 @@ export function buildDailyQueue(
     reviewLimit = DEFAULT_REVIEW_LIMIT,
     seed = 1,
     weights = DOMAIN_WEIGHTS,
+    onlyDomains,
   } = options;
 
   const rng = createRng(seed);
-  const active = cards.filter((card) => !card.suspended);
+  const domainFilter =
+    onlyDomains && onlyDomains.length > 0 ? new Set<DomainId>(onlyDomains) : null;
+
+  const active = cards.filter(
+    (card) => !card.suspended && (domainFilter === null || domainFilter.has(card.domain)),
+  );
 
   const due = active
     .filter((card) => card.repetitions > 0 && isDue(card.dueAt, now))

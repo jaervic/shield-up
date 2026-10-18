@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { getDomain } from '@/domain/domain';
 import { isDecisionStep } from '@/domain/lesson';
@@ -36,11 +36,24 @@ export function LessonPage() {
   const nextStep = useLessonStore((state) => state.nextStep);
   const restart = useLessonStore((state) => state.restart);
 
+  const actionRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     if (lessonId) {
       void start(lessonId);
     }
   }, [lessonId, start]);
+
+  // Al cambiar de paso: foco en la acción y vuelta arriba, para que el recorrido
+  // con teclado no se pierda al desmontarse el botón pulsado.
+  useEffect(() => {
+    if (status !== 'studying') return;
+    actionRef.current?.focus();
+    // En jsdom `scrollY` es siempre 0, así que no se invoca `scrollTo`.
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+  }, [stepIndex, status]);
 
   if (status === 'idle' || status === 'loading') {
     return (
@@ -118,11 +131,12 @@ export function LessonPage() {
 
       <div className={styles.actions}>
         {revealed ? (
-          <Button variant="primary" onClick={() => void nextStep()}>
+          <Button ref={actionRef} variant="primary" onClick={() => void nextStep()}>
             {isLastStep ? 'Finalizar lección' : 'Continuar'}
           </Button>
         ) : (
           <Button
+            ref={actionRef}
             variant="primary"
             onClick={() => void submitStep()}
             disabled={isDecision && selection.length === 0}

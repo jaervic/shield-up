@@ -1,5 +1,5 @@
-import { readFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
 /**
@@ -82,6 +82,51 @@ function hexToRgb(hex: string): [number, number, number] {
   ];
 }
 
+interface Rgba {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+function parseColor(value: string): Rgba {
+  const hex = /^#([0-9a-fA-F]{6})$/.exec(value);
+  if (hex?.[1]) {
+    const [r, g, b] = hexToRgb(value);
+    return { r, g, b, a: 1 };
+  }
+
+  const rgba = /^rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([\d.]+)\s*)?\)$/.exec(value);
+  if (!rgba) {
+    throw new Error(`Color no reconocido: "${value}"`);
+  }
+
+  return {
+    r: Number(rgba[1]),
+    g: Number(rgba[2]),
+    b: Number(rgba[3]),
+    a: rgba[4] === undefined ? 1 : Number(rgba[4]),
+  };
+}
+
+/**
+ * Compone un color translúcido sobre un fondo opaco.
+ *
+ * Necesario porque los tokens `*-soft` son `rgba(...)`: el contraste real del
+ * texto que va encima depende del fondo sobre el que se componen, no del valor
+ * del token por sí solo.
+ */
+function composite(over: string, under: string): string {
+  const top = parseColor(over);
+  const bottom = parseColor(under);
+  const mix = (t: number, u: number) => Math.round(t * top.a + u * (1 - top.a));
+  const toHex = (channel: number) => channel.toString(16).padStart(2, '0');
+
+  return `#${toHex(mix(top.r, bottom.r))}${toHex(mix(top.g, bottom.g))}${toHex(
+    mix(top.b, bottom.b),
+  )}`;
+}
+
 function channelLuminance(channel: number): number {
   const normalized = channel / 255;
   return normalized <= 0.03928
@@ -104,6 +149,31 @@ function contrastRatio(foreground: string, background: string): number {
   const lighter = Math.max(a, b);
   const darker = Math.min(a, b);
   return (lighter + 0.05) / (darker + 0.05);
+}
+
+/** Recorre `src/` y devuelve todos los tokens referenciados con `var()`. */
+function collectUsedTokens(root: string): Set<string> {
+  const used = new Set<string>();
+
+  const walk = (dir: string): void => {
+    for (const entry of readdirSync(dir)) {
+      const full = join(dir, entry);
+      if (statSync(full).isDirectory()) {
+        walk(full);
+        continue;
+      }
+      // El propio archivo de tokens define, no usa.
+      if (full.endsWith('tokens.css')) continue;
+
+      const content = readFileSync(full, 'utf8');
+      for (const match of content.matchAll(/var\(--([a-z0-9-]+)\)/g)) {
+        if (match[1]) used.add(match[1]);
+      }
+    }
+  };
+
+  walk(root);
+  return used;
 }
 
 // --- Carga de los temas -----------------------------------------------------
@@ -143,8 +213,7 @@ const TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['color-danger', 'color-surface'],
 ];
 
-/**
- * Elementos no textuales (bordes, barras): exigen 3:1 (WCAG 1.4.11).
+/** Elementos no textuales (bordes, barras): exigen 3:1 (WCAG 1.4.11).
  *
  * `--color-border` (el borde por defecto) queda fuera a propósito: los
  * componentes que lo usan se identifican por su relleno de fondo, no por el
@@ -159,8 +228,65 @@ const NON_TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['color-primary', 'color-surface-2'],
 ];
 
-describe('tokens de color', () => {
-  it('define los dos temas con las mismas claves de color', () => {
+/** Texto sobre un relleno sólido de acento (estados hover de los botones). */
+const FILL_PAIRS: ReadonlyArray<readonly [string, string]> = [
+  ['color-surface', 'color-success'],
+  ['color-surface', 'color-warning'],
+  ['color-surface', 'color-danger'],
+];
+
+interface SoftPair {
+  fg: string;
+  soft: string;
+  base: string;
+}
+
+/**
+ * Texto sobre un fondo translúcido (`*-soft`) compuesto sobre su base.
+ *
+ * Es el caso de las opciones marcadas y de las insignias de estado. Sin
+ * componer el color, el contraste real queda sin comprobar: el token por sí
+ * solo no dice nada, porque es `rgba`.
+ */
+const SOFT_PAIRS: readonly SoftPair[] = [
+  { fg: 'color-text', soft: 'color-primary-soft', base: 'color-surface-2' },
+  { fg: 'color-text', soft: 'color-success-soft', base: 'color-surface-2' },
+  { fg: 'color-text', soft: 'color-warning-soft', base: 'color-surface-2' },
+  { fg: 'color-success', soft: 'color-success-soft', base: 'color-surface' },
+  { fg: 'color-warning', soft: 'color-warning-soft', base: 'color-surface' },
+];
+
+describe('aritmética del test', () => {
+  // Sin esto, un error en el cálculo haría pasar el test por la razón equivocada.
+  it('la ratio sigue la fórmula WCAG en casos conocidos', () => {
+    expect(contrastRatio('#000000', '#ffffff')).toBeCloseTo(21, 2);
+    expect(contrastRatio('#ffffff', '#000000')).toBeCloseTo(21, 2);
+    expect(contrastRatio('#ffffff', '#ffffff')).toBeCloseTo(1, 5);
+    // El gris clásico del límite AA sobre blanco.
+    expect(contrastRatio('#767676', '#ffffff')).toBeCloseTo(4.54, 2);
+  });
+
+  it('es simétrica respecto al orden de los colores', () => {
+    expect(contrastRatio('#0d1013', '#f6f7f9')).toBeCloseTo(
+      contrastRatio('#f6f7f9', '#0d1013'),
+      10,
+    );
+  });
+
+  it('compone un color translúcido sobre un fondo opaco', () => {
+    expect(composite('rgba(0, 0, 0, 0.5)', '#ffffff')).toBe('#808080');
+    expect(composite('rgba(255, 255, 255, 1)', '#000000')).toBe('#ffffff');
+    // Alfa 0 no altera el fondo.
+    expect(composite('rgba(255, 0, 0, 0)', '#123456')).toBe('#123456');
+  });
+
+  it('rechaza valores de color que no sabe interpretar', () => {
+    expect(() => parseColor('rebeccapurple')).toThrow(/no reconocido/i);
+    expect(() => hexToRgb('#fff')).toThrow(/6 dígitos/i);
+  });
+});
+
+describe('tokens de color', () => {  it('define los dos temas con las mismas claves de color', () => {
     const lightKeys = Object.keys(lightOverrides);
     const baseKeys = Object.keys(baseTokens).filter((key) => key.startsWith('color-'));
 
@@ -181,6 +307,19 @@ describe('tokens de color', () => {
         /^(#[0-9a-fA-F]{6}|rgba?\([^)]+\)|var\(--[a-z0-9-]+\))$/,
       );
     }
+  });
+
+  it('no deja tokens de color definidos y sin usar', () => {
+    const used = collectUsedTokens(resolve(process.cwd(), 'src'));
+
+    // Los colores de dominio se referencian con plantilla: `var(--domain-${id})`.
+    const DYNAMIC = ['domain-1', 'domain-2', 'domain-3', 'domain-4', 'domain-5'];
+
+    const unused = Object.keys(baseTokens).filter(
+      (name) => name.startsWith('color-') && !used.has(name) && !DYNAMIC.includes(name),
+    );
+
+    expect(unused, `Tokens definidos y nunca usados: ${unused.join(', ')}`).toEqual([]);
   });
 });
 
@@ -208,6 +347,28 @@ describe.each(Object.entries(THEMES))('contraste WCAG en tema %s', (themeName, t
       `--${foreground} sobre --${background} en tema ${themeName}`,
     ).toBeGreaterThanOrEqual(3);
   });
+
+  it.each(FILL_PAIRS)('el texto %s sobre el relleno %s alcanza 4.5:1', (foreground, fill) => {
+    const ratio = contrastRatio(resolveToken(tokens, foreground), resolveToken(tokens, fill));
+
+    expect(
+      Number(ratio.toFixed(2)),
+      `--${foreground} sobre --${fill} en tema ${themeName}`,
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it.each(SOFT_PAIRS)(
+    '$fg sobre $soft compuesto en $base alcanza 4.5:1',
+    ({ fg, soft, base }) => {
+      const background = composite(resolveToken(tokens, soft), resolveToken(tokens, base));
+      const ratio = contrastRatio(resolveToken(tokens, fg), background);
+
+      expect(
+        Number(ratio.toFixed(2)),
+        `--${fg} sobre --${soft} (compuesto en --${base}) en tema ${themeName}`,
+      ).toBeGreaterThanOrEqual(4.5);
+    },
+  );
 
   it('los cinco colores de dominio son distinguibles entre sí', () => {
     const domains = ['domain-1', 'domain-2', 'domain-3', 'domain-4', 'domain-5'] as const;

@@ -68,4 +68,53 @@ describe('summarizeQueue', () => {
     // La suma del reparto coincide con el total de la cola.
     expect(plan.domains.reduce((sum, entry) => sum + entry.count, 0)).toBe(plan.cardCount);
   });
+
+  it('la práctica dirigida limita la cola a los dominios elegidos', () => {
+    const cards = [
+      makeCard({ id: 'd4-a', domain: 4 }),
+      makeCard({ id: 'd4-b', domain: 4 }),
+      makeCard({ id: 'd1-a', domain: 1 }),
+      makeCard({ id: 'd2-a', domain: 2 }),
+    ];
+
+    const plan = summarizeQueue(buildDailyQueue(cards, NOW, { newLimit: 10, onlyDomains: [4] }));
+
+    expect(plan.cardCount).toBe(2);
+    expect(plan.domains).toEqual([{ domain: 4, count: 2 }]);
+  });
+
+  it('acepta varios dominios en la práctica dirigida', () => {
+    const cards = [
+      makeCard({ id: 'd4-a', domain: 4 }),
+      makeCard({ id: 'd1-a', domain: 1 }),
+      makeCard({ id: 'd2-a', domain: 2 }),
+    ];
+
+    const plan = summarizeQueue(
+      buildDailyQueue(cards, NOW, { newLimit: 10, onlyDomains: [4, 2] }),
+    );
+
+    expect(plan.cardCount).toBe(2);
+    expect(plan.domains.map((entry) => entry.domain).sort()).toEqual([2, 4]);
+  });
+
+  it('un filtro vacío equivale a la sesión completa', () => {
+    const cards = [makeCard({ id: 'a', domain: 4 }), makeCard({ id: 'b', domain: 1 })];
+
+    const withEmpty = summarizeQueue(buildDailyQueue(cards, NOW, { newLimit: 10, onlyDomains: [] }));
+    const withoutFilter = summarizeQueue(buildDailyQueue(cards, NOW, { newLimit: 10 }));
+
+    expect(withEmpty).toEqual(withoutFilter);
+  });
+
+  it('la práctica dirigida también respeta las tarjetas suspendidas', () => {
+    const cards = [
+      makeCard({ id: 'ok', domain: 4 }),
+      makeCard({ id: 'off', domain: 4, suspended: true }),
+    ];
+
+    const plan = summarizeQueue(buildDailyQueue(cards, NOW, { newLimit: 10, onlyDomains: [4] }));
+
+    expect(plan.cardCount).toBe(1);
+  });
 });

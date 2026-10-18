@@ -138,6 +138,18 @@
   color: var(--color-text);
 }
 
+/* -------------------------- Modo concentración ---------------------------- */
+/* Durante una sesión: la cabecera deja de ser fija (deja sitio al desplazarse)
+   y el pie desaparece. La navegación se mantiene como vía de salida. */
+
+.focus .header {
+  position: static;
+}
+
+.focus .footer {
+  display: none;
+}
+
 /* ------------------------------- Móvil ------------------------------------ */
 /* La navegación se convierte en barra inferior fija: alcance del pulgar y
    objetivo táctil de 44 px mínimo. */

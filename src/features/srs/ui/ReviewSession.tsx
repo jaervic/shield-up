@@ -1,10 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { formatIntervalDays } from '@/shared/utils/format';
 import type { Grade } from '@/domain/card';
+import type { DomainId } from '@/domain/domain';
+import { useFocusMode } from '@/shared/state/focusMode';
 import { Button } from '@/shared/ui/Button';
 import { ProgressBar } from '@/shared/ui/ProgressBar';
 import { computeCalibration } from '../engine/calibration';
+import { DEFAULT_NEW_LIMIT } from '../engine/queue';
 import { selectCurrentCard, useSrsStore } from '../state/srsStore';
 import { sessionPlanQueryKey, useSessionPlan } from '../state/useSessionPlan';
 import { ConfidencePrompt } from './ConfidencePrompt';
@@ -57,9 +60,25 @@ export function ReviewSession() {
   const grade = useSrsStore((state) => state.grade);
   const reset = useSrsStore((state) => state.reset);
 
-  const { data: plan, isPending: planPending } = useSessionPlan();
+  const [selectedDomains, setSelectedDomains] = useState<DomainId[]>([]);
+
+  // Plan completo (para saber qué dominios hay disponibles) y plan filtrado.
+  // Sin filtro, ambas consultas comparten clave y React Query las unifica.
+  const { data: fullPlan } = useSessionPlan();
+  const { data: plan, isPending: planPending } = useSessionPlan(
+    DEFAULT_NEW_LIMIT,
+    selectedDomains,
+  );
+
   const queryClient = useQueryClient();
+  const setFocusMode = useFocusMode((state) => state.setActive);
   const firstActionRef = useRef<HTMLButtonElement>(null);
+
+  // Modo concentración mientras dura la sesión.
+  useEffect(() => {
+    setFocusMode(status === 'reviewing');
+    return () => setFocusMode(false);
+  }, [status, setFocusMode]);
 
   // Al cerrar la sesión, el plan queda obsoleto: se recalcula para el próximo día.
   useEffect(() => {
@@ -73,6 +92,10 @@ export function ReviewSession() {
   useEffect(() => {
     if (status === 'reviewing' && !revealed) {
       firstActionRef.current?.focus();
+    }
+    // En jsdom `scrollY` es siempre 0, así que no se invoca `scrollTo`.
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
     }
   }, [status, revealed, index]);
 
@@ -104,8 +127,20 @@ export function ReviewSession() {
     return (
       <SessionPlanScreen
         plan={plan ?? null}
+        availableDomains={fullPlan?.domains ?? []}
+        selectedDomains={selectedDomains}
         isPending={planPending}
-        onStart={() => void start()}
+        onToggleDomain={(domain) =>
+          setSelectedDomains((current) =>
+            current.includes(domain)
+              ? current.filter((candidate) => candidate !== domain)
+              : [...current, domain],
+          )
+        }
+        onClearDomains={() => setSelectedDomains([])}
+        onStart={() =>
+          void start(selectedDomains.length > 0 ? { onlyDomains: selectedDomains } : {})
+        }
       />
     );
   }

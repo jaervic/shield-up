@@ -1,6 +1,7 @@
 import { DOMAINS } from '@/domain/domain';
 import { formatDayMonth, formatPercent } from '@/shared/utils/format';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
+import { ActivityHeatmap } from './ActivityHeatmap';
 import { DailyGoalPanel } from './DailyGoalPanel';
 import { DomainRing } from './DomainRing';
 import { HowItWorksPanel } from './HowItWorksPanel';
@@ -81,6 +82,7 @@ export function DashboardPage() {
       </section>
 
       <MilestonesPanel />
+      <ActivityHeatmap />
 
       <section aria-labelledby="load-title">
         <h2 id="load-title">Carga de repaso (14 días)</h2>

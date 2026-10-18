@@ -1,5 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import {
+  computeActivityHeatmap,
+  type ActivityHeatmap,
+} from '../engine/activity';
+import {
   computeStats,
   computeStudyStreak,
   countReviewsOn,
@@ -16,6 +20,7 @@ export interface SrsStatsPayload {
   stats: SrsStats;
   load: ReviewLoadPoint[];
   streak: StudyStreak;
+  heatmap: ActivityHeatmap;
   /** Repasos hechos hoy, para el objetivo diario. */
   reviewedToday: number;
 }
@@ -29,6 +34,7 @@ async function fetchStats(): Promise<SrsStatsPayload> {
     stats: computeStats(cards, reviews, now),
     load: projectReviewLoad(cards, now, 14),
     streak: computeStudyStreak(reviews, now),
+    heatmap: computeActivityHeatmap(reviews, now),
     reviewedToday: countReviewsOn(reviews, now),
   };
 }

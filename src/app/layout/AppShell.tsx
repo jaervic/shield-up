@@ -1,4 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { clsx } from 'clsx';
+import { useFocusMode } from '@/shared/state/focusMode';
 import { BrandMark } from './BrandMark';
 import { NavIcon, type NavIconName } from './NavIcon';
 import { ThemeToggle } from './ThemeToggle';
@@ -26,8 +28,10 @@ const NAV_ITEMS: NavItem[] = [
  * en una barra inferior fija, siempre al alcance del pulgar.
  */
 export function AppShell() {
+  const focusMode = useFocusMode((state) => state.active);
+
   return (
-    <div className={styles.shell}>
+    <div className={clsx(styles.shell, focusMode && styles.focus)}>
       <a className="skip-link" href="#main-content">
         Saltar al contenido principal
       </a>

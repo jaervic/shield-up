@@ -89,17 +89,14 @@
 
   /* Acento violeta (secundario de la paleta CompTIA). */
   --color-accent: #b98cf5;
-  --color-accent-soft: rgba(185, 140, 245, 0.18);
   --color-on-accent: #0d1013;
 
   --color-success: #35c48a;
   --color-success-soft: rgba(53, 196, 138, 0.16);
-  --color-warning: #ff8a3d;
+  --color-warning: #ff9a5c;
   --color-warning-soft: rgba(255, 138, 61, 0.18);
   --color-danger: #f2686b;
-  --color-danger-soft: rgba(242, 104, 107, 0.16);
 
-  --color-focus: #ff4d63;
   --focus-ring: 0 0 0 3px rgba(255, 77, 99, 0.55);
 
   --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.45);
@@ -112,6 +109,14 @@
   --domain-3: var(--color-accent);
   --domain-4: #35c48a;
   --domain-5: #45c8c8;
+
+  /* Mapa de calor: cuatro intensidades de la marca. La información también está
+     disponible como texto (resumen + título por celda), así que el color es una
+     señal redundante y no el único canal. */
+  --heat-1: rgba(255, 77, 99, 0.35);
+  --heat-2: rgba(255, 77, 99, 0.55);
+  --heat-3: rgba(255, 77, 99, 0.78);
+  --heat-4: #ff4d63;
 }
 
 /* ============================== TEMA CLARO ================================= */
@@ -136,17 +141,14 @@
   --color-on-primary: #ffffff;
 
   --color-accent: #6f3fb5;
-  --color-accent-soft: rgba(111, 63, 181, 0.12);
   --color-on-accent: #ffffff;
 
-  --color-success: #17795a;
+  --color-success: #0f6647;
   --color-success-soft: rgba(23, 121, 90, 0.14);
-  --color-warning: #b35300;
+  --color-warning: #a04a00;
   --color-warning-soft: rgba(179, 83, 0, 0.14);
   --color-danger: #b3261e;
-  --color-danger-soft: rgba(179, 38, 30, 0.12);
 
-  --color-focus: #c8102e;
   --focus-ring: 0 0 0 3px rgba(200, 16, 46, 0.4);
 
   --shadow-1: 0 1px 2px rgba(13, 16, 19, 0.08);
@@ -158,6 +160,11 @@
   --domain-3: var(--color-accent);
   --domain-4: #17795a;
   --domain-5: #0f6f7a;
+
+  --heat-1: rgba(200, 16, 46, 0.22);
+  --heat-2: rgba(200, 16, 46, 0.45);
+  --heat-3: rgba(200, 16, 46, 0.7);
+  --heat-4: #c8102e;
 }
 
 /* Respeto por la preferencia de movimiento reducido (WCAG 2.3.3). */
