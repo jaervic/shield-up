@@ -420,6 +420,22 @@ Tres decisiones que merece la pena conocer:
 - **El simulacro es proporcional, y lo dice.** Con 89 de las 90 preguntas del examen real, el
   simulacro ya dura los 90 minutos completos; si el banco creciera menos, se avisaría.
 
+### El banco, a escala real
+
+**139 preguntas** repartidas por dominio en la proporción del examen:
+
+| Dominio | Peso | Preguntas | Ideal |
+|---|---|---|---|
+| D1 · Conceptos generales | 12% | 17 | 16,7 |
+| D2 · Amenazas y vulnerabilidades | 22% | 32 | 30,6 |
+| D3 · Arquitectura | 18% | 24 | 25,0 |
+| D4 · Operaciones | 28% | 39 | 38,9 |
+| D5 · Gestión del programa | 20% | 27 | 27,8 |
+
+Con más de 90 preguntas, **cada simulacro es distinto**: se muestrean 90 de las 139 y la duración
+es la del examen real (90 minutos). También hay preguntas de **respuesta múltiple**, donde solo
+cuenta acertar el conjunto completo.
+
 El acceso está en el panel y no en la navegación: el simulacro es una actividad periódica, no
 diaria, y seis secciones no caben en la barra inferior del móvil sin truncar las etiquetas.
 

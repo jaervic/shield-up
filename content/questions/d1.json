@@ -374,5 +374,213 @@
       "defensa-en-profundidad",
       "fundamentos"
     ]
+  },
+  {
+    "id": "d1-q12",
+    "domain": 1,
+    "objective": "1.1",
+    "type": "single",
+    "stem": "¿Qué diferencia hay entre un control preventivo y uno detective?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El preventivo impide que la acción ocurra; el detective la descubre una vez ocurrida"
+      },
+      {
+        "id": "b",
+        "text": "El detective impide la acción y el preventivo la registra"
+      },
+      {
+        "id": "c",
+        "text": "El preventivo solo aplica a controles físicos"
+      },
+      {
+        "id": "d",
+        "text": "Son sinónimos"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "Un bloqueo de USB es preventivo; una revisión de cámaras es detective. La organización necesita ambos: el preventivo reduce la probabilidad y el detective reduce el tiempo de reacción.",
+    "difficulty": "easy",
+    "tags": [
+      "controles",
+      "funciones"
+    ]
+  },
+  {
+    "id": "d1-q13",
+    "domain": 1,
+    "objective": "1.2",
+    "type": "single",
+    "stem": "¿Qué relación hay entre autenticación y autorización?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Son lo mismo"
+      },
+      {
+        "id": "b",
+        "text": "La autenticación confirma quién eres; la autorización decide qué puedes hacer"
+      },
+      {
+        "id": "c",
+        "text": "La autorización siempre ocurre antes"
+      },
+      {
+        "id": "d",
+        "text": "La autenticación solo aplica a servicios web"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Primero se verifica la identidad y después se comprueban los permisos. Confundirlas es el origen de muchos fallos: una sesión autenticada no debería poder hacer cualquier cosa.",
+    "difficulty": "easy",
+    "tags": [
+      "autenticacion",
+      "autorizacion",
+      "aaa"
+    ]
+  },
+  {
+    "id": "d1-q14",
+    "domain": 1,
+    "objective": "1.3",
+    "type": "single",
+    "stem": "¿Por qué el principio de mínimo privilegio reduce el impacto de un compromiso?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque hace las contraseñas más difíciles de adivinar"
+      },
+      {
+        "id": "b",
+        "text": "Porque la cuenta comprometida solo puede hacer lo que necesitaba, y no más"
+      },
+      {
+        "id": "c",
+        "text": "Porque cifra los datos de la cuenta"
+      },
+      {
+        "id": "d",
+        "text": "Porque evita los ataques de phishing"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El mínimo privilegio no evita la entrada, pero limita el daño. Una cuenta de usuario sin permisos de administración comprometida es un incidente; una de administrador comprometida es la organización entera.",
+    "difficulty": "easy",
+    "tags": [
+      "minimo-privilegio",
+      "fundamentos"
+    ]
+  },
+  {
+    "id": "d1-q15",
+    "domain": 1,
+    "objective": "1.4",
+    "type": "single",
+    "stem": "¿Qué es la firma digital de un documento y qué aporta frente a un simple hash?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Aporta confidencialidad del contenido"
+      },
+      {
+        "id": "b",
+        "text": "Además de integridad, aporta autenticidad del emisor y no repudio"
+      },
+      {
+        "id": "c",
+        "text": "Comprime el documento para enviarlo"
+      },
+      {
+        "id": "d",
+        "text": "Sustituye al cifrado en tránsito"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El hash solo demuestra que el contenido no cambió. La firma añade quién lo firmó, porque solo el titular de la clave privada puede generarla, y eso permite exigir responsabilidad.",
+    "difficulty": "medium",
+    "tags": [
+      "firma-digital",
+      "no-repudio",
+      "hash"
+    ]
+  },
+  {
+    "id": "d1-q16",
+    "domain": 1,
+    "objective": "1.2",
+    "type": "single",
+    "stem": "¿Qué es el no repudio y con qué se consigue?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Impedir que un usuario niegue haber realizado una acción, con firma digital y registros de auditoría"
+      },
+      {
+        "id": "b",
+        "text": "Impedir que un atacante entre en la red"
+      },
+      {
+        "id": "c",
+        "text": "Cifrar los datos del usuario"
+      },
+      {
+        "id": "d",
+        "text": "Bloquear el acceso a Internet"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El no repudio hace que una acción sea atribuible y demostrable: firma para la autoría del documento y logs firmados o inmutables para las acciones en sistemas.",
+    "difficulty": "medium",
+    "tags": [
+      "no-repudio",
+      "auditoria"
+    ]
+  },
+  {
+    "id": "d1-q17",
+    "domain": 1,
+    "objective": "1.1",
+    "type": "multiple",
+    "stem": "¿Qué DOS controles son técnicos y preventivos a la vez?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un firewall que bloquea puertos no autorizados"
+      },
+      {
+        "id": "b",
+        "text": "Un sistema de bloqueo de escritura en dispositivos USB"
+      },
+      {
+        "id": "c",
+        "text": "Una política de uso aceptable firmada por los empleados"
+      },
+      {
+        "id": "d",
+        "text": "Una revisión trimestral de las grabaciones de las cámaras"
+      }
+    ],
+    "correctOptionIds": [
+      "a",
+      "b"
+    ],
+    "explanation": "Ambos viven en software y hardware y actúan antes de que la acción ocurra. La política es directiva y la revisión de grabaciones es detective.",
+    "difficulty": "medium",
+    "tags": [
+      "controles",
+      "categorias",
+      "funciones"
+    ]
   }
 ]

@@ -588,5 +588,354 @@
       "segregacion",
       "fraude"
     ]
+  },
+  {
+    "id": "d5-q18",
+    "domain": 5,
+    "objective": "5.2",
+    "type": "single",
+    "stem": "Tras un análisis de riesgo, la dirección decide no actuar sobre un riesgo de bajo impacto y coste de mitigación alto. ¿Cómo debe quedar registrada esa decisión?",
+    "options": [
+      {
+        "id": "a",
+        "text": "No hace falta registrarla: no se va a hacer nada"
+      },
+      {
+        "id": "b",
+        "text": "Como riesgo aceptado, con responsable, justificación y fecha de revisión"
+      },
+      {
+        "id": "c",
+        "text": "Como falso positivo del análisis"
+      },
+      {
+        "id": "d",
+        "text": "Como riesgo transferido a un tercero"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Aceptar un riesgo es una decisión legítima, pero debe ser explícita y revisable. Sin registro, ante un incidente no hay forma de demostrar que la decisión fue consciente y estaba justificada.",
+    "difficulty": "medium",
+    "tags": [
+      "riesgo",
+      "aceptacion",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "d5-q19",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Qué es un marco de control (framework) como ISO 27001 o NIST CSF y para qué sirve?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un producto de seguridad que se instala"
+      },
+      {
+        "id": "b",
+        "text": "Un conjunto estructurado de controles y buenas prácticas que da un lenguaje común y una base auditable"
+      },
+      {
+        "id": "c",
+        "text": "Una certificación personal de los empleados"
+      },
+      {
+        "id": "d",
+        "text": "Un tipo de firewall de nueva generación"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El marco no protege por sí solo: organiza qué hay que hacer y permite comparar la postura con un estándar reconocido. Sirve para priorizar, no para sustituir controles.",
+    "difficulty": "easy",
+    "tags": [
+      "gobernanza",
+      "marcos",
+      "compliance"
+    ]
+  },
+  {
+    "id": "d5-q20",
+    "domain": 5,
+    "objective": "5.4",
+    "type": "single",
+    "stem": "¿Qué debe incluir un plan de respuesta a incidentes para ser útil el día que se activa?",
+    "options": [
+      {
+        "id": "a",
+        "text": "La lista completa de vulnerabilidades conocidas"
+      },
+      {
+        "id": "b",
+        "text": "Roles y suplentes, criterios de escalado, canales de comunicación y procedimientos probados"
+      },
+      {
+        "id": "c",
+        "text": "El presupuesto anual de seguridad"
+      },
+      {
+        "id": "d",
+        "text": "El inventario de licencias de software"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Un plan se cae por personas que no saben quién decide y por procedimientos nunca ejecutados. Los roles con suplentes y los ensayos periódicos son lo que lo hace utilizable bajo presión.",
+    "difficulty": "medium",
+    "tags": [
+      "respuesta-a-incidentes",
+      "plan",
+      "roles"
+    ]
+  },
+  {
+    "id": "d5-q21",
+    "domain": 5,
+    "objective": "5.3",
+    "type": "single",
+    "stem": "¿Por qué se evalúa la seguridad de un proveedor ANTES de firmar el contrato y no después?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque después ya no se puede auditar"
+      },
+      {
+        "id": "b",
+        "text": "Porque el nivel de seguridad del proveedor pasa a ser tu riesgo, y después hay mucho menos margen de negociación"
+      },
+      {
+        "id": "c",
+        "text": "Porque lo exige el RGPD en todos los casos"
+      },
+      {
+        "id": "d",
+        "text": "Porque así el contrato es más barato"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Al integrar un proveedor se hereda su exposición. Antes de firmar se puede exigir, negociar o descartar; después solo queda asumir lo que haya o romper el contrato.",
+    "difficulty": "medium",
+    "tags": [
+      "terceros",
+      "riesgo",
+      "evaluacion"
+    ]
+  },
+  {
+    "id": "d5-q22",
+    "domain": 5,
+    "objective": "5.2",
+    "type": "single",
+    "stem": "¿Qué es el riesgo residual?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El riesgo que queda después de aplicar los controles"
+      },
+      {
+        "id": "b",
+        "text": "El riesgo que ya se ha materializado en un incidente"
+      },
+      {
+        "id": "c",
+        "text": "El riesgo que asume el proveedor cloud"
+      },
+      {
+        "id": "d",
+        "text": "El riesgo que no se puede medir"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "Ningún control elimina el riesgo por completo. Lo que la dirección acepta no es el riesgo bruto, sino el residual: por eso hay que calcularlo y ponerlo por escrito.",
+    "difficulty": "medium",
+    "tags": [
+      "riesgo",
+      "controles"
+    ]
+  },
+  {
+    "id": "d5-q23",
+    "domain": 5,
+    "objective": "5.6",
+    "type": "single",
+    "stem": "¿Qué papel tiene la dirección (no el equipo técnico) en el programa de seguridad?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Configurar los firewalls"
+      },
+      {
+        "id": "b",
+        "text": "Fijar el apetito de riesgo, aprobar políticas y asignar recursos"
+      },
+      {
+        "id": "c",
+        "text": "Analizar los logs del SIEM"
+      },
+      {
+        "id": "d",
+        "text": "Ejecutar los escaneos de vulnerabilidades"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La seguridad es una decisión de negocio antes que técnica: sin apetito de riesgo definido, sin políticas aprobadas y sin presupuesto, los controles técnicos no tienen de dónde partir.",
+    "difficulty": "easy",
+    "tags": [
+      "gobernanza",
+      "direccion",
+      "politicas"
+    ]
+  },
+  {
+    "id": "d5-q24",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Qué es un acuerdo de nivel de servicio (SLA) incumplido por un proveedor crítico y qué corresponde hacer?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Nada: los SLA son orientativos"
+      },
+      {
+        "id": "b",
+        "text": "Aplicar las penalizaciones previstas y reevaluar el riesgo del proveedor"
+      },
+      {
+        "id": "c",
+        "text": "Aumentar el número de usuarios del servicio"
+      },
+      {
+        "id": "d",
+        "text": "Ignorarlo salvo que haya una brecha de datos"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El SLA existe para poder exigir. Un incumplimiento reiterado no es solo un problema contractual: indica que el proveedor no sostiene el nivel de servicio del que depende tu operación.",
+    "difficulty": "medium",
+    "tags": [
+      "terceros",
+      "sla",
+      "contratos"
+    ]
+  },
+  {
+    "id": "d5-q25",
+    "domain": 5,
+    "objective": "5.5",
+    "type": "single",
+    "stem": "¿Qué es la clasificación de datos y por qué es el punto de partida de la protección?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un inventario de los servidores de la organización"
+      },
+      {
+        "id": "b",
+        "text": "Etiquetar la información por sensibilidad para poder exigir controles distintos a cada nivel"
+      },
+      {
+        "id": "c",
+        "text": "Un tipo de cifrado de base de datos"
+      },
+      {
+        "id": "d",
+        "text": "La lista de usuarios con acceso privilegiado"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Sin clasificar no se sabe qué proteger ni cuánto. La etiqueta (público, interno, confidencial, restringido) es lo que determina cifrado, retención, acceso y destrucción.",
+    "difficulty": "easy",
+    "tags": [
+      "clasificacion",
+      "datos",
+      "politicas"
+    ]
+  },
+  {
+    "id": "d5-q26",
+    "domain": 5,
+    "objective": "5.4",
+    "type": "single",
+    "stem": "¿Qué diferencia hay entre un plan de continuidad (BCP) y un plan de recuperación ante desastres (DRP)?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Son el mismo documento"
+      },
+      {
+        "id": "b",
+        "text": "El BCP mantiene el negocio operando durante la interrupción; el DRP restaura la infraestructura tecnológica"
+      },
+      {
+        "id": "c",
+        "text": "El DRP solo cubre desastres naturales"
+      },
+      {
+        "id": "d",
+        "text": "El BCP lo escribe el proveedor cloud"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El BCP mira el proceso de negocio (cómo seguir facturando) y el DRP mira la tecnología (cómo recuperar los sistemas). El DRP es un componente del BCP, no su sustituto.",
+    "difficulty": "medium",
+    "tags": [
+      "continuidad",
+      "bcdr",
+      "recuperacion"
+    ]
+  },
+  {
+    "id": "d5-q27",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Por qué se exige que las políticas de seguridad se revisen periódicamente y no solo al aprobarse?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque caducan legalmente cada año"
+      },
+      {
+        "id": "b",
+        "text": "Porque cambian el negocio, la tecnología y las amenazas, y una política obsoleta deja de ser aplicable"
+      },
+      {
+        "id": "c",
+        "text": "Porque el auditor cobra por revisión"
+      },
+      {
+        "id": "d",
+        "text": "Porque así lo exige PCI DSS en todos los sectores"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Una política que describe sistemas que ya no existen no se puede cumplir ni auditar. La revisión periódica es lo que mantiene la política alineada con la realidad.",
+    "difficulty": "medium",
+    "tags": [
+      "politicas",
+      "gobernanza",
+      "revision"
+    ]
   }
 ]

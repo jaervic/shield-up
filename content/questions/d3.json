@@ -550,5 +550,284 @@
       "red",
       "politicas"
     ]
+  },
+  {
+    "id": "d3-q17",
+    "domain": 3,
+    "objective": "3.3",
+    "type": "single",
+    "stem": "¿Qué protege el protocolo TLS en una conexión web?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Los datos en reposo del servidor"
+      },
+      {
+        "id": "b",
+        "text": "Confidencialidad e integridad de los datos EN TRÁNSITO, y autentica el servidor con su certificado"
+      },
+      {
+        "id": "c",
+        "text": "El código de la aplicación frente a inyecciones"
+      },
+      {
+        "id": "d",
+        "text": "El equipo del usuario frente al malware"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "TLS cifra y protege la integridad del canal, y el certificado permite verificar que hablas con el servidor esperado. No dice nada sobre lo que ocurre después en el servidor ni en el cliente.",
+    "difficulty": "easy",
+    "tags": [
+      "tls",
+      "datos-en-transito"
+    ]
+  },
+  {
+    "id": "d3-q18",
+    "domain": 3,
+    "objective": "3.2",
+    "type": "single",
+    "stem": "¿Qué ventaja de seguridad aporta ejecutar aplicaciones en contenedores frente a hacerlo sobre la misma máquina directamente?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cifran automáticamente los datos de la aplicación"
+      },
+      {
+        "id": "b",
+        "text": "Aíslan dependencias y superficie: cada servicio solo lleva lo que necesita"
+      },
+      {
+        "id": "c",
+        "text": "Eliminan la necesidad de parchear el host"
+      },
+      {
+        "id": "d",
+        "text": "Impiden cualquier escalada de privilegios"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Un contenedor empaqueta solo las dependencias del servicio, así que una vulnerabilidad en una librería afecta a ese servicio y no a todo el host. Comparten kernel, de modo que el kernel sigue siendo superficie común.",
+    "difficulty": "medium",
+    "tags": [
+      "contenedores",
+      "aislamiento"
+    ]
+  },
+  {
+    "id": "d3-q19",
+    "domain": 3,
+    "objective": "3.3",
+    "type": "single",
+    "stem": "¿Qué es una VPN de acceso remoto y qué garantiza frente a conectarse directamente?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un túnel cifrado y autenticado entre el usuario y la red corporativa"
+      },
+      {
+        "id": "b",
+        "text": "Un antivirus para conexiones externas"
+      },
+      {
+        "id": "c",
+        "text": "Un proxy que acelera la navegación"
+      },
+      {
+        "id": "d",
+        "text": "Un sistema de copias de seguridad remotas"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "La VPN protege el tránsito y autentica al usuario antes de darle acceso a los recursos internos. No protege al equipo del usuario frente a malware ni sustituye al control de acceso.",
+    "difficulty": "easy",
+    "tags": [
+      "vpn",
+      "acceso-remoto",
+      "tunel"
+    ]
+  },
+  {
+    "id": "d3-q20",
+    "domain": 3,
+    "objective": "3.1",
+    "type": "single",
+    "stem": "¿Qué es el hipervisor y por qué es un objetivo de ataque de alto valor?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El software que gestiona las máquinas virtuales; comprometerlo da acceso a todas ellas"
+      },
+      {
+        "id": "b",
+        "text": "Un cortafuegos físico del centro de datos"
+      },
+      {
+        "id": "c",
+        "text": "El sistema de almacenamiento en red"
+      },
+      {
+        "id": "d",
+        "text": "La consola de administración del backup"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "Está por debajo de todas las máquinas virtuales: un fallo de escape del hipervisor rompe el aislamiento entre inquilinos. Por eso se parchea con prioridad y se restringe su consola de administración.",
+    "difficulty": "medium",
+    "tags": [
+      "hipervisor",
+      "virtualizacion",
+      "aislamiento"
+    ]
+  },
+  {
+    "id": "d3-q21",
+    "domain": 3,
+    "objective": "3.2",
+    "type": "single",
+    "stem": "¿Qué es una red de confianza cero (ZTNA) frente a una VPN tradicional?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Da acceso a la red completa una vez autenticado"
+      },
+      {
+        "id": "b",
+        "text": "Concede acceso por aplicación y por sesión, sin meter al usuario en la red"
+      },
+      {
+        "id": "c",
+        "text": "No requiere autenticación"
+      },
+      {
+        "id": "d",
+        "text": "Solo funciona en entornos cloud"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La VPN tradicional mete al usuario en la red y desde ahí alcanza todo lo que las reglas permitan. ZTNA autoriza cada aplicación por separado, reduciendo el movimiento lateral si el equipo está comprometido.",
+    "difficulty": "hard",
+    "tags": [
+      "ztna",
+      "zero-trust",
+      "acceso"
+    ]
+  },
+  {
+    "id": "d3-q22",
+    "domain": 3,
+    "objective": "3.4",
+    "type": "single",
+    "stem": "¿Qué mide una prueba de restauración de copias de seguridad?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Que la copia existe y su tamaño es correcto"
+      },
+      {
+        "id": "b",
+        "text": "Que los datos se recuperan de verdad y en el tiempo comprometido (RTO)"
+      },
+      {
+        "id": "c",
+        "text": "Que el software de backup está licenciado"
+      },
+      {
+        "id": "d",
+        "text": "Que el cifrado de la cinta es correcto"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Una copia que nunca se ha restaurado es una hipótesis. La prueba demuestra dos cosas a la vez: que los datos íntegros vuelven y que se tarda lo que el negocio tolera.",
+    "difficulty": "medium",
+    "tags": [
+      "backups",
+      "rto",
+      "pruebas"
+    ]
+  },
+  {
+    "id": "d3-q23",
+    "domain": 3,
+    "objective": "3.3",
+    "type": "multiple",
+    "stem": "¿Qué DOS afirmaciones sobre una DMZ son correctas?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Aloja servicios que deben ser accesibles desde Internet"
+      },
+      {
+        "id": "b",
+        "text": "Si un servicio de la DMZ se compromete, el atacante no alcanza directamente la red interna"
+      },
+      {
+        "id": "c",
+        "text": "Sustituye al firewall perimetral"
+      },
+      {
+        "id": "d",
+        "text": "En la DMZ se colocan las bases de datos para que sean accesibles"
+      }
+    ],
+    "correctOptionIds": [
+      "a",
+      "b"
+    ],
+    "explanation": "La DMZ es un segmento intermedio con reglas estrictas hacia dentro y hacia fuera. Precisamente por eso no es sitio para datos: una base de datos en la DMZ es una base de datos expuesta.",
+    "difficulty": "medium",
+    "tags": [
+      "dmz",
+      "segmentacion",
+      "firewall"
+    ]
+  },
+  {
+    "id": "d3-q24",
+    "domain": 3,
+    "objective": "3.1",
+    "type": "single",
+    "stem": "¿Qué implica el cifrado de datos en reposo en una base de datos en la nube y qué NO resuelve?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Protege el dato si se roba el soporte físico, pero no protege frente a un acceso con credenciales válidas"
+      },
+      {
+        "id": "b",
+        "text": "Protege frente a cualquier consulta no autorizada"
+      },
+      {
+        "id": "c",
+        "text": "Sustituye a los controles de acceso"
+      },
+      {
+        "id": "d",
+        "text": "Cifra también las consultas en tránsito"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El cifrado en reposo protege el medio físico y las copias. Un atacante que consigue credenciales válidas lee la base de datos descifrada: para eso hacen falta autorización, mínimo privilegio y auditoría.",
+    "difficulty": "hard",
+    "tags": [
+      "cifrado",
+      "datos-en-reposo",
+      "cloud"
+    ]
   }
 ]

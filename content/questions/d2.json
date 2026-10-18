@@ -686,5 +686,423 @@
       "wps",
       "wpa2"
     ]
+  },
+  {
+    "id": "d2-q21",
+    "domain": 2,
+    "objective": "2.4",
+    "type": "single",
+    "stem": "¿Qué es un ataque de intermediario (on-path) y qué lo hace posible en una red local?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Saturar el enlace con tráfico; se consigue con amplificación"
+      },
+      {
+        "id": "b",
+        "text": "Situarse entre las dos partes y leer o alterar la comunicación; en LAN lo permite el ARP spoofing"
+      },
+      {
+        "id": "c",
+        "text": "Adivinar contraseñas por fuerza bruta"
+      },
+      {
+        "id": "d",
+        "text": "Cifrar los datos de la víctima y pedir rescate"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El atacante necesita que el tráfico pase por él. En una LAN, falsificar las respuestas ARP es la forma más común de conseguirlo; cifrado extremo a extremo y DAI lo dificultan.",
+    "difficulty": "medium",
+    "tags": [
+      "on-path",
+      "arp",
+      "capa-2"
+    ]
+  },
+  {
+    "id": "d2-q22",
+    "domain": 2,
+    "objective": "2.2",
+    "type": "single",
+    "stem": "Un atacante deja un USB rotulado «Nóminas 2026» en el aparcamiento de la empresa. ¿Qué principio de ingeniería social explota?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Autoridad"
+      },
+      {
+        "id": "b",
+        "text": "Curiosidad y urgencia"
+      },
+      {
+        "id": "c",
+        "text": "Prueba social"
+      },
+      {
+        "id": "d",
+        "text": "Escasez"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El baiting explota la curiosidad con un cebo irresistible. La defensa es técnica (bloqueo de USB) y cultural (reportar en lugar de conectar), no solo formación.",
+    "difficulty": "easy",
+    "tags": [
+      "ingenieria-social",
+      "baiting",
+      "usb"
+    ]
+  },
+  {
+    "id": "d2-q23",
+    "domain": 2,
+    "objective": "2.3",
+    "type": "single",
+    "stem": "¿Qué permite un ataque de cross-site scripting (XSS) al atacante?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Ejecutar script en el navegador de la víctima dentro del contexto del sitio legítimo"
+      },
+      {
+        "id": "b",
+        "text": "Cifrar la base de datos del servidor"
+      },
+      {
+        "id": "c",
+        "text": "Interceptar el tráfico entre el servidor y su base de datos"
+      },
+      {
+        "id": "d",
+        "text": "Obtener acceso físico al equipo de la víctima"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "Como el script se ejecuta en el origen del sitio, hereda su sesión y sus permisos: puede robar cookies, enviar formularios o redirigir. Se evita validando la entrada y codificando la salida.",
+    "difficulty": "medium",
+    "tags": [
+      "xss",
+      "aplicaciones-web"
+    ]
+  },
+  {
+    "id": "d2-q24",
+    "domain": 2,
+    "objective": "2.4",
+    "type": "single",
+    "stem": "Un atacante intercepta una sesión válida y envía de nuevo una petición de transferencia ya capturada. ¿Qué ataque es?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Replay attack"
+      },
+      {
+        "id": "b",
+        "text": "Cross-site request forgery"
+      },
+      {
+        "id": "c",
+        "text": "SQL injection"
+      },
+      {
+        "id": "d",
+        "text": "Directory traversal"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El replay reutiliza un mensaje válido sin modificarlo. Se mitiga con nonces, marcas de tiempo y tokens de un solo uso, de modo que el mensaje repetido ya no sea aceptado.",
+    "difficulty": "medium",
+    "tags": [
+      "replay",
+      "sesiones",
+      "nonce"
+    ]
+  },
+  {
+    "id": "d2-q25",
+    "domain": 2,
+    "objective": "2.1",
+    "type": "single",
+    "stem": "¿Qué caracteriza a un gusano frente a un virus?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El gusano necesita que el usuario ejecute un archivo"
+      },
+      {
+        "id": "b",
+        "text": "El gusano se propaga solo por la red sin intervención del usuario"
+      },
+      {
+        "id": "c",
+        "text": "El gusano solo afecta a dispositivos móviles"
+      },
+      {
+        "id": "d",
+        "text": "El gusano no causa daño nunca"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El virus requiere un huésped y una acción del usuario; el gusano se automultiplica por la red, y por eso un segmento plano lo propaga en minutos. La segmentación es su freno.",
+    "difficulty": "easy",
+    "tags": [
+      "malware",
+      "gusano",
+      "virus"
+    ]
+  },
+  {
+    "id": "d2-q26",
+    "domain": 2,
+    "objective": "2.3",
+    "type": "single",
+    "stem": "Una petición web incluye la secuencia `../../etc/passwd`. ¿Qué intenta el atacante?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un desbordamiento de búfer"
+      },
+      {
+        "id": "b",
+        "text": "Un recorrido de directorios (directory traversal)"
+      },
+      {
+        "id": "c",
+        "text": "Una inyección SQL"
+      },
+      {
+        "id": "d",
+        "text": "Un ataque de denegación de servicio"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Los `../` intentan salir del directorio permitido para leer archivos del sistema. Se evita validando la ruta contra una lista blanca y no construyendo rutas con entrada del usuario.",
+    "difficulty": "medium",
+    "tags": [
+      "directory-traversal",
+      "aplicaciones-web"
+    ]
+  },
+  {
+    "id": "d2-q27",
+    "domain": 2,
+    "objective": "2.2",
+    "type": "single",
+    "stem": "Un empleado conecta su portátil a una red inalámbrica pública y le aparece un aviso de certificado no válido al abrir el banco. ¿Qué debe hacer?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Aceptar el certificado y continuar: es habitual en redes públicas"
+      },
+      {
+        "id": "b",
+        "text": "No continuar y usar la conexión de datos móviles o una VPN corporativa"
+      },
+      {
+        "id": "c",
+        "text": "Desactivar HTTPS para evitar el aviso"
+      },
+      {
+        "id": "d",
+        "text": "Cambiar la contraseña del banco desde esa red"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Un certificado inválido puede indicar interceptación. Aceptarlo entrega la sesión al intermediario; lo correcto es cortar y usar un canal de confianza.",
+    "difficulty": "easy",
+    "tags": [
+      "mitm",
+      "certificados",
+      "wifi-publica"
+    ]
+  },
+  {
+    "id": "d2-q28",
+    "domain": 2,
+    "objective": "2.5",
+    "type": "multiple",
+    "stem": "¿Qué DOS medidas reducen de forma más directa la superficie de ataque de una organización?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Inventariar los activos y eliminar los servicios y cuentas que no se usan"
+      },
+      {
+        "id": "b",
+        "text": "Aplicar parches y actualizar software obsoleto o sin soporte"
+      },
+      {
+        "id": "c",
+        "text": "Aumentar la longitud mínima de las contraseñas"
+      },
+      {
+        "id": "d",
+        "text": "Contratar un seguro de ciberseguridad"
+      }
+    ],
+    "correctOptionIds": [
+      "a",
+      "b"
+    ],
+    "explanation": "La superficie de ataque son los componentes expuestos. Reducirla es quitar lo que sobra y cerrar lo que está desactualizado. Contraseñas más largas y el seguro no eliminan ningún vector.",
+    "difficulty": "medium",
+    "tags": [
+      "superficie-de-ataque",
+      "hardening",
+      "parcheo"
+    ]
+  },
+  {
+    "id": "d2-q29",
+    "domain": 2,
+    "objective": "2.4",
+    "type": "single",
+    "stem": "¿Qué es un ataque de agotamiento de recursos (resource exhaustion) contra un servicio web?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Robar la base de datos de usuarios"
+      },
+      {
+        "id": "b",
+        "text": "Consumir CPU, memoria o conexiones hasta que el servicio deja de atender a los legítimos"
+      },
+      {
+        "id": "c",
+        "text": "Falsificar el certificado del servidor"
+      },
+      {
+        "id": "d",
+        "text": "Modificar los registros DNS del dominio"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Es una denegación de servicio a nivel de aplicación: no satura el enlace, agota un recurso concreto del servidor. Se mitiga con límites de tasa, cuotas y timeouts.",
+    "difficulty": "medium",
+    "tags": [
+      "dos",
+      "aplicaciones-web",
+      "limites"
+    ]
+  },
+  {
+    "id": "d2-q30",
+    "domain": 2,
+    "objective": "2.1",
+    "type": "single",
+    "stem": "¿Qué es un rootkit y por qué es especialmente difícil de detectar?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un programa que cifra archivos; se detecta por la extensión de los archivos"
+      },
+      {
+        "id": "b",
+        "text": "Software que oculta su presencia manipulando el propio sistema; puede falsear lo que ven las herramientas del equipo"
+      },
+      {
+        "id": "c",
+        "text": "Un correo fraudulento que suplanta a un banco"
+      },
+      {
+        "id": "d",
+        "text": "Un ataque de fuerza bruta contra SSH"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Si el rootkit controla las llamadas del sistema, puede ocultarse de las herramientas que corren sobre ese mismo sistema. Por eso la detección fiable suele requerir arrancar desde fuera o reinstalar.",
+    "difficulty": "hard",
+    "tags": [
+      "rootkit",
+      "malware",
+      "deteccion"
+    ]
+  },
+  {
+    "id": "d2-q31",
+    "domain": 2,
+    "objective": "2.2",
+    "type": "single",
+    "stem": "¿Qué es un ataque de watering hole?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Enviar correos masivos con un enlace malicioso"
+      },
+      {
+        "id": "b",
+        "text": "Comprometer un sitio web que la víctima visita habitualmente para infectarla desde ahí"
+      },
+      {
+        "id": "c",
+        "text": "Suplantar una red inalámbrica en un aeropuerto"
+      },
+      {
+        "id": "d",
+        "text": "Llamar por teléfono haciéndose pasar por soporte técnico"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "En lugar de atacar al objetivo, se ataca un sitio de confianza de su sector. Es sigiloso porque no requiere engañar a nadie: la víctima acude sola.",
+    "difficulty": "medium",
+    "tags": [
+      "watering-hole",
+      "amenazas"
+    ]
+  },
+  {
+    "id": "d2-q32",
+    "domain": 2,
+    "objective": "2.5",
+    "type": "single",
+    "stem": "¿Por qué la segmentación de red reduce el impacto del ransomware?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque cifra los datos de cada segmento"
+      },
+      {
+        "id": "b",
+        "text": "Porque limita el movimiento lateral: un equipo comprometido no alcanza los demás segmentos"
+      },
+      {
+        "id": "c",
+        "text": "Porque sustituye a las copias de seguridad"
+      },
+      {
+        "id": "d",
+        "text": "Porque impide la entrada inicial por correo"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La segmentación no evita la infección inicial, pero decide hasta dónde llega. Con controles este-oeste, el cifrado se queda en el segmento comprometido en lugar de recorrer toda la empresa.",
+    "difficulty": "medium",
+    "tags": [
+      "ransomware",
+      "segmentacion",
+      "movimiento-lateral"
+    ]
   }
 ]

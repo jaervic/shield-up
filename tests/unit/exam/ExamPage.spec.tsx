@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 import { act, fireEvent, screen } from '@testing-library/react';
 import type { ExamAttempt } from '@/domain/exam';
 import { loadQuestions } from '@/data/content/loadQuestions';
+import { examLengthFor } from '@/features/exam/engine/selection';
 import { resetExamRepository, setExamRepository } from '@/features/exam/data/repository';
 import type { ExamRepository } from '@/features/exam/data/examRepository';
 import { useExamStore } from '@/features/exam/state/examStore';
@@ -41,9 +42,10 @@ describe('ExamPage', () => {
     renderWithProviders(<ExamPage />, ['/exam']);
     await settleUntil(() => screen.queryByRole('button', { name: /comenzar simulacro/i }) !== null);
 
-    const bank = loadQuestions().length;
+    // El examen nunca pasa de 90 preguntas, aunque el banco sea mayor.
+    const length = examLengthFor(loadQuestions().length);
     expect(screen.getByRole('heading', { name: 'Simulador de examen' })).toBeInTheDocument();
-    expect(screen.getByText(String(bank))).toBeInTheDocument();
+    expect(screen.getByText(String(length))).toBeInTheDocument();
     expect(screen.getByText('Aprobado').parentElement).toHaveTextContent('750/900');
     // Con el banco a escala real (>=90% de 90) no se avisa de proporcionalidad.
     expect(screen.queryByText(/simulacro proporcional/i)).not.toBeInTheDocument();
@@ -52,7 +54,7 @@ describe('ExamPage', () => {
     await settleUntil(() => screen.queryByRole('timer') !== null);
 
     expect(screen.getByRole('timer')).toBeInTheDocument();
-    expect(screen.getByText('Pregunta 1 de ' + bank)).toBeInTheDocument();
+    expect(screen.getByText('Pregunta 1 de ' + length)).toBeInTheDocument();
   });
 
   it('permite responder, marcar y entregar, y guarda el intento', async () => {
@@ -64,7 +66,7 @@ describe('ExamPage', () => {
     fireEvent.click(screen.getByRole('button', { name: /comenzar simulacro/i }));
     await settleUntil(() => screen.queryByRole('timer') !== null);
 
-    const total = loadQuestions().length;
+    const total = examLengthFor(loadQuestions().length);
 
     // Responder la primera: se marca la primera opción del enunciado.
     const firstOption = container.querySelector('fieldset input');

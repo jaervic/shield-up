@@ -865,5 +865,493 @@
       "soc",
       "mttr"
     ]
+  },
+  {
+    "id": "d4-q26",
+    "domain": 4,
+    "objective": "4.5",
+    "type": "multiple",
+    "stem": "Un servidor heredado no puede parchearse y sigue expuesto. ¿Qué DOS medidas reducen el riesgo mientras tanto?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Segmentarlo y restringir qué puede alcanzarlo y quién puede alcanzarlo"
+      },
+      {
+        "id": "b",
+        "text": "Reglas virtuales en el IPS que bloqueen la explotación conocida"
+      },
+      {
+        "id": "c",
+        "text": "Deshabilitar la auditoría para reducir la carga del sistema"
+      },
+      {
+        "id": "d",
+        "text": "Documentar la excepción y no hacer nada más"
+      }
+    ],
+    "correctOptionIds": [
+      "a",
+      "b"
+    ],
+    "explanation": "Cuando no se puede corregir, se compensa: aislar reduce la probabilidad de alcanzar el sistema y el impacto si cae, y las reglas virtuales bloquean el vector conocido. Documentar sin actuar es aceptar el riesgo en silencio.",
+    "difficulty": "medium",
+    "tags": [
+      "compensacion",
+      "segmentacion",
+      "ips"
+    ]
+  },
+  {
+    "id": "d4-q27",
+    "domain": 4,
+    "objective": "4.2",
+    "type": "single",
+    "stem": "¿Qué ventaja aporta la federación de identidades a la gestión de accesos?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Elimina la necesidad de MFA"
+      },
+      {
+        "id": "b",
+        "text": "Permite autenticarse en varios servicios con una identidad de confianza, sin duplicar cuentas"
+      },
+      {
+        "id": "c",
+        "text": "Cifra las bases de datos de la organización"
+      },
+      {
+        "id": "d",
+        "text": "Sustituye al directorio activo en todos los casos"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La federación (SAML, OIDC) traslada la autenticación a un proveedor de identidad de confianza. Menos cuentas duplicadas significa menos contraseñas débiles y menos cuentas huérfanas que revisar.",
+    "difficulty": "medium",
+    "tags": [
+      "iam",
+      "federacion",
+      "sso"
+    ]
+  },
+  {
+    "id": "d4-q28",
+    "domain": 4,
+    "objective": "4.6",
+    "type": "single",
+    "stem": "Un usuario intenta enviar por correo un archivo con números de tarjeta y el sistema lo bloquea, registrando el intento. ¿Qué control ha actuado?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un DLP en modo bloqueo"
+      },
+      {
+        "id": "b",
+        "text": "Un WAF"
+      },
+      {
+        "id": "c",
+        "text": "Un antimalware de endpoint"
+      },
+      {
+        "id": "d",
+        "text": "Un sistema de detección de intrusos"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El DLP inspecciona el contenido en busca de datos sensibles y, en modo bloqueo, impide la transferencia además de registrarla. El WAF protege aplicaciones web, no el correo saliente.",
+    "difficulty": "easy",
+    "tags": [
+      "dlp",
+      "prevencion-de-fuga"
+    ]
+  },
+  {
+    "id": "d4-q29",
+    "domain": 4,
+    "objective": "4.1",
+    "type": "single",
+    "stem": "¿Qué diferencia hay entre un IDS y un IPS?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El IDS detecta y alerta; el IPS además bloquea el tráfico en línea"
+      },
+      {
+        "id": "b",
+        "text": "El IPS solo analiza tráfico cifrado"
+      },
+      {
+        "id": "c",
+        "text": "El IDS funciona únicamente en el endpoint"
+      },
+      {
+        "id": "d",
+        "text": "Son el mismo producto con distinto nombre comercial"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El IDS es pasivo: observa y notifica. El IPS está en el camino del tráfico y puede descartar el paquete, con el riesgo que eso implica: un falso positivo bloquea tráfico legítimo.",
+    "difficulty": "easy",
+    "tags": [
+      "ids",
+      "ips",
+      "deteccion"
+    ]
+  },
+  {
+    "id": "d4-q30",
+    "domain": 4,
+    "objective": "4.8",
+    "type": "single",
+    "stem": "¿Por qué se recomienda documentar la línea de tiempo del incidente durante la respuesta y no después?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque el informe final no admite anexos"
+      },
+      {
+        "id": "b",
+        "text": "Porque los detalles se pierden y la correlación posterior se vuelve especulación"
+      },
+      {
+        "id": "c",
+        "text": "Porque lo exige el RGPD en 72 horas"
+      },
+      {
+        "id": "d",
+        "text": "Porque el SIEM borra los logs automáticamente"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La memoria del equipo es el registro menos fiable. Documentar en caliente permite reconstruir qué se hizo y cuándo, que es lo que después sostiene el informe y una eventual reclamación legal.",
+    "difficulty": "medium",
+    "tags": [
+      "respuesta-a-incidentes",
+      "documentacion"
+    ]
+  },
+  {
+    "id": "d4-q31",
+    "domain": 4,
+    "objective": "4.3",
+    "type": "single",
+    "stem": "¿Qué es un escaneo autenticado (credentialed scan) frente a uno no autenticado?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El autenticado solo funciona en Linux"
+      },
+      {
+        "id": "b",
+        "text": "El autenticado se ejecuta con credenciales del sistema y ve parches y configuración interna, no solo servicios expuestos"
+      },
+      {
+        "id": "c",
+        "text": "El no autenticado requiere aprobación de la dirección"
+      },
+      {
+        "id": "d",
+        "text": "El autenticado no genera falsos positivos nunca"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Sin credenciales, el escáner solo ve lo que un atacante externo vería. Con ellas puede leer versiones instaladas, claves de registro y configuraciones, que es donde suelen estar los fallos reales.",
+    "difficulty": "medium",
+    "tags": [
+      "vulnerabilidades",
+      "escaneo"
+    ]
+  },
+  {
+    "id": "d4-q32",
+    "domain": 4,
+    "objective": "4.7",
+    "type": "single",
+    "stem": "¿Cuál es el primer paso al recibir una alerta de alta fidelidad sobre un host concreto?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Abrir un ticket y esperar al turno siguiente"
+      },
+      {
+        "id": "b",
+        "text": "Validar la alerta y determinar el alcance antes de contener"
+      },
+      {
+        "id": "c",
+        "text": "Notificar a la dirección"
+      },
+      {
+        "id": "d",
+        "text": "Bloquear la IP del host en el firewall"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Contener sin entender el alcance puede dejar al atacante operando por otra vía. Validar y medir el alcance primero es lo que evita cerrar el incidente antes de tiempo.",
+    "difficulty": "medium",
+    "tags": [
+      "triaje",
+      "soc",
+      "alcance"
+    ]
+  },
+  {
+    "id": "d4-q33",
+    "domain": 4,
+    "objective": "4.2",
+    "type": "single",
+    "stem": "¿Qué riesgo concreto introduce el uso compartido de una cuenta privilegiada entre varios administradores?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Se pierde la trazabilidad: no se puede atribuir una acción a una persona"
+      },
+      {
+        "id": "b",
+        "text": "Aumenta el consumo de licencias"
+      },
+      {
+        "id": "c",
+        "text": "Reduce el rendimiento del servidor"
+      },
+      {
+        "id": "d",
+        "text": "Impide aplicar MFA"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "Sin atribución individual, la auditoría no sirve para investigar ni para exigir responsabilidad. La solución son cuentas nominativas con privilegio elevado temporal (PAM).",
+    "difficulty": "medium",
+    "tags": [
+      "privilegios",
+      "auditoria",
+      "pam"
+    ]
+  },
+  {
+    "id": "d4-q34",
+    "domain": 4,
+    "objective": "4.4",
+    "type": "single",
+    "stem": "¿Qué aporta la normalización de registros (por ejemplo, a CEF o LEEF) antes de enviarlos al SIEM?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Reduce el tamaño de los logs a la mitad"
+      },
+      {
+        "id": "b",
+        "text": "Permite correlacionar eventos de fuentes distintas con campos comparables"
+      },
+      {
+        "id": "c",
+        "text": "Cifra los logs en tránsito"
+      },
+      {
+        "id": "d",
+        "text": "Elimina la necesidad de marcas de tiempo"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Cada fabricante nombra los campos a su manera. Normalizar a un esquema común es lo que permite preguntar «¿qué usuario hizo esto?» y obtener respuesta de fuentes heterogéneas.",
+    "difficulty": "hard",
+    "tags": [
+      "logs",
+      "siem",
+      "normalizacion"
+    ]
+  },
+  {
+    "id": "d4-q35",
+    "domain": 4,
+    "objective": "4.5",
+    "type": "single",
+    "stem": "Un empleado reporta un correo de phishing y el equipo quiere saber cuántos compañeros lo recibieron. ¿Qué fuente consulta?",
+    "options": [
+      {
+        "id": "a",
+        "text": "La puerta de enlace de correo y los logs del servidor de mensajería"
+      },
+      {
+        "id": "b",
+        "text": "El inventario de activos"
+      },
+      {
+        "id": "c",
+        "text": "La tabla de rutas del core"
+      },
+      {
+        "id": "d",
+        "text": "El registro de cambios"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "La puerta de enlace registra qué mensajes entregó y a quién. Es la fuente que convierte un reporte individual en el alcance real del envío.",
+    "difficulty": "easy",
+    "tags": [
+      "phishing",
+      "correo",
+      "alcance"
+    ]
+  },
+  {
+    "id": "d4-q36",
+    "domain": 4,
+    "objective": "4.6",
+    "type": "single",
+    "stem": "¿Qué control reduce más directamente el riesgo de exfiltración de datos a través de dispositivos USB?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cifrado del disco del portátil"
+      },
+      {
+        "id": "b",
+        "text": "Bloqueo de almacenamiento extraíble por política de endpoint"
+      },
+      {
+        "id": "c",
+        "text": "Contraseñas más largas"
+      },
+      {
+        "id": "d",
+        "text": "Un SIEM con más reglas"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El cifrado protege el dato si el equipo se pierde, pero no impide copiarlo a un USB. Bloquear el almacenamiento extraíble ataca directamente el canal de salida.",
+    "difficulty": "easy",
+    "tags": [
+      "usb",
+      "exfiltracion",
+      "endpoint"
+    ]
+  },
+  {
+    "id": "d4-q37",
+    "domain": 4,
+    "objective": "4.9",
+    "type": "single",
+    "stem": "Durante un análisis forense se trabaja sobre una COPIA de la imagen del disco y nunca sobre el original. ¿Por qué?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque la copia es más rápida de analizar"
+      },
+      {
+        "id": "b",
+        "text": "Para no alterar la evidencia original y poder demostrar que se conserva intacta"
+      },
+      {
+        "id": "c",
+        "text": "Porque el original está cifrado"
+      },
+      {
+        "id": "d",
+        "text": "Porque el software forense solo lee copias"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Cualquier escritura sobre el original contamina la prueba. El hash del original y de la copia demuestra que ambas son idénticas, que es lo que sostiene la validez del análisis.",
+    "difficulty": "medium",
+    "tags": [
+      "forense",
+      "evidencia",
+      "integridad"
+    ]
+  },
+  {
+    "id": "d4-q38",
+    "domain": 4,
+    "objective": "4.4",
+    "type": "single",
+    "stem": "El SOC quiere reducir el tiempo entre la detección y la contención. ¿Qué medida ataca ese intervalo de forma más directa?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Comprar más almacenamiento para los logs"
+      },
+      {
+        "id": "b",
+        "text": "Automatizar la contención de los casos de alta confianza con playbooks aprobados"
+      },
+      {
+        "id": "c",
+        "text": "Aumentar el número de reglas del SIEM"
+      },
+      {
+        "id": "d",
+        "text": "Alargar la retención de los registros"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Si la detección ya es buena, el tiempo se pierde en la respuesta manual. Automatizar la contención de lo inequívoco (aislar host, revocar sesión) recorta ese intervalo sin añadir detección.",
+    "difficulty": "hard",
+    "tags": [
+      "soar",
+      "automatizacion",
+      "mttr"
+    ]
+  },
+  {
+    "id": "d4-q39",
+    "domain": 4,
+    "objective": "4.3",
+    "type": "single",
+    "stem": "¿Qué es una excepción de compensación (exception) documentada en la gestión de vulnerabilidades?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Un fallo del escáner que se ignora sin más"
+      },
+      {
+        "id": "b",
+        "text": "La aceptación formal y con fecha de caducidad de un riesgo que no se puede corregir todavía"
+      },
+      {
+        "id": "c",
+        "text": "Un parche aplicado fuera de la ventana de cambios"
+      },
+      {
+        "id": "d",
+        "text": "Una vulnerabilidad que solo afecta a sistemas ajenos"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Una excepción no es ignorar: es decidir, con responsable y fecha de revisión. Sin caducidad, la excepción se convierte en un riesgo permanente que nadie vuelve a mirar.",
+    "difficulty": "medium",
+    "tags": [
+      "riesgo",
+      "excepciones",
+      "vulnerabilidades"
+    ]
   }
 ]
