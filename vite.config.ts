@@ -27,6 +27,13 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.spec.{ts,tsx}'],
     css: false,
+    /**
+     * Los tests de integración montan árboles grandes (un simulacro de 90
+     * preguntas, un tablero de PBQ con ocho selects, el panel con varias
+     * consultas) y rozan el límite de 5 s por defecto. Se amplía para que el
+     * resultado no dependa de la carga de la máquina.
+     */
+    testTimeout: 15_000,
     alias: {
       // xterm llama a `canvas.getContext` al importarse y jsdom no lo
       // implementa: en tests se sustituye por un doble que registra lo escrito.

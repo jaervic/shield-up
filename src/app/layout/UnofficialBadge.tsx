@@ -1,7 +1,5 @@
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import styles from './UnofficialBadge.module.css';
-
-const DISCLAIMER =
-  'Material de estudio independiente. No está afiliado ni respaldado por CompTIA.';
 
 /**
  * Aviso de no afiliación.
@@ -10,9 +8,11 @@ const DISCLAIMER =
  * que ShieldUp es material de estudio independiente.
  */
 export function UnofficialBadge() {
+  const { t } = useTranslation();
+
   return (
-    <span className={styles.badge} title={DISCLAIMER}>
-      No oficial
+    <span className={styles.badge} title={t('brand.unofficialTitle')}>
+      {t('brand.unofficial')}
     </span>
   );
 }

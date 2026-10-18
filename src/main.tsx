@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import './styles/global.css';
 import { initTheme } from '@/app/theme/themeStore';
+import { initLanguage } from '@/shared/i18n/i18nStore';
 import { ensureContentSeeded } from '@/features/srs/data/seedService';
 import { ErrorBoundary } from './app/ErrorBoundary';
 import { AppProviders } from './app/providers';
@@ -16,6 +17,9 @@ async function bootstrap(): Promise<void> {
 
   // Tema antes de pintar la app (el script inline ya evitó el FOUC).
   initTheme();
+
+  // Idioma: sincroniza el atributo `lang` con la preferencia resuelta.
+  initLanguage();
 
   // Primer arranque: carga el contenido seed en IndexedDB (no bloquea si falla).
   try {

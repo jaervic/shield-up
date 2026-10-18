@@ -1,4 +1,4 @@
-import { themeToggleLabel } from '../theme/theme';
+import { useTranslation } from '@/shared/i18n/useTranslation';
 import { useThemeStore } from '../theme/themeStore';
 import styles from './ThemeToggle.module.css';
 
@@ -6,7 +6,9 @@ import styles from './ThemeToggle.module.css';
 export function ThemeToggle() {
   const mode = useThemeStore((state) => state.mode);
   const toggle = useThemeStore((state) => state.toggle);
-  const label = themeToggleLabel(mode);
+  const { t } = useTranslation();
+
+  const label = mode === 'dark' ? t('theme.toggleToLight') : t('theme.toggleToDark');
 
   return (
     <button

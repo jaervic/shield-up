@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { useFocusMode } from '@/shared/state/focusMode';
+import { useTranslation } from '@/shared/i18n/useTranslation';
+import type { TranslationKey } from '@/shared/i18n/dictionary';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { BrandMark } from './BrandMark';
 import { NavIcon, type NavIconName } from './NavIcon';
@@ -11,17 +13,17 @@ import styles from './AppShell.module.css';
 
 interface NavItem {
   to: string;
-  label: string;
+  labelKey: TranslationKey;
   icon: NavIconName;
   end: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { to: '/', label: 'Panel', icon: 'dashboard', end: true },
-  { to: '/diagnostic', label: 'Diagnóstico', icon: 'diagnostic', end: false },
-  { to: '/lessons', label: 'Lecciones', icon: 'lessons', end: false },
-  { to: '/pbq', label: 'Simulaciones', icon: 'pbq', end: false },
-  { to: '/review', label: 'Repaso', icon: 'review', end: false },
+  { to: '/', labelKey: 'nav.dashboard', icon: 'dashboard', end: true },
+  { to: '/diagnostic', labelKey: 'nav.diagnostic', icon: 'diagnostic', end: false },
+  { to: '/lessons', labelKey: 'nav.lessons', icon: 'lessons', end: false },
+  { to: '/pbq', labelKey: 'nav.pbq', icon: 'pbq', end: false },
+  { to: '/review', labelKey: 'nav.review', icon: 'review', end: false },
 ];
 
 /**
@@ -32,11 +34,12 @@ const NAV_ITEMS: NavItem[] = [
  */
 export function AppShell() {
   const focusMode = useFocusMode((state) => state.active);
+  const { t } = useTranslation();
 
   return (
     <div className={clsx(styles.shell, focusMode && styles.focus)}>
       <a className="skip-link" href="#main-content">
-        Saltar al contenido principal
+        {t('shell.skip')}
       </a>
 
       <header className={styles.header}>
@@ -45,7 +48,7 @@ export function AppShell() {
           <span className={styles.brandText}>
             <span className={styles.brandName}>ShieldUp</span>
             <span className={styles.brandMeta}>
-              <span className={styles.brandTag}>Security+ SY0-701</span>
+              <span className={styles.brandTag}>{t('brand.tagline')}</span>
               <UnofficialBadge />
             </span>
           </span>
@@ -53,7 +56,7 @@ export function AppShell() {
 
         <ThemeToggle />
 
-        <nav className={styles.nav} aria-label="Navegación principal">
+        <nav className={styles.nav} aria-label={t('nav.label')}>
           <ul className={styles.navList} role="list">
             {NAV_ITEMS.map((item) => (
               <li key={item.to} className={styles.navItem}>
@@ -63,7 +66,7 @@ export function AppShell() {
                   className={({ isActive }) => (isActive ? styles.navLinkActive : styles.navLink)}
                 >
                   <NavIcon name={item.icon} className={styles.navIcon} />
-                  <span className={styles.navLabel}>{item.label}</span>
+                  <span className={styles.navLabel}>{t(item.labelKey)}</span>
                 </NavLink>
               </li>
             ))}
@@ -74,11 +77,11 @@ export function AppShell() {
       <main id="main-content" className={styles.main} tabIndex={-1}>
         {/* Si una sección revienta, la navegación sigue viva: el usuario puede
             irse a otra en lugar de quedarse ante una pantalla en blanco. */}
-        <ErrorBoundary scope="esta sección">
+        <ErrorBoundary scope={t('shell.errorScope')}>
           <Suspense
             fallback={
               <p className={styles.loading} role="status">
-                Cargando…
+                {t('shell.loading')}
               </p>
             }
           >
@@ -88,13 +91,9 @@ export function AppShell() {
       </main>
 
       <footer className={styles.footer}>
-        <p>
-          ShieldUp es un proyecto de estudio independiente y <strong>no está afiliado ni
-          respaldado por CompTIA</strong>. CompTIA® y Security+® son marcas registradas de
-          CompTIA, Inc. Verifica siempre el contenido contra las fuentes oficiales del examen.
-        </p>
+        <p>{t('shell.footer')}</p>
         <p className={styles.footerLinks}>
-          <NavLink to="/settings">Ajustes, copia de seguridad y reinicio</NavLink>
+          <NavLink to="/settings">{t('shell.footerSettings')}</NavLink>
         </p>
       </footer>
     </div>

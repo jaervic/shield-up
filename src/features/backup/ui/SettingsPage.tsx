@@ -4,6 +4,8 @@ import type { BackupSnapshot, BackupSummary } from '@/domain/backup';
 import { BACKUP_VERSION } from '@/domain/backup';
 import { Button } from '@/shared/ui/Button';
 import { formatDateTime } from '@/shared/utils/format';
+import { useTranslation } from '@/shared/i18n/useTranslation';
+import { LanguageSwitch } from '@/shared/i18n/LanguageSwitch';
 import { ThemeSelector } from '@/app/theme/ThemeSelector';
 import { summarizeBackup } from '../engine/backup';
 import {
@@ -17,8 +19,10 @@ import styles from './SettingsPage.module.css';
 
 const RESET_CONFIRMATION = 'REINICIAR';
 
+type Feedback = { kind: 'message' | 'error'; text: string } | null;
+
 /**
- * Ajustes: tema, copia de seguridad y reinicio del progreso.
+ * Ajustes: idioma, tema, copia de seguridad y reinicio del progreso.
  *
  * El progreso vive en el navegador, así que poder sacarlo y volverlo a meter no
  * es una función secundaria: es lo que evita perder meses de repaso al limpiar
@@ -26,11 +30,11 @@ const RESET_CONFIRMATION = 'REINICIAR';
  */
 export function SettingsPage() {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const [summary, setSummary] = useState<BackupSummary | null>(null);
   const [pendingImport, setPendingImport] = useState<BackupSnapshot | null>(null);
-  const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<Feedback>(null);
   const [busy, setBusy] = useState(false);
   const [resetText, setResetText] = useState('');
 
@@ -50,14 +54,18 @@ export function SettingsPage() {
     await refreshSummary();
   }
 
+  function describeError(cause: unknown, fallbackKey: 'error.download' | 'error.read' | 'error.restore' | 'error.reset'): string {
+    return cause instanceof Error ? cause.message : t(fallbackKey);
+  }
+
   async function handleExport(): Promise<void> {
     setBusy(true);
-    setError(null);
+    setFeedback(null);
     try {
       downloadBackup(await collectBackup());
-      setMessage('Copia descargada.');
+      setFeedback({ kind: 'message', text: t('settings.downloaded') });
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'No se pudo descargar la copia.');
+      setFeedback({ kind: 'error', text: describeError(cause, 'error.download') });
     } finally {
       setBusy(false);
     }
@@ -69,13 +77,12 @@ export function SettingsPage() {
     event.target.value = '';
     if (file === undefined) return;
 
-    setError(null);
-    setMessage(null);
+    setFeedback(null);
     try {
       setPendingImport(await readBackupFile(file));
     } catch (cause) {
       setPendingImport(null);
-      setError(cause instanceof Error ? cause.message : 'No se pudo leer la copia.');
+      setFeedback({ kind: 'error', text: describeError(cause, 'error.read') });
     }
   }
 
@@ -85,10 +92,10 @@ export function SettingsPage() {
     try {
       await restoreBackup(pendingImport);
       setPendingImport(null);
-      setMessage('Copia restaurada.');
+      setFeedback({ kind: 'message', text: t('settings.restored') });
       await refreshEverything();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'No se pudo restaurar la copia.');
+      setFeedback({ kind: 'error', text: describeError(cause, 'error.restore') });
     } finally {
       setBusy(false);
     }
@@ -96,14 +103,14 @@ export function SettingsPage() {
 
   async function handleReset(): Promise<void> {
     setBusy(true);
-    setError(null);
+    setFeedback(null);
     try {
       await resetProgress();
       setResetText('');
-      setMessage('Progreso reiniciado.');
+      setFeedback({ kind: 'message', text: t('settings.resetDone') });
       await refreshEverything();
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : 'No se pudo reiniciar el progreso.');
+      setFeedback({ kind: 'error', text: describeError(cause, 'error.reset') });
     } finally {
       setBusy(false);
     }
@@ -112,57 +119,53 @@ export function SettingsPage() {
   return (
     <div className={styles.page}>
       <header>
-        <h1 className={styles.title}>Ajustes</h1>
-        <p className={styles.lead}>
-          Tu progreso se guarda solo en este navegador. Descárgalo de vez en cuando: es la única
-          forma de recuperarlo si se borran los datos del dispositivo.
-        </p>
+        <h1 className={styles.title}>{t('settings.title')}</h1>
+        <p className={styles.lead}>{t('settings.lead')}</p>
       </header>
 
-      {error !== null ? (
-        <p className={styles.error} role="alert">
-          {error}
-        </p>
-      ) : null}
-      {message !== null ? (
-        <p className={styles.message} role="status">
-          {message}
+      {feedback !== null ? (
+        <p
+          className={feedback.kind === 'error' ? styles.error : styles.message}
+          role={feedback.kind === 'error' ? 'alert' : 'status'}
+        >
+          {feedback.text}
         </p>
       ) : null}
 
-      <section className={styles.section} aria-labelledby="settings-theme">
-        <h2 id="settings-theme" className={styles.sectionTitle}>
-          Apariencia
+      <section className={styles.section} aria-labelledby="settings-appearance">
+        <h2 id="settings-appearance" className={styles.sectionTitle}>
+          {t('settings.appearance')}
         </h2>
+        <LanguageSwitch />
         <ThemeSelector />
       </section>
 
       <section className={styles.section} aria-labelledby="settings-backup">
         <h2 id="settings-backup" className={styles.sectionTitle}>
-          Copia de seguridad
+          {t('settings.backup')}
         </h2>
 
         {summary === null ? (
           <p className={styles.text} role="status">
-            Calculando…
+            {t('settings.calculating')}
           </p>
         ) : (
           <ul className={styles.summary} role="list">
-            <li>{summary.cards} tarjetas</li>
-            <li>{summary.reviews} repasos</li>
-            <li>{summary.diagnosticAttempts} diagnósticos</li>
-            <li>{summary.lessonProgress} lecciones con progreso</li>
-            <li>{summary.pbqAttempts} intentos de PBQ</li>
-            <li>{summary.examAttempts} simulacros</li>
+            <li>{t('settings.cards', { count: summary.cards })}</li>
+            <li>{t('settings.reviews', { count: summary.reviews })}</li>
+            <li>{t('settings.diagnostics', { count: summary.diagnosticAttempts })}</li>
+            <li>{t('settings.lessons', { count: summary.lessonProgress })}</li>
+            <li>{t('settings.pbq', { count: summary.pbqAttempts })}</li>
+            <li>{t('settings.exams', { count: summary.examAttempts })}</li>
           </ul>
         )}
 
         <div className={styles.actions}>
           <Button variant="primary" onClick={() => void handleExport()} disabled={busy}>
-            Descargar copia
+            {t('settings.download')}
           </Button>
           <Button onClick={() => fileInputRef.current?.click()} disabled={busy}>
-            Importar copia
+            {t('settings.import')}
           </Button>
           <input
             ref={fileInputRef}
@@ -174,20 +177,25 @@ export function SettingsPage() {
         </div>
 
         {pendingImport !== null ? (
-          <div className={styles.confirm} role="alertdialog" aria-label="Confirmar importación">
+          <div
+            className={styles.confirm}
+            role="alertdialog"
+            aria-label={t('settings.importTitle')}
+          >
             <p>
-              La copia es del <strong>{formatDateTime(pendingImport.exportedAt)}</strong> y tiene{' '}
-              <strong>{summarizeBackup(pendingImport).totalRecords}</strong> registros.
+              {t('settings.importFrom', {
+                date: formatDateTime(pendingImport.exportedAt),
+                count: summarizeBackup(pendingImport).totalRecords,
+              })}
             </p>
             <p className={styles.warning}>
-              Al restaurarla se <strong>sustituye todo tu progreso actual</strong>. Si no has
-              descargado una copia antes, hazlo ahora.
+              <strong>{t('settings.importWarning')}</strong> {t('settings.importWarningExtra')}
             </p>
             <div className={styles.actions}>
               <Button variant="primary" onClick={() => void confirmImport()} disabled={busy}>
-                {busy ? 'Restaurando…' : 'Sustituir mi progreso'}
+                {busy ? t('settings.importing') : t('settings.importConfirm')}
               </Button>
-              <Button onClick={() => setPendingImport(null)}>Cancelar</Button>
+              <Button onClick={() => setPendingImport(null)}>{t('settings.cancel')}</Button>
             </div>
           </div>
         ) : null}
@@ -195,17 +203,12 @@ export function SettingsPage() {
 
       <section className={styles.danger} aria-labelledby="settings-reset">
         <h2 id="settings-reset" className={styles.sectionTitle}>
-          Zona de peligro
+          {t('settings.danger')}
         </h2>
-        <p className={styles.text}>
-          Reiniciar borra los repasos, el diagnóstico, el progreso de las lecciones, las PBQ y los
-          simulacros. El mazo de tarjetas vuelve a su estado inicial.
-        </p>
+        <p className={styles.text}>{t('settings.dangerText')}</p>
 
         <label className={styles.confirmLabel}>
-          <span>
-            Escribe <code>{RESET_CONFIRMATION}</code> para confirmar
-          </span>
+          <span>{t('settings.resetLabel', { word: RESET_CONFIRMATION })}</span>
           <input
             className={styles.input}
             type="text"
@@ -220,13 +223,11 @@ export function SettingsPage() {
           disabled={busy || resetText.trim().toUpperCase() !== RESET_CONFIRMATION}
           onClick={() => void handleReset()}
         >
-          Reiniciar todo el progreso
+          {t('settings.resetAction')}
         </Button>
       </section>
 
-      <p className={styles.version}>
-        Formato de copia: v{BACKUP_VERSION}
-      </p>
+      <p className={styles.version}>{t('settings.formatVersion', { version: BACKUP_VERSION })}</p>
     </div>
   );
 }

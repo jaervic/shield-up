@@ -1,4 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react';
+import { TRANSLATIONS, type TranslationKey } from '@/shared/i18n/dictionary';
+import { interpolate } from '@/shared/i18n/language';
+import { useI18nStore } from '@/shared/i18n/i18nStore';
 import { Button } from '@/shared/ui/Button';
 import styles from './ErrorBoundary.module.css';
 
@@ -41,21 +44,23 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
     const { error } = this.state;
     if (error === null) return this.props.children;
 
-    const scope = this.props.scope ?? 'la aplicación';
+    // Se traduce leyendo el idioma directamente del store: una clase no puede
+    // usar hooks, y la pantalla de error debe funcionar pase lo que pase.
+    const language = useI18nStore.getState().language;
+    const t = (key: TranslationKey): string => TRANSLATIONS[language][key];
+    const scope = this.props.scope ?? t('shell.errorApp');
 
     return (
       <div className={styles.fallback} role="alert">
-        <h1 className={styles.title}>Algo se ha roto en {scope}</h1>
-        <p className={styles.text}>
-          El progreso guardado no se ha tocado. Puedes intentar continuar o recargar la página.
-        </p>
+        <h1 className={styles.title}>{interpolate(t('shell.errorTitle'), { scope })}</h1>
+        <p className={styles.text}>{t('shell.errorText')}</p>
         <p className={styles.detail}>{error.message}</p>
 
         <div className={styles.actions}>
           <Button variant="primary" onClick={this.handleRetry}>
-            Reintentar
+            {t('shell.retry')}
           </Button>
-          <Button onClick={() => window.location.reload()}>Recargar la página</Button>
+          <Button onClick={() => window.location.reload()}>{t('shell.reload')}</Button>
         </div>
       </div>
     );
