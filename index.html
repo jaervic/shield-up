@@ -18,8 +18,13 @@
           var prefersDark =
             typeof window.matchMedia === 'function' &&
             window.matchMedia('(prefers-color-scheme: dark)').matches;
+          /* Preferencia explicita ('light'/'dark') o 'system' (tambien si no hay nada). */
           var theme =
-            stored === 'light' || stored === 'dark' ? stored : prefersDark ? 'dark' : 'light';
+            stored === 'light' || stored === 'dark'
+              ? stored
+              : prefersDark
+                ? 'dark'
+                : 'light';
           document.documentElement.setAttribute('data-theme', theme);
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta) {

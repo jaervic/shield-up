@@ -16,7 +16,7 @@ export default defineConfig({
         // Separa el vendor para que el bundle principal no supere el límite de aviso.
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
-          data: ['dexie', 'dexie-react-hooks', '@tanstack/react-query', 'zustand'],
+          data: ['dexie', '@tanstack/react-query', 'zustand'],
         },
       },
     },

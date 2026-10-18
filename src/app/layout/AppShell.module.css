@@ -148,6 +148,28 @@
   color: var(--color-text);
 }
 
+.footerLinks {
+  margin-top: var(--space-2);
+}
+
+.footerLinks a {
+  display: inline-block;
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  text-decoration: underline;
+}
+
+.footerLinks a:hover {
+  color: var(--color-text);
+}
+
+.loading {
+  padding: var(--space-6);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
 /* -------------------------- Modo concentración ---------------------------- */
 /* Durante una sesión: la cabecera deja de ser fija (deja sitio al desplazarse)
    y el pie desaparece. La navegación se mantiene como vía de salida. */

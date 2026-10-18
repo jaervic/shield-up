@@ -1,6 +1,8 @@
+import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import { clsx } from 'clsx';
 import { useFocusMode } from '@/shared/state/focusMode';
+import { ErrorBoundary } from '../ErrorBoundary';
 import { BrandMark } from './BrandMark';
 import { NavIcon, type NavIconName } from './NavIcon';
 import { ThemeToggle } from './ThemeToggle';
@@ -70,7 +72,19 @@ export function AppShell() {
       </header>
 
       <main id="main-content" className={styles.main} tabIndex={-1}>
-        <Outlet />
+        {/* Si una sección revienta, la navegación sigue viva: el usuario puede
+            irse a otra en lugar de quedarse ante una pantalla en blanco. */}
+        <ErrorBoundary scope="esta sección">
+          <Suspense
+            fallback={
+              <p className={styles.loading} role="status">
+                Cargando…
+              </p>
+            }
+          >
+            <Outlet />
+          </Suspense>
+        </ErrorBoundary>
       </main>
 
       <footer className={styles.footer}>
@@ -78,6 +92,9 @@ export function AppShell() {
           ShieldUp es un proyecto de estudio independiente y <strong>no está afiliado ni
           respaldado por CompTIA</strong>. CompTIA® y Security+® son marcas registradas de
           CompTIA, Inc. Verifica siempre el contenido contra las fuentes oficiales del examen.
+        </p>
+        <p className={styles.footerLinks}>
+          <NavLink to="/settings">Ajustes, copia de seguridad y reinicio</NavLink>
         </p>
       </footer>
     </div>

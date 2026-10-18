@@ -1,13 +1,16 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   THEME_COLORS,
+  THEME_PREFERENCES,
   THEME_STORAGE_KEY,
   isThemeMode,
+  isThemePreference,
   otherTheme,
+  resolvePreference,
   resolveTheme,
   themeToggleLabel,
 } from '@/app/theme/theme';
-import { applyThemeDom, readStoredTheme } from '@/app/theme/themeStore';
+import { applyThemeDom, readStoredTheme, useThemeStore } from '@/app/theme/themeStore';
 
 beforeEach(() => {
   window.localStorage.clear();
@@ -38,6 +41,58 @@ describe('resolveTheme', () => {
   it('ignora valores almacenados inválidos', () => {
     expect(resolveTheme('purple', true)).toBe('dark');
     expect(resolveTheme('', false)).toBe('light');
+  });
+
+  it('"sistema" sigue al sistema operativo', () => {
+    expect(resolveTheme('system', true)).toBe('dark');
+    expect(resolveTheme('system', false)).toBe('light');
+  });
+});
+
+describe('isThemePreference / resolvePreference', () => {
+  it('acepta las tres preferencias', () => {
+    for (const preference of THEME_PREFERENCES) {
+      expect(isThemePreference(preference)).toBe(true);
+    }
+    expect(isThemePreference('auto')).toBe(false);
+  });
+
+  it('sin preferencia guardada, la opción por defecto es seguir al sistema', () => {
+    expect(resolvePreference(null)).toBe('system');
+    expect(resolvePreference('')).toBe('system');
+    expect(resolvePreference('purple')).toBe('system');
+  });
+
+  it('respeta las preferencias explícitas', () => {
+    expect(resolvePreference('light')).toBe('light');
+    expect(resolvePreference('dark')).toBe('dark');
+    expect(resolvePreference('system')).toBe('system');
+  });
+});
+
+describe('preferencia del tema en el store', () => {
+  it('elegir "sistema" guarda la preferencia y resuelve el tema', () => {
+    useThemeStore.getState().setPreference('system');
+
+    expect(useThemeStore.getState().preference).toBe('system');
+    expect(readStoredTheme()).toBe('system');
+    expect(['light', 'dark']).toContain(useThemeStore.getState().mode);
+  });
+
+  it('elegir un tema explícito lo fija y lo persiste', () => {
+    useThemeStore.getState().setPreference('light');
+
+    expect(useThemeStore.getState().mode).toBe('light');
+    expect(document.documentElement.getAttribute('data-theme')).toBe('light');
+    expect(readStoredTheme()).toBe('light');
+  });
+
+  it('el botón de la cabecera fija una preferencia explícita', () => {
+    useThemeStore.getState().setPreference('dark');
+    useThemeStore.getState().toggle();
+
+    expect(useThemeStore.getState().mode).toBe('light');
+    expect(useThemeStore.getState().preference).toBe('light');
   });
 });
 

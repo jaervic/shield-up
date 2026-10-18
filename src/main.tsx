@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import './styles/global.css';
 import { initTheme } from '@/app/theme/themeStore';
 import { ensureContentSeeded } from '@/features/srs/data/seedService';
+import { ErrorBoundary } from './app/ErrorBoundary';
 import { AppProviders } from './app/providers';
 import { router } from './app/router';
 
@@ -25,9 +26,11 @@ async function bootstrap(): Promise<void> {
 
   createRoot(rootElement).render(
     <StrictMode>
-      <AppProviders>
-        <RouterProvider router={router} />
-      </AppProviders>
+      <ErrorBoundary>
+        <AppProviders>
+          <RouterProvider router={router} />
+        </AppProviders>
+      </ErrorBoundary>
     </StrictMode>,
   );
 }
