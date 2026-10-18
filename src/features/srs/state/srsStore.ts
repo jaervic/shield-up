@@ -7,7 +7,7 @@
  */
 
 import { create } from 'zustand';
-import type { Card, Grade } from '@/domain/card';
+import type { Card, Confidence, Grade, Review } from '@/domain/card';
 import { buildDailyQueue, DEFAULT_NEW_LIMIT, type QueueOptions } from '../engine/queue';
 import { getSrsRepository } from '../data/repository';
 import { reviewCard } from '../data/reviewService';
@@ -20,13 +20,19 @@ export interface SrsState {
   queue: Card[];
   index: number;
   revealed: boolean;
+  /** Confianza declarada antes de revelar (opcional). */
+  confidence: Confidence | null;
   /** Última tarjeta programada, para anunciar el próximo intervalo (aria-live). */
   lastScheduledCard: Card | null;
+  /** Repasos de ESTA sesión: alimentan la calibración del resumen final. */
+  sessionReviews: Review[];
   sessionReviewed: number;
   sessionCorrect: number;
 
   start: (options?: QueueOptions) => Promise<void>;
   reveal: () => void;
+  /** Declara la confianza y revela en un solo gesto. */
+  declareConfidence: (confidence: Confidence) => void;
   grade: (grade: Grade) => Promise<void>;
   skip: () => void;
   reset: () => void;
@@ -38,7 +44,9 @@ const initialState = {
   queue: [],
   index: 0,
   revealed: false,
+  confidence: null,
   lastScheduledCard: null,
+  sessionReviews: [] as Review[],
   sessionReviewed: 0,
   sessionCorrect: 0,
 };
@@ -60,7 +68,9 @@ export const useSrsStore = create<SrsState>((set, get) => ({
         queue: queue.cards,
         index: 0,
         revealed: false,
+        confidence: null,
         lastScheduledCard: null,
+        sessionReviews: [],
         sessionReviewed: 0,
         sessionCorrect: 0,
       });
@@ -77,13 +87,23 @@ export const useSrsStore = create<SrsState>((set, get) => ({
     set({ revealed: true });
   },
 
+  declareConfidence(confidence) {
+    if (get().status !== 'reviewing') return;
+    set({ confidence, revealed: true });
+  },
+
   async grade(grade) {
-    const { queue, index } = get();
+    const { queue, index, confidence } = get();
     const current = queue[index];
     if (!current) return;
 
     try {
-      const { card } = await reviewCard(current.id, grade);
+      const { card, review } = await reviewCard(
+        current.id,
+        grade,
+        new Date(),
+        confidence ?? undefined,
+      );
       const nextQueue = [...queue];
       nextQueue[index] = card;
       const nextIndex = index + 1;
@@ -92,7 +112,9 @@ export const useSrsStore = create<SrsState>((set, get) => ({
         queue: nextQueue,
         index: nextIndex,
         revealed: false,
+        confidence: null,
         lastScheduledCard: card,
+        sessionReviews: [...get().sessionReviews, review],
         sessionReviewed: get().sessionReviewed + 1,
         sessionCorrect: get().sessionCorrect + (grade === 'again' ? 0 : 1),
         status: nextIndex >= nextQueue.length ? 'finished' : 'reviewing',
@@ -112,6 +134,7 @@ export const useSrsStore = create<SrsState>((set, get) => ({
     set({
       index: nextIndex,
       revealed: false,
+      confidence: null,
       status: nextIndex >= queue.length ? 'finished' : 'reviewing',
     });
   },

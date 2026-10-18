@@ -7,7 +7,7 @@
  * sin tocar componentes ni la capa de datos.
  */
 
-import { GRADE_SCORE, type Card, type Grade, type Review } from '@/domain/card';
+import { GRADE_SCORE, type Card, type Confidence, type Grade, type Review } from '@/domain/card';
 import { createId } from '@/shared/utils/id';
 import { fullDaysBetween } from '@/shared/utils/date';
 import { schedule as sm2Schedule } from './sm2';
@@ -50,9 +50,13 @@ export function createReviewRecord(
   after: Card,
   grade: Grade,
   now: Date = new Date(),
+  confidence?: Confidence,
 ): Review {
-  const previousReference = before.lastReviewedAt ? new Date(before.lastReviewedAt) : new Date(before.createdAt);
-  return {
+  const previousReference = before.lastReviewedAt
+    ? new Date(before.lastReviewedAt)
+    : new Date(before.createdAt);
+
+  const review: Review = {
     id: createId('rev'),
     cardId: before.id,
     reviewedAt: now.toISOString(),
@@ -64,4 +68,11 @@ export function createReviewRecord(
     nextEaseFactor: after.easeFactor,
     elapsedDays: fullDaysBetween(previousReference, now),
   };
+
+  // Solo se persiste si se declaró: el campo es opcional y no queremos ruido.
+  if (confidence !== undefined) {
+    review.confidence = confidence;
+  }
+
+  return review;
 }

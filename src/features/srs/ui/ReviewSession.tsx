@@ -1,11 +1,16 @@
 import { useEffect, useRef } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { formatIntervalDays } from '@/shared/utils/format';
 import type { Grade } from '@/domain/card';
 import { Button } from '@/shared/ui/Button';
 import { ProgressBar } from '@/shared/ui/ProgressBar';
+import { computeCalibration } from '../engine/calibration';
 import { selectCurrentCard, useSrsStore } from '../state/srsStore';
+import { sessionPlanQueryKey, useSessionPlan } from '../state/useSessionPlan';
+import { ConfidencePrompt } from './ConfidencePrompt';
 import { FlashcardView } from './FlashcardView';
 import { GradeButtons } from './GradeButtons';
+import { SessionPlanScreen } from './SessionPlanScreen';
 import styles from './ReviewSession.module.css';
 
 const KEY_TO_GRADE: Record<string, Grade> = {
@@ -29,8 +34,10 @@ function sessionFeedback(reviewed: number, correct: number): string {
 }
 
 /**
- * Sesión de repaso: única pieza con estado. Toda la lógica de programación vive
- * en `engine/` y la persistencia en `data/`; aquí solo se orquesta la interacción.
+ * Sesión de repaso: única pieza con estado.
+ *
+ * Flujo: plan de sesión → (confianza opcional) → revelado → calificación.
+ * Toda la programación vive en `engine/`; aquí solo se orquesta la interacción.
  */
 export function ReviewSession() {
   const status = useSrsStore((state) => state.status);
@@ -40,29 +47,36 @@ export function ReviewSession() {
   const currentCard = useSrsStore(selectCurrentCard);
   const revealed = useSrsStore((state) => state.revealed);
   const lastScheduledCard = useSrsStore((state) => state.lastScheduledCard);
+  const sessionReviews = useSrsStore((state) => state.sessionReviews);
   const sessionReviewed = useSrsStore((state) => state.sessionReviewed);
   const sessionCorrect = useSrsStore((state) => state.sessionCorrect);
 
   const start = useSrsStore((state) => state.start);
   const reveal = useSrsStore((state) => state.reveal);
+  const declareConfidence = useSrsStore((state) => state.declareConfidence);
   const grade = useSrsStore((state) => state.grade);
   const reset = useSrsStore((state) => state.reset);
 
-  const revealButtonRef = useRef<HTMLButtonElement>(null);
+  const { data: plan, isPending: planPending } = useSessionPlan();
+  const queryClient = useQueryClient();
+  const firstActionRef = useRef<HTMLButtonElement>(null);
 
-  // Arranca la sesión al montar el componente.
+  // Al cerrar la sesión, el plan queda obsoleto: se recalcula para el próximo día.
   useEffect(() => {
-    void start();
-  }, [start]);
+    if (status === 'finished') {
+      void queryClient.invalidateQueries({ queryKey: sessionPlanQueryKey });
+    }
+  }, [status, queryClient]);
 
-  // Devuelve el foco al botón de revelar cada vez que cambia la tarjeta.
+  // Devuelve el foco a la primera acción cada vez que cambia la tarjeta, para
+  // que el recorrido con teclado no se pierda al desmontarse el botón pulsado.
   useEffect(() => {
     if (status === 'reviewing' && !revealed) {
-      revealButtonRef.current?.focus();
+      firstActionRef.current?.focus();
     }
   }, [status, revealed, index]);
 
-  // Atajos de teclado: Espacio/Enter revela; 1-4 califica.
+  // Espacio revela sin valorar la confianza.
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       if (status !== 'reviewing') return;
@@ -86,7 +100,17 @@ export function ReviewSession() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [status, revealed, reveal, grade]);
 
-  if (status === 'loading' || status === 'idle') {
+  if (status === 'idle') {
+    return (
+      <SessionPlanScreen
+        plan={plan ?? null}
+        isPending={planPending}
+        onStart={() => void start()}
+      />
+    );
+  }
+
+  if (status === 'loading') {
     return (
       <p className={styles.state} role="status">
         Preparando tu sesión de repaso…
@@ -108,6 +132,8 @@ export function ReviewSession() {
 
   if (status === 'finished') {
     const accuracy = sessionReviewed > 0 ? Math.round((sessionCorrect / sessionReviewed) * 100) : 0;
+    const calibration = computeCalibration(sessionReviews);
+
     return (
       <section className={styles.summary} aria-labelledby="session-summary-title">
         <h2 id="session-summary-title">Sesión completada</h2>
@@ -132,6 +158,24 @@ export function ReviewSession() {
               </div>
             </dl>
             <p className={styles.feedback}>{sessionFeedback(sessionReviewed, sessionCorrect)}</p>
+
+            {calibration.declared > 0 ? (
+              <div className={styles.calibration}>
+                <h3 className={styles.calibrationTitle}>Calibración de tu confianza</h3>
+                <ul className={styles.calibrationList} role="list">
+                  <li>
+                    Lo tenías seguro: <strong>{calibration.sure.correct}</strong>/
+                    {calibration.sure.total}
+                  </li>
+                  <li>
+                    Dudabas: <strong>{calibration.unsure.correct}</strong>/{calibration.unsure.total}
+                  </li>
+                </ul>
+                {calibration.insight ? (
+                  <p className={styles.insight}>{calibration.insight}</p>
+                ) : null}
+              </div>
+            ) : null}
           </>
         )}
         <Button variant="primary" onClick={reset}>
@@ -149,19 +193,16 @@ export function ReviewSession() {
     <section className={styles.session} aria-label="Sesión de repaso">
       <ProgressBar value={Math.min(index + 1, total)} max={total} label="Progreso de la sesión" />
 
-      <FlashcardView
-        card={currentCard}
-        revealed={revealed}
-        onReveal={reveal}
-        revealButtonRef={revealButtonRef}
-      />
+      <FlashcardView card={currentCard} revealed={revealed} />
 
       {revealed ? (
         <GradeButtons onGrade={(value) => void grade(value)} />
       ) : (
-        <p className={styles.hintBar}>
-          Pulsa <kbd>Espacio</kbd> para ver la respuesta, o respóndete a ti mismo antes de revelar.
-        </p>
+        <ConfidencePrompt
+          onDeclare={declareConfidence}
+          onReveal={reveal}
+          firstButtonRef={firstActionRef}
+        />
       )}
 
       {/* Anuncio accesible del próximo intervalo tras cada calificación. */}

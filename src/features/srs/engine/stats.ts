@@ -13,6 +13,7 @@
 import type { Card, Review } from '@/domain/card';
 import { DOMAIN_IDS, type DomainId } from '@/domain/domain';
 import { addDays, fullDaysBetween, isDue, startOfDay, toDateKey } from '@/shared/utils/date';
+import { round2 } from '@/shared/utils/math';
 
 export const MATURE_INTERVAL_DAYS = 21;
 
@@ -27,6 +28,8 @@ export interface DomainStats {
   mature: number;
   dueToday: number;
   avgEaseFactor: number;
+  /** 0..1: proporción de conocimiento consolidado del dominio. */
+  mastery: number;
 }
 
 export interface SrsStats {
@@ -50,6 +53,25 @@ export interface SrsStats {
 export interface ReviewLoadPoint {
   date: string;
   count: number;
+}
+
+/**
+ * Peso de una tarjeta "joven" en el dominio.
+ *
+ * Una tarjeta madura (intervalo >= 21 días) cuenta como conocimiento
+ * consolidado; una joven cuenta la mitad, porque aún no ha demostrado que
+ * resista el olvido. Es una medida deliberadamente conservadora.
+ */
+export const YOUNG_MASTERY_WEIGHT = 0.5;
+
+export function computeDomainMastery(input: {
+  young: number;
+  mature: number;
+  total: number;
+}): number {
+  if (input.total <= 0) return 0;
+  const weighted = input.mature + YOUNG_MASTERY_WEIGHT * input.young;
+  return round2(weighted / input.total);
 }
 
 /** Racha de días consecutivos con al menos un repaso. */
@@ -151,6 +173,7 @@ export function computeStats(
       mature: 0,
       dueToday: 0,
       avgEaseFactor: 0,
+      mastery: 0,
     };
   }
 
@@ -193,7 +216,9 @@ export function computeStats(
 
   for (const id of DOMAIN_IDS) {
     const values = easeByDomain.get(id) ?? [];
-    byDomain[id].avgEaseFactor = values.length > 0 ? Math.round(average(values) * 100) / 100 : 0;
+    const entry = byDomain[id];
+    entry.avgEaseFactor = values.length > 0 ? Math.round(average(values) * 100) / 100 : 0;
+    entry.mastery = computeDomainMastery(entry);
   }
 
   const recentReviews = reviews.filter((review) => new Date(review.reviewedAt) >= thirtyDaysAgo);

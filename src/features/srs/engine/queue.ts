@@ -42,6 +42,45 @@ export interface DailyQueue {
   availableCount: number;
 }
 
+/** Segundos medios que se tardan en resolver una tarjeta, calificarla incluida. */
+export const SECONDS_PER_CARD = 20;
+
+export interface SessionPlan {
+  cardCount: number;
+  dueCount: number;
+  newCount: number;
+  /** Estimación de duración, en minutos (mínimo 1 si hay tarjetas). */
+  estimatedMinutes: number;
+  /** Reparto por dominio, de mayor a menor. */
+  domains: Array<{ domain: DomainId; count: number }>;
+}
+
+/**
+ * Resume la cola en lo que el usuario necesita saber ANTES de empezar:
+ * cuántas tarjetas son, de qué dominios y cuánto va a tardar.
+ */
+export function summarizeQueue(queue: DailyQueue): SessionPlan {
+  const byDomain = new Map<DomainId, number>();
+  for (const card of queue.cards) {
+    byDomain.set(card.domain, (byDomain.get(card.domain) ?? 0) + 1);
+  }
+
+  const domains = [...byDomain.entries()]
+    .map(([domain, count]) => ({ domain, count }))
+    .sort((a, b) => b.count - a.count || a.domain - b.domain);
+
+  return {
+    cardCount: queue.cards.length,
+    dueCount: queue.dueCount,
+    newCount: queue.newCount,
+    estimatedMinutes:
+      queue.cards.length > 0
+        ? Math.max(1, Math.round((queue.cards.length * SECONDS_PER_CARD) / 60))
+        : 0,
+    domains,
+  };
+}
+
 /** Arma la cola de repaso del día. */
 export function buildDailyQueue(
   cards: readonly Card[],

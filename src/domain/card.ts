@@ -74,7 +74,24 @@ export interface Review {
   nextEaseFactor: number;
   /** Días transcurridos desde el repaso anterior (o desde createdAt si es el primero). */
   elapsedDays: number;
+  /**
+   * Confianza declarada ANTES de revelar la respuesta. Es opcional: el usuario
+   * puede revelar sin valorarla, y entonces el repaso no entra en el cálculo de
+   * calibración.
+   */
+  confidence?: Confidence;
 }
+
+/**
+ * Juicio de aprendizaje previo al revelado.
+ * Declararlo mejora la retención y permite medir la calibración.
+ */
+export type Confidence = 'sure' | 'unsure';
+
+export const CONFIDENCE_LABELS_ES: Readonly<Record<Confidence, string>> = {
+  sure: 'Lo tenía seguro',
+  unsure: 'Dudaba',
+};
 
 /** Forma del contenido cargado desde /content/flashcards/*.json. */
 export interface CardSeed {

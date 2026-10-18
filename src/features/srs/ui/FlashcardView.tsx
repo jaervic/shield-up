@@ -1,14 +1,10 @@
 import type { Card } from '@/domain/card';
 import { getDomain } from '@/domain/domain';
-import { Button } from '@/shared/ui/Button';
 import styles from './FlashcardView.module.css';
 
 export interface FlashcardViewProps {
   card: Card;
   revealed: boolean;
-  onReveal: () => void;
-  /** Ref del botón "Mostrar respuesta" para gestionar el foco al cambiar de tarjeta. */
-  revealButtonRef?: React.Ref<HTMLButtonElement>;
 }
 
 const TYPE_LABELS: Record<Card['type'], string> = {
@@ -18,7 +14,12 @@ const TYPE_LABELS: Record<Card['type'], string> = {
   concept: 'Conceptos',
 };
 
-export function FlashcardView({ card, revealed, onReveal, revealButtonRef }: FlashcardViewProps) {
+/**
+ * Tarjeta de repaso: SOLO presenta el contenido.
+ * El revelado y la calificación los orquesta `ReviewSession`, porque ahora el
+ * revelado pasa por la valoración de confianza.
+ */
+export function FlashcardView({ card, revealed }: FlashcardViewProps) {
   const domain = getDomain(card.domain);
 
   return (
@@ -34,22 +35,18 @@ export function FlashcardView({ card, revealed, onReveal, revealButtonRef }: Fla
         {card.front}
       </h2>
 
-      {card.hint ? (
+      {card.hint && !revealed ? (
         <p className={styles.hint}>
           <span className={styles.hintLabel}>Pista:</span> {card.hint}
         </p>
       ) : null}
 
       {revealed ? (
-        <div className={styles.answer} aria-live="polite">
+        <div className={`${styles.answer} reveal`} aria-live="polite">
           <h3 className={styles.answerLabel}>Respuesta</h3>
           <p className={styles.answerText}>{card.back}</p>
         </div>
-      ) : (
-        <Button variant="primary" onClick={onReveal} ref={revealButtonRef}>
-          Mostrar respuesta <span className={styles.kbd}>Espacio</span>
-        </Button>
-      )}
+      ) : null}
     </article>
   );
 }

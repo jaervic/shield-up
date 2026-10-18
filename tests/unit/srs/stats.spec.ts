@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import type { Review } from '@/domain/card';
+import { DOMAIN_IDS } from '@/domain/domain';
 import { addDays } from '@/shared/utils/date';
 import { computeStats, projectReviewLoad } from '@/features/srs/engine/stats';
 import { NOW, makeCard, makeReviewedCard } from '../../helpers/card';
@@ -93,6 +94,29 @@ describe('computeStats', () => {
     ];
 
     expect(computeStats(cards, [], NOW).totalLapses).toBe(5);
+  });
+
+  it('calcula el dominio alcanzado: madura cuenta 1, joven cuenta la mitad', () => {
+    const cards = [
+      makeCard({ id: 'new', domain: 3 }),
+      makeReviewedCard({ id: 'young', domain: 3, intervalDays: 5 }),
+      makeReviewedCard({ id: 'mature-1', domain: 3, intervalDays: 30 }),
+      makeReviewedCard({ id: 'mature-2', domain: 3, intervalDays: 60 }),
+    ];
+
+    const stats = computeStats(cards, [], NOW);
+
+    // (2 maduras + 0,5 × 1 joven) / 4 = 0,625 → 0,63
+    expect(stats.byDomain[3].mastery).toBe(0.63);
+    expect(stats.byDomain[1].mastery).toBe(0);
+  });
+
+  it('el dominio alcanzado es 0 en un dominio sin tarjetas', () => {
+    const stats = computeStats([], [], NOW);
+
+    for (const domain of DOMAIN_IDS) {
+      expect(stats.byDomain[domain].mastery).toBe(0);
+    }
   });
 });
 

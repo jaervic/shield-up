@@ -17,8 +17,10 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   ponderadas por el peso del examen, motor de selección/corrección y ruta ordenada por impacto.
 - **Fase 3 — Microlearning.** 8 lecciones-problema (28 pasos) basadas en *active recall*,
   progreso reanudable y recomendaciones ligadas a la ruta de estudio.
-- **Diseño** — Sistema de temas claro/oscuro, interfaz mobile-first con barra inferior, y un
-  entorno orientado al estudio (objetivo diario, racha y explicación del método).
+- **Diseño** — Paleta anclada a la identidad de CompTIA, temas claro/oscuro, interfaz
+  mobile-first con barra inferior, **test automático de contraste WCAG** y un entorno orientado
+  al estudio: plan de sesión, confianza antes de revelar con calibración, objetivo diario, racha,
+  anillos de dominio e hitos.
 
 ## Stack
 
@@ -221,8 +223,36 @@ semánticas. `src/styles/tokens.css` define la paleta oscura en `:root` (base y 
 faltara el atributo) y el tema claro como única sobreescritura. Añadir un tema nuevo es añadir
 un bloque de ~25 líneas.
 
-Contraste verificado ≥ 4.5:1 para texto en ambos temas, incluidos enlaces, botones y estados
-de acierto/error.
+### Paleta e identidad
+
+La gama está anclada a la identidad de CompTIA, **muestreada del CSS de comptia.org** (no de una
+guía de marca, que no está publicada): rojo `#c8102e`, rojo oscuro `#b70f2a`, carbón
+`#20282f` / `#0d1013`, gris claro `#f6f7f9`, y los acentos violeta `#4e25a1` y naranja `#cf4400`.
+
+**Dos reglas gobiernan la paleta:**
+
+1. **El rojo es la marca, no el error.** El rojo se reserva a navegación, acciones y progreso.
+   El feedback de "no era la mejor opción" usa ámbar y la calificación del repaso una rampa
+   ámbar → neutro → verde → violeta. En una app de estudio, marcar el fallo con el mismo color
+   que la marca confunde las dos señales.
+2. **Relleno y texto se separan.** `--color-primary` es un color de *relleno*;
+   `--color-primary-text` es para texto y enlaces. El rojo de marca no alcanza 4.5:1 como texto
+   sobre fondo oscuro, así que en tema oscuro la marca se aclara (`#ff4d63`) y el texto encima
+   pasa a ser oscuro. Sin esa separación, o el botón o el enlace suspenden contraste.
+
+**Límite de marca:** se usan los colores, no el logotipo ni el wordmark. El símbolo es un escudo
+propio (`BrandMark.tsx`) y el aviso de no afiliación es visible en la cabecera
+(`UnofficialBadge`), no solo en el pie.
+
+### Test de contraste automático
+
+`tests/unit/theme/contrast.spec.ts` **lee `tokens.css`**, resuelve las referencias `var(--x)` y
+comprueba la ratio WCAG de cada par semántico: 4.5:1 para texto y 3:1 para bordes e indicadores.
+Si un retoque de color rompe la accesibilidad, **rompe el build**.
+
+Ese test ya detectó y corrigió tres problemas reales durante su implementación: el rojo de marca
+como borde sobre superficies (2.54:1), y `--color-border-strong` por debajo de 3:1 en ambos
+temas. La accesibilidad dejó de depender de una revisión a ojo.
 
 ### Mobile-first
 
@@ -237,15 +267,22 @@ de acierto/error.
 
 ### Entorno de aprendizaje
 
-- **Objetivo diario y racha** (`computeStudyStreak`): la constancia es lo que hace funcionar la
-  repetición espaciada, así que el panel abre con lo único que hay que hacer hoy.
-- **Microcopy que orienta**, no que felicita en abstracto: cambia según el estado real
-  («te quedan 19 repasos», «empezar es lo más difícil», «todo al día»).
-- **Explicación del método** («Cómo aprovechar ShieldUp»): un alumno rinde más cuando entiende
-  *por qué* decide antes de leer la respuesta.
+- **Plan de sesión antes de empezar** (`summarizeQueue`): cuántas tarjetas son, de qué dominios
+  y cuánto se tarda. Una sesión de duración conocida se empieza mucho más fácil que una de
+  longitud incierta.
+- **Confianza antes de revelar** (`ConfidencePrompt`): declarar si lo sabías o dudabas revela en
+  el mismo gesto, así que no añade un clic. Es *metacognición*, y alimenta
+  `computeCalibration`, que cruza la predicción con el resultado real para detectar la
+  **ilusión de saber** —el error de estudio más común—. Es opcional: se puede revelar sin valorar.
+- **Objetivo diario y racha** (`computeStudyStreak`): el panel abre con lo único que hay que
+  hacer hoy. La racha no se rompe hasta perder un día completo.
+- **Anillo de dominio** (`computeDomainMastery`): una tarjeta madura cuenta 1 y una joven 0.5.
+  Ver el anillo llenarse motiva más que leer un porcentaje.
+- **Hitos** (`computeMilestones`): derivados de datos que ya existen, sin tabla de logros.
+- **Explicación del método**: un alumno rinde más cuando entiende *por qué* decide antes de leer
+  la respuesta.
+- **Micro-animaciones** en el contenido revelado, solo si el usuario no pidió movimiento reducido.
 - **Feedback cualitativo al cerrar la sesión**, centrado en el proceso y no en la nota.
-- **Atajos de teclado visibles** (`Espacio`, `1`–`4`) y estado de reanudación explícito cuando
-  se retoma una lección a medias.
 
 ---
 

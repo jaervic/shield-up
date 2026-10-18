@@ -86,3 +86,22 @@ a {
   box-shadow: var(--focus-ring);
   border-radius: var(--radius-md);
 }
+
+/* Aparición suave del contenido revelado.
+   Solo se declara si el usuario no pidió movimiento reducido (WCAG 2.3.3). */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes reveal-up {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .reveal {
+    animation: reveal-up var(--transition-base);
+  }
+}

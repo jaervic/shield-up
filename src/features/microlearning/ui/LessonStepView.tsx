@@ -87,7 +87,11 @@ export function LessonStepView({
 
       {revealed ? (
         <div
-          className={clsx(styles.feedback, isDecision && (isCorrect ? styles.ok : styles.ko))}
+          className={clsx(
+            styles.feedback,
+            'reveal',
+            isDecision && (isCorrect ? styles.ok : styles.ko),
+          )}
           aria-live="polite"
         >
           {isDecision ? (

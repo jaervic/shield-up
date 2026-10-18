@@ -98,4 +98,16 @@ describe('DashboardPage', () => {
     expect(screen.getByRole('heading', { name: 'Entiende resolviendo' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Consolida cada día' })).toBeInTheDocument();
   });
+
+  it('muestra el avance por dominio y los hitos', async () => {
+    setup();
+    await renderDashboard();
+
+    expect(screen.getByRole('heading', { name: 'Dominio por dominio' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Hitos' })).toBeInTheDocument();
+    expect(screen.getByText(/0 de 5 conseguidos/)).toBeInTheDocument();
+    expect(screen.getByText('Primer repaso')).toBeInTheDocument();
+    // Los cinco dominios exponen su porcentaje de dominio en texto (accesible).
+    expect(screen.getAllByText(/dominado$/)).toHaveLength(5);
+  });
 });

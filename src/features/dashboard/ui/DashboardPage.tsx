@@ -2,7 +2,9 @@ import { DOMAINS } from '@/domain/domain';
 import { formatDayMonth, formatPercent } from '@/shared/utils/format';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
 import { DailyGoalPanel } from './DailyGoalPanel';
+import { DomainRing } from './DomainRing';
 import { HowItWorksPanel } from './HowItWorksPanel';
+import { MilestonesPanel } from './MilestonesPanel';
 import { ReadinessPanel } from './ReadinessPanel';
 import { RecommendedLessonsPanel } from './RecommendedLessonsPanel';
 import styles from './DashboardPage.module.css';
@@ -49,47 +51,36 @@ export function DashboardPage() {
       </section>
 
       <section aria-labelledby="domains-title">
-        <h2 id="domains-title">Progreso por dominio</h2>
+        <h2 id="domains-title">Dominio por dominio</h2>
         <ul className={styles.domains} role="list">
           {DOMAINS.map((domain) => {
             const domainStats = stats.byDomain[domain.id];
             const studied = domainStats.total - domainStats.newCards;
-            const percent = domainStats.total > 0 ? (studied / domainStats.total) * 100 : 0;
 
             return (
               <li key={domain.id} className={styles.domainRow}>
-                <div className={styles.domainHeader}>
-                  <span className={styles.domainName}>
-                    <span
-                      className={styles.domainDot}
-                      style={{ backgroundColor: `var(--domain-${domain.id})` }}
-                      aria-hidden="true"
-                    />
-                    D{domain.id} · {domain.nameEs}
-                  </span>
-                  <span className={styles.domainWeight}>
-                    {Math.round(domain.weight * 100)}% del examen
-                  </span>
+                <DomainRing domain={domain.id} mastery={domainStats.mastery} />
+                <div className={styles.domainBody}>
+                  <div className={styles.domainHeader}>
+                    <span className={styles.domainName}>
+                      D{domain.id} · {domain.nameEs}
+                    </span>
+                    <span className={styles.masteryValue}>
+                      {Math.round(domainStats.mastery * 100)}% dominado
+                    </span>
+                  </div>
+                  <p className={styles.domainMeta}>
+                    {Math.round(domain.weight * 100)}% del examen · {studied} de {domainStats.total}{' '}
+                    vistas · {domainStats.dueToday} pendientes · {domainStats.mature} consolidadas
+                  </p>
                 </div>
-                <div
-                  className={styles.bar}
-                  role="progressbar"
-                  aria-valuemin={0}
-                  aria-valuemax={domainStats.total}
-                  aria-valuenow={studied}
-                  aria-label={`Progreso en ${domain.nameEs}`}
-                >
-                  <div className={styles.barFill} style={{ width: `${percent}%` }} />
-                </div>
-                <p className={styles.domainMeta}>
-                  {studied} de {domainStats.total} vistas · {domainStats.dueToday} pendientes ·{' '}
-                  {domainStats.mature} consolidadas
-                </p>
               </li>
             );
           })}
         </ul>
       </section>
+
+      <MilestonesPanel />
 
       <section aria-labelledby="load-title">
         <h2 id="load-title">Carga de repaso (14 días)</h2>
