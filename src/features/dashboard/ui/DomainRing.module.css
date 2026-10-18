@@ -4,7 +4,7 @@
 
 .track {
   fill: none;
-  stroke: var(--color-surface-2);
+  stroke: var(--color-track);
 }
 
 .arc {

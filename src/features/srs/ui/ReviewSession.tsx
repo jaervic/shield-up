@@ -73,6 +73,7 @@ export function ReviewSession() {
   const queryClient = useQueryClient();
   const setFocusMode = useFocusMode((state) => state.setActive);
   const firstActionRef = useRef<HTMLButtonElement>(null);
+  const gradeRef = useRef<HTMLDivElement>(null);
 
   // Modo concentración mientras dura la sesión.
   useEffect(() => {
@@ -96,6 +97,23 @@ export function ReviewSession() {
     // En jsdom `scrollY` es siempre 0, así que no se invoca `scrollTo`.
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
+    }
+  }, [status, revealed, index]);
+
+  // Al revelar, la respuesta alarga la tarjeta y los botones de calificación
+  // pueden quedar fuera de pantalla en móvil: se acercan para no obligar a
+  // desplazarse en cada tarjeta.
+  useEffect(() => {
+    if (status !== 'reviewing' || !revealed) return;
+    const node = gradeRef.current;
+    if (!node) return;
+
+    // `scrollIntoView` no existe en jsdom, de ahí la comprobación.
+    if (typeof node.scrollIntoView !== 'function') return;
+
+    const rect = node.getBoundingClientRect();
+    if (rect.bottom > window.innerHeight) {
+      node.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
     }
   }, [status, revealed, index]);
 
@@ -231,7 +249,9 @@ export function ReviewSession() {
       <FlashcardView card={currentCard} revealed={revealed} />
 
       {revealed ? (
-        <GradeButtons onGrade={(value) => void grade(value)} />
+        <div ref={gradeRef}>
+          <GradeButtons onGrade={(value) => void grade(value)} />
+        </div>
       ) : (
         <ConfidencePrompt
           onDeclare={declareConfidence}

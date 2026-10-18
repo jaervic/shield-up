@@ -72,6 +72,9 @@
   --color-surface-2: #2a333c;
   --color-border: #333d47;
   --color-border-strong: #7d8a96;
+  /* Pista de barras y anillos. No es un borde de control: es la referencia
+     vacía, así que se queda en ~2:1 para verse sin competir con el relleno. */
+  --color-track: #4a5560;
 
   --color-text: #f6f7f9;
   --color-text-muted: #a8b2bb;
@@ -129,6 +132,7 @@
   --color-surface-2: #eef0f3;
   --color-border: #d8dde3;
   --color-border-strong: #7a8590;
+  --color-track: #bfc7cf;
 
   --color-text: #0d1013;
   --color-text-muted: #505c66;

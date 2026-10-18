@@ -20,6 +20,9 @@ coverage/
 playwright-report/
 test-results/
 
+# Capturas de la revisión visual
+screenshots/
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

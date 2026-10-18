@@ -309,6 +309,36 @@ fondo translúcido (ámbar 4.24:1 y verde 4.36:1 en tema claro). Todos corregido
   acción principal y la vista sube arriba, para que el recorrido con teclado no se pierda.
 - **Feedback cualitativo al cerrar la sesión**, centrado en el proceso y no en la nota.
 
+### Revisión visual y auditoría de layout
+
+La suite de tests no ve el aspecto. Para eso hay dos herramientas en `scripts/`
+(requieren `npx playwright install chromium` una vez):
+
+```bash
+npm run dev            # en otra terminal
+npm run shots          # capturas de las pantallas clave, en ambos temas y viewports
+npm run audit:layout   # auditoría medida en navegador real
+```
+
+`audit-layout.mjs` comprueba **hechos medibles**, no impresiones: desbordamiento
+horizontal por viewport, elementos que se salen del viewport y objetivos táctiles por
+debajo de 44 px. `screenshots.mjs` siembra datos reales conduciendo la interfaz (diagnóstico,
+lección, repasos) antes de capturar, así que las capturas muestran la app en uso.
+
+**Defectos que encontró la primera pasada y que la suite no podía ver:**
+
+| Defecto | Medición |
+|---|---|
+| La página se desplazaba en horizontal en móvil | 59 px de desbordamiento a 360 px |
+| El gráfico de carga ocupaba barras de 72 px | El `min-width` del gráfico forzaba el desbordamiento |
+| Barras de progreso, anillos y mapa de calor **invisibles** | `--color-surface-2` sobre `--color-surface` = 1.17:1 |
+| Objetivos táctiles de 23 px en los títulos de lección | Por debajo del mínimo AA de 24 px |
+| Los botones de calificación quedaban fuera de pantalla al revelar | Obligaba a desplazarse en cada tarjeta |
+
+El caso de la "pista invisible" se resolvió con un token propio: `--color-track` (~2:1),
+deliberadamente por debajo de 3:1 porque es la referencia **vacía** de una barra, no la frontera
+de un control. El test de contraste documenta por qué queda fuera de la lista de 3:1.
+
 ---
 
 ## Pesos oficiales del examen (SY0-701)

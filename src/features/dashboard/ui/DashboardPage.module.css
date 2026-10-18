@@ -98,11 +98,9 @@
 
 .loadChart {
   display: flex;
-  align-items: flex-end;
+  align-items: stretch;
   gap: var(--space-1);
-  /* En móvil el gráfico se desplaza en lugar de comprimirse. */
-  min-width: 26rem;
-  height: 8rem;
+  height: 8.5rem;
   margin: 0;
   padding: var(--space-2);
   background-color: var(--color-surface);
@@ -110,25 +108,45 @@
   border-radius: var(--radius-md);
 }
 
+/* Las barras se reparten el ancho disponible: sin `min-width` no hay
+   desbordamiento horizontal en móvil. */
 .loadBar {
   display: flex;
+  flex: 1 1 0;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-  height: 100%;
-  gap: var(--space-1);
+  gap: 2px;
+  min-width: 0;
 }
 
-.loadBarFill {
+.loadValue {
+  font-size: var(--text-xs);
+  line-height: 1;
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.loadTrack {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  background-color: var(--color-track);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.loadFill {
   width: 100%;
   min-height: 2px;
   background-color: var(--color-success);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
 
-.loadCount {
+.loadDay {
   font-size: var(--text-xs);
+  line-height: 1;
   color: var(--color-text-muted);
   font-variant-numeric: tabular-nums;
 }

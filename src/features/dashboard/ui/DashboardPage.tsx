@@ -44,7 +44,7 @@ export function DashboardPage() {
         <dl className={styles.metrics}>
           <Metric label="Tarjetas totales" value={stats.total} />
           <Metric label="Pendientes hoy" value={stats.dueToday} />
-          <Metric label="Nuevas" value={stats.newCards} />
+          <Metric label="Sin empezar" value={stats.newCards} />
           <Metric label="Consolidadas" value={stats.mature} />
           <Metric label="Retención" value={formatPercent(stats.retentionRate)} />
           <Metric label="Repasos" value={stats.totalReviews} />
@@ -95,13 +95,17 @@ export function DashboardPage() {
           <ul className={styles.loadChart} role="list">
             {load.map((point) => (
               <li key={point.date} className={styles.loadBar}>
-                <span
-                  className={styles.loadBarFill}
-                  style={{ height: `${(point.count / maxLoad) * 100}%` }}
-                  aria-hidden="true"
-                />
-                <span className={styles.loadCount} aria-hidden="true">
-                  {point.count}
+                <span className={styles.loadValue} aria-hidden="true">
+                  {point.count > 0 ? point.count : ''}
+                </span>
+                <span className={styles.loadTrack} aria-hidden="true">
+                  <span
+                    className={styles.loadFill}
+                    style={{ height: `${(point.count / maxLoad) * 100}%` }}
+                  />
+                </span>
+                <span className={styles.loadDay} aria-hidden="true">
+                  {Number(point.date.slice(8, 10))}
                 </span>
                 <span className="visually-hidden">
                   {formatDayMonth(point.date)}: {point.count} tarjetas

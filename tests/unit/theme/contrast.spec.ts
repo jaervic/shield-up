@@ -215,10 +215,12 @@ const TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [
 
 /** Elementos no textuales (bordes, barras): exigen 3:1 (WCAG 1.4.11).
  *
- * `--color-border` (el borde por defecto) queda fuera a propósito: los
- * componentes que lo usan se identifican por su relleno de fondo, no por el
- * borde. Solo se exige contraste a los bordes que SON la frontera del control
- * (`--color-border-strong`) y a los indicadores de estado (`--color-primary`).
+ * Quedan fuera a propósito:
+ *  - `--color-border`: los componentes que lo usan se identifican por su
+ *    relleno de fondo, no por el borde.
+ *  - `--color-track`: es la referencia VACÍA de barras y anillos, no la
+ *    frontera de un control. Se queda en ~2:1 para verse sin competir con el
+ *    relleno, que es el dato.
  */
 const NON_TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['color-border-strong', 'color-surface'],

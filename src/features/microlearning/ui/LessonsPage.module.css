@@ -62,6 +62,10 @@
 }
 
 .lessonLink {
+  display: block;
+  /* Objetivo táctil cómodo: el título es la acción principal de la tarjeta. */
+  min-height: var(--tap-min);
+  padding-block: var(--space-1);
   font-weight: 600;
   text-decoration: none;
 }
