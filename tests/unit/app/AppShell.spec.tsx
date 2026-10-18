@@ -70,4 +70,27 @@ describe('AppShell', () => {
     );
     expect(document.getElementById('main-content')).not.toBeNull();
   });
+
+  it('avisa en la cabecera de que el material no es oficial', async () => {
+    renderShell();
+    await settle();
+
+    const badge = screen.getByText('No oficial');
+    expect(badge).toHaveAttribute('title', expect.stringMatching(/afiliado/i));
+  });
+
+  it('identifica la app y su objetivo en la cabecera', async () => {
+    renderShell();
+    await settle();
+
+    expect(screen.getByText('ShieldUp')).toBeInTheDocument();
+    expect(screen.getByText('Security+ SY0-701')).toBeInTheDocument();
+  });
+
+  it('deja claro en el pie que no hay afiliación con CompTIA', async () => {
+    renderShell();
+    await settle();
+
+    expect(screen.getByText(/no está afiliado ni respaldado por CompTIA/i)).toBeInTheDocument();
+  });
 });

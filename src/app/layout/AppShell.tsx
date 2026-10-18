@@ -1,6 +1,8 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import { BrandMark } from './BrandMark';
 import { NavIcon, type NavIconName } from './NavIcon';
 import { ThemeToggle } from './ThemeToggle';
+import { UnofficialBadge } from './UnofficialBadge';
 import styles from './AppShell.module.css';
 
 interface NavItem {
@@ -32,12 +34,13 @@ export function AppShell() {
 
       <header className={styles.header}>
         <div className={styles.brand}>
-          <span className={styles.logo} aria-hidden="true">
-            🛡️
-          </span>
+          <BrandMark className={styles.logo} />
           <span className={styles.brandText}>
             <span className={styles.brandName}>ShieldUp</span>
-            <span className={styles.brandTag}>Security+ SY0-701</span>
+            <span className={styles.brandMeta}>
+              <span className={styles.brandTag}>Security+ SY0-701</span>
+              <UnofficialBadge />
+            </span>
           </span>
         </div>
 
@@ -67,7 +70,9 @@ export function AppShell() {
 
       <footer className={styles.footer}>
         <p>
-          Contenido de estudio no oficial. Verifica siempre contra el examen oficial de CompTIA.
+          ShieldUp es un proyecto de estudio independiente y <strong>no está afiliado ni
+          respaldado por CompTIA</strong>. CompTIA® y Security+® son marcas registradas de
+          CompTIA, Inc. Verifica siempre el contenido contra las fuentes oficiales del examen.
         </p>
       </footer>
     </div>
