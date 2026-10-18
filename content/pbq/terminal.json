@@ -1,0 +1,193 @@
+[
+  {
+    "kind": "terminal",
+    "id": "pbq-triaje-host-comprometido",
+    "domain": 4,
+    "blueprintObjectives": ["4.4", "4.8"],
+    "title": "Triaje de un host comprometido",
+    "summary": "El EDR alerta de tráfico saliente raro en un puesto de trabajo. Averigua qué escucha, qué se está enviando y cómo entraron.",
+    "instructions": "Investiga el host. Necesitas: (1) saber qué puertos están en escucha y qué proceso los abre, (2) capturar el tráfico hacia el puerto sospechoso y (3) revisar los intentos de acceso fallidos en el log de autenticación. Escribe `help` para ver los comandos disponibles.",
+    "estimatedMinutes": 8,
+    "difficulty": "hard",
+    "tags": ["triaje", "tcpdump", "ss", "respuesta-a-incidentes"],
+    "explanation": "El orden importa: primero se identifica qué escucha (un backdoor en el 4444 abierto por un proceso que no debería existir), después se confirma la exfiltración capturando ese puerto, y por último se busca el vector de entrada en el log de autenticación. En un caso real, lo siguiente sería contener: aislar el host y revocar credenciales.",
+    "state": {
+      "hostname": "analista-wks",
+      "interfaces": [
+        { "name": "eth0", "ip": "10.20.4.57/24", "mac": "52:54:00:9f:1c:22", "state": "UP" },
+        { "name": "lo", "ip": "127.0.0.1/8", "mac": "00:00:00:00:00:00", "state": "UP" }
+      ],
+      "routes": [{ "destination": "10.20.4.0/24", "gateway": "0.0.0.0", "iface": "eth0" }],
+      "arp": [
+        { "ip": "10.20.4.1", "mac": "52:54:00:12:34:56" },
+        { "ip": "10.20.4.20", "mac": "52:54:00:ab:cd:ef" }
+      ],
+      "listening": [
+        { "port": 22, "protocol": "tcp", "process": "sshd", "pid": 812, "address": "0.0.0.0" },
+        { "port": 631, "protocol": "tcp", "process": "cupsd", "pid": 903, "address": "127.0.0.1" },
+        { "port": 4444, "protocol": "tcp", "process": "svc_host", "pid": 4471, "address": "0.0.0.0" },
+        { "port": 53, "protocol": "udp", "process": "systemd-resolve", "pid": 744, "address": "127.0.0.53" }
+      ],
+      "processes": [
+        { "pid": 812, "user": "root", "command": "/usr/sbin/sshd -D" },
+        { "pid": 903, "user": "root", "command": "/usr/sbin/cupsd -l" },
+        { "pid": 4471, "user": "analista", "command": "/tmp/.svc_host --connect 203.0.113.66:4444" }
+      ],
+      "dns": { "vpn.corp.local": "10.20.0.9" },
+      "hosts": [
+        {
+          "ip": "203.0.113.66",
+          "hostname": "cdn-update.example",
+          "up": true,
+          "ports": [{ "port": 4444, "protocol": "tcp", "service": "unknown" }]
+        },
+        { "ip": "10.20.0.9", "hostname": "vpn.corp.local", "up": true, "ports": [{ "port": 443, "protocol": "tcp", "service": "https" }] }
+      ],
+      "packets": [
+        { "time": 0.42, "src": "10.20.4.57", "dst": "203.0.113.66", "protocol": "TCP", "srcPort": 51244, "dstPort": 4444, "flags": "S", "length": 0 },
+        { "time": 0.44, "src": "203.0.113.66", "dst": "10.20.4.57", "protocol": "TCP", "srcPort": 4444, "dstPort": 51244, "flags": "SA", "length": 0 },
+        { "time": 0.46, "src": "10.20.4.57", "dst": "203.0.113.66", "protocol": "TCP", "srcPort": 51244, "dstPort": 4444, "flags": "PA", "length": 1420 },
+        { "time": 0.88, "src": "10.20.4.57", "dst": "203.0.113.66", "protocol": "TCP", "srcPort": 51244, "dstPort": 4444, "flags": "PA", "length": 1420 },
+        { "time": 1.31, "src": "10.20.4.57", "dst": "203.0.113.66", "protocol": "TCP", "srcPort": 51244, "dstPort": 4444, "flags": "PA", "length": 980 },
+        { "time": 1.55, "src": "10.20.4.57", "dst": "10.20.4.20", "protocol": "UDP", "srcPort": 41234, "dstPort": 123, "length": 76 }
+      ],
+      "files": {
+        "/var/log/auth.log": "Oct 17 03:41:22 analista-wks sshd[3312]: Failed password for invalid user admin from 198.51.100.23 port 40221 ssh2\nOct 17 03:41:25 analista-wks sshd[3312]: Failed password for invalid user admin from 198.51.100.23 port 40233 ssh2\nOct 17 03:41:31 analista-wks sshd[3314]: Failed password for invalid user oracle from 198.51.100.23 port 40244 ssh2\nOct 17 03:42:02 analista-wks sshd[3320]: Accepted password for analista from 198.51.100.23 port 40298 ssh2\nOct 17 03:42:03 analista-wks systemd[3321]: Session opened for user analista.",
+        "/etc/hosts": "127.0.0.1 localhost\n10.20.0.9 vpn.corp.local"
+      }
+    },
+    "tasks": [
+      {
+        "id": "escuchas",
+        "description": "Averigua qué puertos están en escucha y qué proceso abre cada uno.",
+        "matcher": { "program": "ss", "flags": ["l", "p"] }
+      },
+      {
+        "id": "captura-c2",
+        "description": "Captura el tráfico hacia el puerto 4444 para confirmar la exfiltración.",
+        "matcher": { "program": "tcpdump", "args": ["4444"] }
+      },
+      {
+        "id": "log-accesos",
+        "description": "Revisa los intentos de acceso fallidos en /var/log/auth.log.",
+        "matcher": { "program": "grep", "args": ["Failed", "/var/log/auth.log"] }
+      }
+    ]
+  },
+  {
+    "kind": "terminal",
+    "id": "pbq-reconocimiento-servidor",
+    "domain": 4,
+    "blueprintObjectives": ["4.3", "4.5"],
+    "title": "Reconocimiento de un servidor expuesto",
+    "summary": "Antes de priorizar el parcheo hay que saber qué corre y en qué versión. Enumera el servidor de producción.",
+    "instructions": "Enumera el servidor de producción 10.0.10.20: (1) identifica los servicios y sus versiones, (2) comprueba si el puerto 8080 está abierto y (3) confirma que el host responde.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": ["nmap", "reconocimiento", "gestion-de-vulnerabilidades"],
+    "explanation": "Enumerar es el primer paso de la gestión de vulnerabilidades: sin saber qué servicio corre y en qué versión no se puede priorizar. El 8080 con Tomcat 9.0.31 (obsoleto) y expuesto es el hallazgo que manda a la parte alta de la lista, por delante de hallazgos con CVSS más alto pero en servicios internos.",
+    "state": {
+      "hostname": "kali-wks",
+      "interfaces": [{ "name": "eth0", "ip": "10.0.10.5/24", "mac": "52:54:00:33:44:55", "state": "UP" }],
+      "routes": [{ "destination": "10.0.10.0/24", "gateway": "0.0.0.0", "iface": "eth0" }],
+      "arp": [{ "ip": "10.0.10.20", "mac": "52:54:00:77:88:99" }],
+      "listening": [],
+      "processes": [{ "pid": 1, "user": "root", "command": "/sbin/init" }],
+      "dns": { "web-prod.corp.local": "10.0.10.20" },
+      "hosts": [
+        {
+          "ip": "10.0.10.20",
+          "hostname": "web-prod.corp.local",
+          "up": true,
+          "ports": [
+            { "port": 22, "protocol": "tcp", "service": "ssh", "version": "OpenSSH 8.9p1" },
+            { "port": 80, "protocol": "tcp", "service": "http", "version": "nginx 1.24.0" },
+            { "port": 443, "protocol": "tcp", "service": "ssl/https", "version": "nginx 1.24.0" },
+            { "port": 8080, "protocol": "tcp", "service": "http-proxy", "version": "Apache Tomcat 9.0.31" }
+          ]
+        },
+        {
+          "ip": "10.0.10.30",
+          "hostname": "db-internal.corp.local",
+          "up": true,
+          "ports": [{ "port": 5432, "protocol": "tcp", "service": "postgresql", "version": "PostgreSQL 14.9" }]
+        }
+      ],
+      "packets": [],
+      "files": { "/etc/hosts": "127.0.0.1 localhost\n10.0.10.20 web-prod.corp.local" }
+    },
+    "tasks": [
+      {
+        "id": "servicios",
+        "description": "Identifica los servicios abiertos y sus versiones en 10.0.10.20.",
+        "matcher": { "program": "nmap", "flags": ["sV"], "args": ["10.0.10.20"] }
+      },
+      {
+        "id": "puerto-8080",
+        "description": "Comprueba específicamente si el puerto 8080 está abierto.",
+        "matcher": { "program": "nmap", "args": ["8080", "10.0.10.20"] }
+      },
+      {
+        "id": "responde",
+        "description": "Confirma que el host responde a ICMP.",
+        "matcher": { "program": "ping", "args": ["10.0.10.20"] }
+      }
+    ]
+  },
+  {
+    "kind": "terminal",
+    "id": "pbq-diagnostico-conectividad",
+    "domain": 3,
+    "blueprintObjectives": ["3.2", "4.5"],
+    "title": "Diagnóstico de conectividad",
+    "summary": "Un servidor ha perdido la salida a Internet y no resuelve nombres. Localiza la causa en la configuración local.",
+    "instructions": "Diagnostica el servidor: (1) revisa la configuración de las interfaces, (2) revisa la tabla de rutas, (3) comprueba a qué servidor DNS apunta y (4) verifica si hay salida a Internet. La causa está en la configuración local.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": ["diagnostico", "ip", "rutas", "dns"],
+    "explanation": "Dos fallos sumados: la puerta de enlace configurada (10.0.0.254) no es la del segmento (10.0.0.1), así que no hay salida; y el resolv.conf apunta a 10.0.0.53, un servidor que no responde. Sin ruta por defecto correcta, ningún diagnóstico de nombres puede funcionar: primero la ruta, después el DNS.",
+    "state": {
+      "hostname": "srv-web-02",
+      "interfaces": [
+        { "name": "eth0", "ip": "10.0.0.42/24", "mac": "52:54:00:11:22:33", "state": "UP" },
+        { "name": "eth1", "ip": "192.168.50.10/24", "mac": "52:54:00:44:55:66", "state": "DOWN" }
+      ],
+      "routes": [
+        { "destination": "10.0.0.0/24", "gateway": "0.0.0.0", "iface": "eth0" },
+        { "destination": "192.168.50.0/24", "gateway": "0.0.0.0", "iface": "eth1" }
+      ],
+      "arp": [{ "ip": "10.0.0.1", "mac": "52:54:00:aa:bb:cc" }],
+      "listening": [{ "port": 443, "protocol": "tcp", "process": "nginx", "pid": 1204, "address": "0.0.0.0" }],
+      "processes": [{ "pid": 1204, "user": "www-data", "command": "nginx: worker process" }],
+      "dns": {},
+      "hosts": [],
+      "packets": [],
+      "files": {
+        "/etc/resolv.conf": "# Generado por netplan\nnameserver 10.0.0.53\nsearch corp.local",
+        "/etc/netplan/01-netcfg.yaml": "network:\n  version: 2\n  ethernets:\n    eth0:\n      addresses: [10.0.0.42/24]\n      gateway4: 10.0.0.254\n      nameservers:\n        addresses: [10.0.0.53]"
+      }
+    },
+    "tasks": [
+      {
+        "id": "interfaces",
+        "description": "Revisa la configuración de las interfaces de red.",
+        "matcher": { "program": "ip", "args": ["a"] }
+      },
+      {
+        "id": "rutas",
+        "description": "Revisa la tabla de rutas del servidor.",
+        "matcher": { "program": "ip", "args": ["route"] }
+      },
+      {
+        "id": "dns",
+        "description": "Comprueba a qué servidor DNS apunta el sistema.",
+        "matcher": { "program": "cat", "args": ["/etc/resolv.conf"] }
+      },
+      {
+        "id": "salida",
+        "description": "Verifica si hay salida a Internet.",
+        "matcher": { "program": "ping", "args": ["8.8.8.8"] }
+      }
+    ]
+  }
+]

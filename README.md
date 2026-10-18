@@ -22,6 +22,9 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   un entorno orientado al estudio: plan de sesión, práctica dirigida por dominio, confianza antes
   de revelar con calibración, objetivo diario, racha, anillos de dominio, hitos, mapa de calor de
   constancia y modo concentración.
+- **Fase 4 (en curso) — PBQ.** Motor puro de simulaciones: topologías y terminal simulada
+  (`nmap`, `tcpdump`, `ss`, `ip`, `ping`, `cat`, `grep`), con 5 PBQ de contenido y tests que
+  **demuestran que todas son resolubles al 100%**. Falta la interfaz (drag & drop y xterm.js).
 
 ## Stack
 
@@ -71,13 +74,17 @@ src/
 │  │  ├─ data/   # LessonRepository + servicio (reanudable)
 │  │  ├─ state/  # store de la sesión de lección y hooks del catálogo
 │  │  └─ ui/     # LessonsPage, LessonPage, LessonStepView, LessonResults
-│  └─ dashboard/ui/  # DashboardPage, ReadinessPanel, RecommendedLessonsPanel
-├─ shared/       # ui/, hooks/, utils/ reutilizables (answer, random, interleave, date, math)
+│  ├─ pbq/       # Fase 4
+│  │  └─ engine/ # LÓGICA PURA: scoring, topology, terminal y shell/ (parser + comandos)
+│  └─ dashboard/ui/  # DashboardPage, ReadinessPanel, DailyGoalPanel, anillos, hitos, mapa de calor
+├─ shared/       # ui/, hooks/, utils/ y state/ reutilizables
 └─ styles/       # tokens.css (temas claro/oscuro), reset.css, global.css
 content/
 ├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program)
 ├─ questions/    # banco de preguntas del diagnóstico (d1..d5)
-└─ lessons/      # lecciones de microlearning (d1..d5)
+├─ lessons/      # lecciones de microlearning (d1..d5)
+└─ pbq/          # PBQ: topology.json y terminal.json
+scripts/         # screenshots.mjs y audit-layout.mjs (revisión visual)
 ```
 
 ### Regla de oro
@@ -341,6 +348,50 @@ de un control. El test de contraste documenta por qué queda fuera de la lista d
 
 ---
 
+## PBQ: simulaciones (Fase 4)
+
+Una PBQ no se responde eligiendo: **se resuelve**. Hay dos familias, y en ambas la corrección es
+lógica pura y testeable.
+
+### Topología
+
+Colocar activos en el segmento correcto. `evaluateTopology` corrige activo a activo y separa los
+**mal colocados** de los **no colocados**, que son diagnósticos distintos: uno es un error de
+criterio, el otro es no haber terminado.
+
+### Terminal simulada
+
+`features/pbq/engine/shell/` es un mini-shell **determinista y sin `eval`**: tokeniza respetando
+comillas, separa banderas de argumentos y despacha a un registro de comandos puros
+`(invocación, estado) => salida`.
+
+| Comando | Qué hace |
+|---|---|
+| `nmap` | Escaneo con `-p`, `-sV`, `-A`, objetivos por IP, nombre o CIDR |
+| `tcpdump` | Captura con filtros `port`, `host`, `tcp`, `udp`, `icmp` y `-c` |
+| `ss` / `netstat` | Puertos en escucha, con `-p` para el proceso |
+| `ip` | `a` (interfaces), `route`, `neigh` |
+| `ping` | Respuestas según si el host simulado está levantado |
+| `cat`, `grep` | Lectura y filtrado de archivos del host |
+| `help`, `clear` | Ayuda y limpieza |
+
+**Detalle que importa:** las banderas de una letra se comprueban por inclusión, porque en la
+práctica se combinan (`-tulnp` activa cinco). Las de varias letras exigen coincidencia exacta
+(`-sV` ≠ `-sv`).
+
+Los objetivos del enunciado se validan con un `CommandMatcher`: programa, banderas, argumentos y,
+opcionalmente, un fragmento que debe aparecer en la salida. Basta con que **alguna** línea lo
+cumpla, así que el orden y los intentos fallidos no penalizan.
+
+### El test que garantiza que el contenido sirve
+
+`tests/unit/pbq/terminal.spec.ts` recorre **todo el banco** y, para cada PBQ, construye la
+solución canónica a partir de los propios matchers y comprueba que llega al 100%. Si alguien
+escribe una PBQ irresoluble, el build falla: no se puede publicar un ejercicio imposible de
+resolver.
+
+---
+
 ## Pesos oficiales del examen (SY0-701)
 
 | Dominio | Peso |
@@ -369,5 +420,7 @@ de un control. El test de contraste documenta por qué queda fuera de la lista d
 - [x] **Fase 2** — Dashboard de diagnóstico + test inicial que personaliza la ruta
 - [x] **Fase 3** — Microlearning (lecciones-problema)
 - [ ] **Fase 4** — PBQ: drag & drop (`dnd-kit`) + terminal simulada (`xterm.js`)
+  - [x] Motor puro: topologías, terminal simulada, corrección y contenido
+  - [ ] Interfaz: drag & drop con teclado y terminal con xterm.js
 - [ ] **Fase 5** — Simulador de examen (90 preguntas / 90 min / marcado para revisión)
 - [ ] **Fase 6** — Sync multidispositivo y cuentas

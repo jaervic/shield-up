@@ -1,0 +1,59 @@
+[
+  {
+    "kind": "topology",
+    "id": "pbq-segmentar-red-plana",
+    "domain": 3,
+    "blueprintObjectives": ["3.2", "3.3"],
+    "title": "Segmentar una red plana",
+    "summary": "Coloca cada activo en el segmento que le corresponde para cortar el movimiento lateral.",
+    "instructions": "La red es un único segmento plano. Arrastra cada activo a la zona correcta según su exposición y su criticidad.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": ["segmentacion", "dmz", "movimiento-lateral"],
+    "explanation": "La regla es por exposición y criticidad, no por departamento: lo que se publica en Internet va a la DMZ, los datos y el directorio a la red interna, la administración a su VLAN y los dispositivos con firmware que no controlas (cámaras, impresoras) a la VLAN de IoT, que sale a Internet pero no habla con la red interna.",
+    "zones": [
+      { "id": "dmz", "label": "DMZ", "description": "Servicios expuestos a Internet" },
+      { "id": "interna", "label": "Red interna", "description": "Datos y directorio, sin exposición directa" },
+      { "id": "gestion", "label": "VLAN de gestión", "description": "Administración y saltos auditados" },
+      { "id": "iot", "label": "VLAN de IoT", "description": "Dispositivos con firmware no gestionado" }
+    ],
+    "nodes": [
+      { "id": "web", "label": "Servidor web público", "hint": "Publica contenido en Internet.", "correctZoneId": "dmz" },
+      { "id": "mail", "label": "Servidor de correo entrante", "hint": "Recibe SMTP desde cualquier origen.", "correctZoneId": "dmz" },
+      { "id": "db", "label": "Base de datos de clientes", "hint": "Solo la consulta la aplicación.", "correctZoneId": "interna" },
+      { "id": "dc", "label": "Controlador de dominio", "hint": "Emite tickets Kerberos.", "correctZoneId": "interna" },
+      { "id": "wks", "label": "Puesto de trabajo de finanzas", "hint": "Usuario con datos sensibles.", "correctZoneId": "interna" },
+      { "id": "bastion", "label": "Host de salto (bastion)", "hint": "Punto único y auditado de administración.", "correctZoneId": "gestion" },
+      { "id": "camaras", "label": "Cámaras IP", "hint": "Firmware del fabricante, sin parches propios.", "correctZoneId": "iot" },
+      { "id": "impresora", "label": "Impresora de red antigua", "hint": "Firmware sin actualizar desde 2019.", "correctZoneId": "iot" }
+    ]
+  },
+  {
+    "kind": "topology",
+    "id": "pbq-defensa-en-profundidad",
+    "domain": 3,
+    "blueprintObjectives": ["3.3", "3.4"],
+    "title": "Defensa en profundidad de una aplicación",
+    "summary": "Reparte los componentes de una aplicación web en capas, con un backup que el ransomware no alcance.",
+    "instructions": "Coloca cada componente en su capa. Ten en cuenta que la capa de datos no debe ser alcanzable desde el perímetro, y que el backup debe sobrevivir a un cifrado masivo.",
+    "estimatedMinutes": 5,
+    "difficulty": "medium",
+    "tags": ["defensa-en-profundidad", "capas", "backups"],
+    "explanation": "La aplicación se separa en tres capas que solo hablan con la siguiente, y el backup se guarda fuera de línea o inmutable: si el atacante cifra todo lo conectado, la cinta (o el almacenamiento inmutable) sigue siendo recuperable. Esa es la diferencia entre pagar y restaurar.",
+    "zones": [
+      { "id": "perimetro", "label": "Perímetro", "description": "Primera línea, expuesta a Internet" },
+      { "id": "app", "label": "Capa de aplicación", "description": "Lógica de negocio" },
+      { "id": "datos", "label": "Capa de datos", "description": "Persistencia y secretos" },
+      { "id": "backup", "label": "Backup fuera de línea", "description": "No alcanzable desde la red" }
+    ],
+    "nodes": [
+      { "id": "waf", "label": "WAF", "hint": "Filtra peticiones HTTP antes de que lleguen a la app.", "correctZoneId": "perimetro" },
+      { "id": "lb", "label": "Balanceador de carga", "hint": "Reparte el tráfico entre instancias.", "correctZoneId": "perimetro" },
+      { "id": "api", "label": "Servidor de API", "hint": "Ejecuta la lógica de negocio.", "correctZoneId": "app" },
+      { "id": "cache", "label": "Caché de sesiones", "hint": "Guarda sesiones en memoria.", "correctZoneId": "app" },
+      { "id": "pg", "label": "PostgreSQL", "hint": "Almacena los datos de negocio.", "correctZoneId": "datos" },
+      { "id": "vault", "label": "Gestor de secretos", "hint": "Custodia claves y credenciales.", "correctZoneId": "datos" },
+      { "id": "cintas", "label": "Cintas de backup semanales", "hint": "Se guardan en una caja fuerte física.", "correctZoneId": "backup" }
+    ]
+  }
+]
