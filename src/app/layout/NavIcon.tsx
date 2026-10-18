@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-export type NavIconName = 'dashboard' | 'diagnostic' | 'lessons' | 'review';
+export type NavIconName = 'dashboard' | 'diagnostic' | 'lessons' | 'pbq' | 'review';
 
 const PATHS: Record<NavIconName, ReactNode> = {
   dashboard: (
@@ -30,6 +30,13 @@ const PATHS: Record<NavIconName, ReactNode> = {
       <rect x="3" y="6.5" width="12.5" height="12.5" rx="2" />
       <path d="M8 3.5h10.5a2 2 0 0 1 2 2V16" />
       <path d="M7 12.5h4.5" />
+    </>
+  ),
+  pbq: (
+    <>
+      <rect x="3" y="4.5" width="18" height="15" rx="2" />
+      <path d="M7 10l2.5 2.5L7 15" />
+      <path d="M12.5 15h4.5" />
     </>
   ),
 };

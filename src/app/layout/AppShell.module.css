@@ -106,6 +106,16 @@
   flex-shrink: 0;
 }
 
+/* Entre el móvil y el escritorio, cinco secciones no caben con el padding
+   completo: se compacta la navegación antes de romper el layout. */
+@media (max-width: 64rem) {
+  .navLink,
+  .navLinkActive {
+    padding-inline: var(--space-3);
+    font-size: var(--text-xs);
+  }
+}
+
 /* --------------------------------- Cuerpo --------------------------------- */
 
 .main {
@@ -176,7 +186,7 @@
 
   .navList {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 0;
   }
 

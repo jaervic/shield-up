@@ -9,6 +9,7 @@ import Dexie, { type EntityTable } from 'dexie';
 import type { Card, Review } from '@/domain/card';
 import type { DiagnosticAttempt } from '@/domain/diagnostic';
 import type { LessonProgress } from '@/domain/lesson';
+import type { PbqAttempt } from '@/domain/pbq';
 
 export const DATABASE_NAME = 'shieldup';
 
@@ -17,6 +18,7 @@ export class ShieldUpDatabase extends Dexie {
   reviews!: EntityTable<Review, 'id'>;
   diagnosticAttempts!: EntityTable<DiagnosticAttempt, 'id'>;
   lessonProgress!: EntityTable<LessonProgress, 'lessonId'>;
+  pbqAttempts!: EntityTable<PbqAttempt, 'id'>;
 
   constructor() {
     super(DATABASE_NAME);
@@ -35,6 +37,11 @@ export class ShieldUpDatabase extends Dexie {
     // v3: progreso de las lecciones de microlearning.
     this.version(3).stores({
       lessonProgress: 'lessonId, domain, status, updatedAt',
+    });
+
+    // v5: intentos de las PBQ. (v4 se reservó y no llegó a usarse.)
+    this.version(5).stores({
+      pbqAttempts: 'id, pbqId, kind, completedAt',
     });
   }
 }

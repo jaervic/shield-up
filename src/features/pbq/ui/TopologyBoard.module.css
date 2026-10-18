@@ -1,0 +1,123 @@
+.board {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.pool,
+.poolOver,
+.zone,
+.zoneOver {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+}
+
+.pool {
+  position: sticky;
+  top: 5rem;
+}
+
+.poolOver,
+.zoneOver {
+  border-style: solid;
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-soft);
+}
+
+.zone,
+.zoneOver {
+  border-top: 3px solid var(--color-border);
+}
+
+.zoneTitle {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+}
+
+.zoneDescription {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.zoneEmpty {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.zones {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--space-4);
+}
+
+.nodeList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.node,
+.nodeDragging {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3);
+  background-color: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: grab;
+  touch-action: none;
+}
+
+.nodeDragging {
+  opacity: 0.6;
+  cursor: grabbing;
+  border-color: var(--color-primary);
+}
+
+.nodeLabel {
+  font-weight: 600;
+  font-size: var(--text-sm);
+}
+
+.nodeHint {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.nodeControl {
+  margin-top: var(--space-1);
+}
+
+.select {
+  width: 100%;
+  min-height: var(--tap-min);
+  padding: var(--space-1) var(--space-2);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 47.99rem) {
+  .board {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pool {
+    position: static;
+  }
+}

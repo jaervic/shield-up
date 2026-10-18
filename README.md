@@ -22,9 +22,9 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   un entorno orientado al estudio: plan de sesión, práctica dirigida por dominio, confianza antes
   de revelar con calibración, objetivo diario, racha, anillos de dominio, hitos, mapa de calor de
   constancia y modo concentración.
-- **Fase 4 (en curso) — PBQ.** Motor puro de simulaciones: topologías y terminal simulada
-  (`nmap`, `tcpdump`, `ss`, `ip`, `ping`, `cat`, `grep`), con 5 PBQ de contenido y tests que
-  **demuestran que todas son resolubles al 100%**. Falta la interfaz (drag & drop y xterm.js).
+- **Fase 4 — PBQ.** Motor puro de simulaciones (topologías y terminal simulada con `nmap`,
+  `tcpdump`, `ss`, `ip`, `ping`, `cat`, `grep`), 5 PBQ de contenido y la interfaz completa:
+  tablero de arrastre con `dnd-kit` y terminal con `xterm.js` (cargada de forma diferida).
 
 ## Stack
 
@@ -383,6 +383,19 @@ Los objetivos del enunciado se validan con un `CommandMatcher`: programa, bander
 opcionalmente, un fragmento que debe aparecer en la salida. Basta con que **alguna** línea lo
 cumpla, así que el orden y los intentos fallidos no penalizan.
 
+### La interfaz
+
+- **Topología** — tablero con `dnd-kit` (ratón y táctil) **y un `select` por activo**. El
+  arrastre es la vía rápida; el `select` es la vía accesible y funciona con teclado y lector de
+  pantalla sin nada extra. Ambos escriben el mismo estado, así que no hay dos caminos que puedan
+  divergir.
+- **Terminal** — `xterm.js` como capa de presentación. Quién decide qué pasa al pulsar una tecla
+  es `reduceInput`, y quién produce la salida es `executeCommand`: ambos puros y testeados. El
+  terminal **se carga de forma diferida** (chunk propio de 336 kB), así que no entra en el bundle
+  inicial ni en las rutas de topología.
+- Los colores del terminal se leen de las variables CSS del tema, no se duplican: `tokens.css`
+  sigue siendo la única fuente.
+
 ### El test que garantiza que el contenido sirve
 
 `tests/unit/pbq/terminal.spec.ts` recorre **todo el banco** y, para cada PBQ, construye la
@@ -419,8 +432,6 @@ resolver.
 - [x] **Fase 1** — Arquitectura + motor SRS
 - [x] **Fase 2** — Dashboard de diagnóstico + test inicial que personaliza la ruta
 - [x] **Fase 3** — Microlearning (lecciones-problema)
-- [ ] **Fase 4** — PBQ: drag & drop (`dnd-kit`) + terminal simulada (`xterm.js`)
-  - [x] Motor puro: topologías, terminal simulada, corrección y contenido
-  - [ ] Interfaz: drag & drop con teclado y terminal con xterm.js
+- [x] **Fase 4** — PBQ: drag & drop (`dnd-kit`) + terminal simulada (`xterm.js`)
 - [ ] **Fase 5** — Simulador de examen (90 preguntas / 90 min / marcado para revisión)
 - [ ] **Fase 6** — Sync multidispositivo y cuentas

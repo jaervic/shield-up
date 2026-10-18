@@ -18,6 +18,7 @@ const NAV_ITEMS: NavItem[] = [
   { to: '/', label: 'Panel', icon: 'dashboard', end: true },
   { to: '/diagnostic', label: 'Diagnóstico', icon: 'diagnostic', end: false },
   { to: '/lessons', label: 'Lecciones', icon: 'lessons', end: false },
+  { to: '/pbq', label: 'Simulaciones', icon: 'pbq', end: false },
   { to: '/review', label: 'Repaso', icon: 'review', end: false },
 ];
 

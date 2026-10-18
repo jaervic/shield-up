@@ -19,7 +19,7 @@ const VIEWPORTS = [
   { name: 'escritorio-1440', width: 1440, height: 900 },
 ];
 
-const ROUTES = ['/', '/review', '/lessons', '/diagnostic'];
+const ROUTES = ['/', '/review', '/lessons', '/diagnostic', '/pbq', '/pbq/pbq-segmentar-red-plana'];
 
 const MIN_TAP = 44;
 

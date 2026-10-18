@@ -1,0 +1,48 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.meta {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.title {
+  margin-top: var(--space-1);
+  font-size: var(--text-xl);
+}
+
+.instructions {
+  margin-top: var(--space-2);
+  max-width: 75ch;
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.pending {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.error {
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--color-warning-soft);
+  border-left: 3px solid var(--color-warning);
+  border-radius: var(--radius-sm);
+  color: var(--color-warning);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 30rem) {
+  .actions button {
+    width: 100%;
+  }
+}

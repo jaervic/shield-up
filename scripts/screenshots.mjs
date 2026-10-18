@@ -259,6 +259,33 @@ for (const [name, viewport] of [
   console.log(`  ${OUT_DIR}/${name}-revelado.png`);
 }
 
+// PBQ: catálogo, tablero de topología y terminal en uso.
+await page.setViewportSize(DESKTOP);
+await page.addInitScript(() => window.localStorage.setItem('shieldup.theme', 'dark'));
+
+await page.goto(`${BASE_URL}/pbq`);
+await page.waitForTimeout(700);
+await page.screenshot({ path: `${OUT_DIR}/pbq-list-dark.png`, fullPage: true });
+console.log(`  ${OUT_DIR}/pbq-list-dark.png`);
+
+await page.goto(`${BASE_URL}/pbq/pbq-segmentar-red-plana`);
+await page.waitForTimeout(800);
+await page.screenshot({ path: `${OUT_DIR}/pbq-topology-dark.png`, fullPage: true });
+console.log(`  ${OUT_DIR}/pbq-topology-dark.png`);
+
+await page.goto(`${BASE_URL}/pbq/pbq-triaje-host-comprometido`);
+await page.waitForTimeout(1200);
+const terminal = page.locator('[role="application"]');
+await terminal.click();
+await page.keyboard.type('ss -tulnp');
+await page.keyboard.press('Enter');
+await page.waitForTimeout(300);
+await page.keyboard.type('tcpdump -n port 4444');
+await page.keyboard.press('Enter');
+await page.waitForTimeout(400);
+await page.screenshot({ path: `${OUT_DIR}/pbq-terminal-dark.png`, fullPage: true });
+console.log(`  ${OUT_DIR}/pbq-terminal-dark.png`);
+
 if (!only || only === 'light') {
   await shoot(page, 'dashboard-light', { theme: 'light', viewport: DESKTOP, path: '/' });
   await shoot(page, 'dashboard-light-mobile', { theme: 'light', viewport: MOBILE, path: '/' });

@@ -27,5 +27,13 @@ export default defineConfig({
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.spec.{ts,tsx}'],
     css: false,
+    alias: {
+      // xterm llama a `canvas.getContext` al importarse y jsdom no lo
+      // implementa: en tests se sustituye por un doble que registra lo escrito.
+      '@xterm/xterm': fileURLToPath(new URL('./tests/stubs/xterm.ts', import.meta.url)),
+      '@xterm/addon-fit': fileURLToPath(
+        new URL('./tests/stubs/xterm-addon-fit.ts', import.meta.url),
+      ),
+    },
   },
 });
