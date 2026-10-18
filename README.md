@@ -405,6 +405,26 @@ resolver.
 
 ---
 
+## Simulador de examen (Fase 5)
+
+Reproduce las condiciones del SY0-701: cuenta atrás, marcado para revisar, entrega automática al
+agotarse el tiempo y **puntuación escalada de 100 a 900 con 750 para aprobar** — que es como se
+comunica el resultado real: un 80% de aciertos no dice lo mismo que «780».
+
+Tres decisiones que merece la pena conocer:
+
+- **El tiempo no se decrementa, se recalcula** desde `startedAt` en cada tick. Así no se desvía
+  si el navegador suspende la pestaña, y el estado del cronómetro es reproducible.
+- **La entrega no es inmediata**: antes muestra cuántas quedan sin responder y cuántas marcadas.
+- **El simulacro es proporcional, y lo dice.** El banco tiene 41 preguntas y el examen real llega
+  a 90, así que usa todas las disponibles y ajusta la duración (41 → 62 min) en lugar de fingir
+  un examen completo. La interfaz lo advierte de forma explícita.
+
+El acceso está en el panel y no en la navegación: el simulacro es una actividad periódica, no
+diaria, y seis secciones no caben en la barra inferior del móvil sin truncar las etiquetas.
+
+---
+
 ## Pesos oficiales del examen (SY0-701)
 
 | Dominio | Peso |
@@ -433,5 +453,5 @@ resolver.
 - [x] **Fase 2** — Dashboard de diagnóstico + test inicial que personaliza la ruta
 - [x] **Fase 3** — Microlearning (lecciones-problema)
 - [x] **Fase 4** — PBQ: drag & drop (`dnd-kit`) + terminal simulada (`xterm.js`)
-- [ ] **Fase 5** — Simulador de examen (90 preguntas / 90 min / marcado para revisión)
+- [x] **Fase 5** — Simulador de examen (cuenta atrás, marcado para revisión y puntuación 100-900)
 - [ ] **Fase 6** — Sync multidispositivo y cuentas
