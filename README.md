@@ -217,7 +217,12 @@ de diagnóstico y la UI decide qué intento usar.
 
 ## Diseño, temas y accesibilidad
 
-### Tema claro y oscuro
+### Tema claro, oscuro y sistema
+
+Se distinguen dos cosas que suelen confundirse: la **preferencia** (lo que elige el usuario:
+`claro`, `oscuro` o `sistema`) y el **tema resuelto** (el que se pinta). Si la preferencia es
+`sistema`, se deduce de `prefers-color-scheme` y se sigue en caliente mientras no haya una
+elección explícita.
 
 El tema se aplica con el atributo `data-theme` en `<html>` y se resuelve en tres pasos:
 
@@ -438,6 +443,51 @@ cuenta acertar el conjunto completo.
 
 El acceso está en el panel y no en la navegación: el simulacro es una actividad periódica, no
 diaria, y seis secciones no caben en la barra inferior del móvil sin truncar las etiquetas.
+
+---
+
+## Confianza y datos
+
+Todo el progreso vive en IndexedDB, que es cómodo pero frágil: si se limpian los datos del
+navegador, se pierde. Estas piezas existen para que eso no sea irreversible.
+
+### Copia de seguridad (`/settings`)
+
+Un único fichero JSON con las seis tablas. **Validación estricta con el sobre** (`app`, `version`,
+`exportedAt` y que existan las colecciones) y **ligera con cada registro** (que sea un objeto con
+su clave primaria). Validar campo a campo duplicaría el esquema del dominio y, peor, rechazaría
+copias legítimas tras cualquier cambio de modelo.
+
+La restauración es **atómica**: `src/data/backupGateway.ts` borra y escribe dentro de una sola
+transacción de Dexie, así que un fallo a mitad no deja la base a medias.
+
+**El import sustituye todo el progreso**, y lo dice antes de hacerlo: exige confirmación y avisa
+de descargar una copia primero. Fusionar exige resolver conflictos por tarjeta y prefiero no
+fingir que está resuelto.
+
+### Reinicio del progreso
+
+Zona de peligro con confirmación por texto (`REINICIAR`), no un `confirm()` del navegador. Al
+reiniciar se borra el historial y **se vuelve a sembrar el mazo**: las tarjetas son a la vez
+contenido y progreso, así que el usuario recupera el mazo intacto sin historial.
+
+### Red de seguridad
+
+`ErrorBoundary` en **dos niveles**: en la raíz, para que un fallo no deje una pantalla en blanco;
+y alrededor del contenido del layout, para que una sección que reviente no se lleve por delante
+la navegación.
+
+### Rendimiento
+
+Las rutas se cargan con `lazy()`. Antes, entrar al panel descargaba también el banco de 139
+preguntas, las 58 tarjetas, las lecciones y las PBQ:
+
+| | Antes | Ahora |
+|---|---|---|
+| Bundle principal | 568 kB | **300 kB** (91 kB gzip) |
+
+Cada sección carga lo suyo al abrirse (el simulador 12 kB, el repaso 16 kB, el panel 20 kB), y
+xterm sigue en su propio trozo de 337 kB.
 
 ---
 
