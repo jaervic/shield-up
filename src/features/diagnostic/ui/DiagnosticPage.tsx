@@ -13,7 +13,7 @@ import {
 import { ProgressBar } from '@/shared/ui/ProgressBar';
 import { Button } from '@/shared/ui/Button';
 import { DiagnosticResults } from './DiagnosticResults';
-import { QuestionCard } from './QuestionCard';
+import { QuestionCard } from '@/shared/ui/QuestionCard';
 import styles from './DiagnosticPage.module.css';
 
 /**

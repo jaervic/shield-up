@@ -8,6 +8,7 @@
 import Dexie, { type EntityTable } from 'dexie';
 import type { Card, Review } from '@/domain/card';
 import type { DiagnosticAttempt } from '@/domain/diagnostic';
+import type { ExamAttempt } from '@/domain/exam';
 import type { LessonProgress } from '@/domain/lesson';
 import type { PbqAttempt } from '@/domain/pbq';
 
@@ -19,6 +20,7 @@ export class ShieldUpDatabase extends Dexie {
   diagnosticAttempts!: EntityTable<DiagnosticAttempt, 'id'>;
   lessonProgress!: EntityTable<LessonProgress, 'lessonId'>;
   pbqAttempts!: EntityTable<PbqAttempt, 'id'>;
+  examAttempts!: EntityTable<ExamAttempt, 'id'>;
 
   constructor() {
     super(DATABASE_NAME);
@@ -39,9 +41,14 @@ export class ShieldUpDatabase extends Dexie {
       lessonProgress: 'lessonId, domain, status, updatedAt',
     });
 
-    // v5: intentos de las PBQ. (v4 se reservó y no llegó a usarse.)
+    // v5: intentos de las PBQ.
     this.version(5).stores({
       pbqAttempts: 'id, pbqId, kind, completedAt',
+    });
+
+    // v6: intentos del simulador de examen.
+    this.version(6).stores({
+      examAttempts: 'id, completedAt',
     });
   }
 }

@@ -4,6 +4,7 @@ import { useSrsStats } from '@/features/srs/state/useSrsStats';
 import { ActivityHeatmap } from './ActivityHeatmap';
 import { DailyGoalPanel } from './DailyGoalPanel';
 import { DomainRing } from './DomainRing';
+import { ExamPanel } from './ExamPanel';
 import { HowItWorksPanel } from './HowItWorksPanel';
 import { MilestonesPanel } from './MilestonesPanel';
 import { ReadinessPanel } from './ReadinessPanel';
@@ -36,6 +37,7 @@ export function DashboardPage() {
       </header>
 
       <DailyGoalPanel />
+      <ExamPanel />
       <ReadinessPanel />
       <RecommendedLessonsPanel />
 

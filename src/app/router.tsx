@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { DashboardPage } from '@/features/dashboard/ui/DashboardPage';
 import { DiagnosticPage } from '@/features/diagnostic/ui/DiagnosticPage';
+import { ExamPage } from '@/features/exam/ui/ExamPage';
 import { LessonPage } from '@/features/microlearning/ui/LessonPage';
 import { LessonsPage } from '@/features/microlearning/ui/LessonsPage';
 import { PbqListPage } from '@/features/pbq/ui/PbqListPage';
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       { path: 'diagnostic', element: <DiagnosticPage /> },
+      { path: 'exam', element: <ExamPage /> },
       { path: 'lessons', element: <LessonsPage /> },
       { path: 'lessons/:lessonId', element: <LessonPage /> },
       { path: 'pbq', element: <PbqListPage /> },

@@ -22,9 +22,9 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   un entorno orientado al estudio: plan de sesión, práctica dirigida por dominio, confianza antes
   de revelar con calibración, objetivo diario, racha, anillos de dominio, hitos, mapa de calor de
   constancia y modo concentración.
-- **Fase 4 — PBQ.** Motor puro de simulaciones (topologías y terminal simulada con `nmap`,
-  `tcpdump`, `ss`, `ip`, `ping`, `cat`, `grep`), 5 PBQ de contenido y la interfaz completa:
-  tablero de arrastre con `dnd-kit` y terminal con `xterm.js` (cargada de forma diferida).
+- **Fase 5 — Simulador de examen.** Cuenta atrás, preguntas marcadas para revisar, entrega
+  automática al agotarse el tiempo y **puntuación escalada sobre 900 con 750 para aprobar**,
+  como el examen real. Con resultado por dominio y repaso de lo fallado.
 
 ## Stack
 

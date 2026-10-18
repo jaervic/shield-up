@@ -10,7 +10,11 @@
 import { DOMAIN_IDS, DOMAIN_WEIGHTS, type DomainId } from '@/domain/domain';
 import type { Question } from '@/domain/question';
 import { interleaveByDomain } from '@/shared/utils/interleave';
+import { allocateQuotas } from '@/shared/utils/quota';
 import { createRng, shuffle } from '@/shared/utils/random';
+
+// Se re-exporta desde aquí para no romper los puntos de import existentes.
+export { allocateQuotas };
 
 export const DEFAULT_DIAGNOSTIC_LENGTH = 25;
 
@@ -19,48 +23,6 @@ export interface SelectionOptions {
   count?: number;
   seed?: number;
   weights?: Readonly<Record<DomainId, number>>;
-}
-
-/**
- * Reparte `count` preguntas entre dominios según los pesos, sin superar el
- * tamaño de cada pool. Garantiza que la suma de cuotas sea
- * `min(count, total disponible)`.
- */
-export function allocateQuotas(
-  poolSizes: Readonly<Record<DomainId, number>>,
-  count: number,
-  weights: Readonly<Record<DomainId, number>> = DOMAIN_WEIGHTS,
-): Record<DomainId, number> {
-  const quotas = {} as Record<DomainId, number>;
-  let assigned = 0;
-
-  for (const id of DOMAIN_IDS) {
-    const target = Math.floor(count * weights[id]);
-    const quota = Math.min(target, poolSizes[id]);
-    quotas[id] = quota;
-    assigned += quota;
-  }
-
-  let remaining = count - assigned;
-  while (remaining > 0) {
-    let bestId: DomainId | null = null;
-    let bestDeficit = Number.NEGATIVE_INFINITY;
-
-    for (const id of DOMAIN_IDS) {
-      if (quotas[id] >= poolSizes[id]) continue;
-      const deficit = count * weights[id] - quotas[id];
-      if (deficit > bestDeficit + 1e-9) {
-        bestDeficit = deficit;
-        bestId = id;
-      }
-    }
-
-    if (bestId === null) break;
-    quotas[bestId] += 1;
-    remaining -= 1;
-  }
-
-  return quotas;
 }
 
 export function selectDiagnosticQuestions(

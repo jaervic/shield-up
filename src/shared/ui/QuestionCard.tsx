@@ -11,6 +11,12 @@ export interface QuestionCardProps {
   total: number;
 }
 
+/**
+ * Presentación de una pregunta de opción múltiple.
+ *
+ * Vive en `shared/ui` porque la usan tanto el diagnóstico como el simulador de
+ * examen: es presentacional y no sabe nada de ninguno de los dos.
+ */
 export function QuestionCard({
   question,
   selectedOptionIds,
