@@ -491,6 +491,34 @@ xterm sigue en su propio trozo de 337 kB.
 
 ---
 
+## Idiomas
+
+La **interfaz** está en español y en inglés, con un selector en Ajustes. El **contenido de estudio**
+(preguntas, tarjetas, lecciones y PBQ) está redactado en español: traducirlo es trabajo de
+contenido, no de código, y la ayuda del selector lo dice para no prometer lo que no hay.
+
+### Sin dependencias, con garantía de tipos
+
+`src/shared/i18n/dictionary.ts` deriva `TranslationKey` **del español**, que es la fuente de
+verdad, y declara el inglés como `Record<TranslationKey, string>`. Consecuencia: **el inglés está
+obligado a cubrir todas las claves** o el proyecto no compila, y usar una clave inexistente
+tampoco. No hace falta un test que persiga cadenas sin traducir: el compilador lo impide.
+
+Los tests comprueban además que ningún texto esté vacío y que **los huecos de plantilla coincidan
+entre idiomas**: si el español dice `{count} tarjetas` y el inglés olvida el `{count}`, falla.
+
+### Detalles
+
+- La **preferencia de idioma** vive en `localStorage`, como la del tema: es una preferencia de
+  interfaz y debe poder leerse antes del primer pintado.
+- `<html lang>` se mantiene sincronizado, que afecta a lectores de pantalla y al guionado.
+- El idioma se detecta del navegador; cualquier idioma que no sea inglés recibe español, que es
+  el del contenido.
+- `ErrorBoundary` es una clase y no puede usar hooks, así que lee el idioma directamente del
+  store: la pantalla de error tiene que funcionar pase lo que pase.
+
+---
+
 ## Pesos oficiales del examen (SY0-701)
 
 | Dominio | Peso |
