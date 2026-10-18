@@ -9,7 +9,12 @@ import {
   examLengthFor,
 } from '@/features/exam/engine/selection';
 import { evaluateExam, isExamPassed, scaledScore } from '@/features/exam/engine/scoring';
-import { examTimerState, formatClock, isTimeRunningOut } from '@/features/exam/engine/timer';
+import {
+  examTimerState,
+  formatClock,
+  isTimeRunningOut,
+  timeWarningLevel,
+} from '@/features/exam/engine/timer';
 import { makeQuestion } from '../../helpers/question';
 
 const META = {
@@ -212,5 +217,29 @@ describe('cronómetro', () => {
     expect(isTimeRunningOut(300)).toBe(true);
     expect(isTimeRunningOut(301)).toBe(false);
     expect(isTimeRunningOut(0)).toBe(false);
+  });
+
+  it('el nivel de aviso salta al cruzar cada umbral', () => {
+    expect(timeWarningLevel(601)).toBeNull();
+    expect(timeWarningLevel(600)).toBe('ten');
+    expect(timeWarningLevel(301)).toBe('ten');
+    expect(timeWarningLevel(300)).toBe('five');
+    expect(timeWarningLevel(61)).toBe('five');
+    expect(timeWarningLevel(60)).toBe('one');
+    expect(timeWarningLevel(1)).toBe('one');
+  });
+
+  it('sin tiempo no hay aviso', () => {
+    expect(timeWarningLevel(0)).toBeNull();
+    expect(timeWarningLevel(-5)).toBeNull();
+  });
+
+  it('el nivel es estable dentro de un tramo, para no anunciar cada segundo', () => {
+    // De 600 a 301 segundos el nivel no cambia: una región aria-live solo
+    // anuncia cuando el texto cambia, no en cada tick.
+    const levels = new Set([600, 500, 400, 301].map((seconds) => timeWarningLevel(seconds)));
+
+    expect(levels.size).toBe(1);
+    expect([...levels][0]).toBe('ten');
   });
 });

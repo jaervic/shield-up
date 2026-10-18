@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, fireEvent, screen, within } from '@testing-library/react';
 import type { ExamAttempt } from '@/domain/exam';
 import { loadQuestions } from '@/data/content/loadQuestions';
 import { examLengthFor } from '@/features/exam/engine/selection';
@@ -36,6 +36,63 @@ afterEach(() => {
 });
 
 describe('ExamPage', () => {
+  /** Intento mínimo, solo con lo que muestra el historial. */
+  function makeAttempt(overrides: Partial<ExamAttempt> = {}): ExamAttempt {
+    return {
+      id: overrides.id ?? 'exam_1',
+      startedAt: '2026-03-01T10:00:00.000Z',
+      completedAt: overrides.completedAt ?? '2026-03-01T11:00:00.000Z',
+      durationMinutes: 90,
+      elapsedSeconds: 3600,
+      timeExpired: false,
+      questionIds: [],
+      answers: [],
+      totalQuestions: 90,
+      correctCount: 75,
+      scorePercent: 83,
+      scaledScore: overrides.scaledScore ?? 767,
+      passed: overrides.passed ?? true,
+      byDomain: {} as ExamAttempt['byDomain'],
+    };
+  }
+
+  it('muestra el historial de simulacros cuando los hay', async () => {
+    const repository = memoryRepository();
+    repository.attempts.push(
+      makeAttempt({ id: 'a1', scaledScore: 620, passed: false }),
+      makeAttempt({ id: 'a2', scaledScore: 767, passed: true }),
+    );
+    setExamRepository(repository);
+
+    renderWithProviders(<ExamPage />, ['/exam']);
+    await settleUntil(
+      () => screen.queryByRole('heading', { name: 'Historial de simulacros' }) !== null,
+    );
+
+    const historySection = screen
+      .getByRole('heading', { name: 'Historial de simulacros' })
+      .closest('section') as HTMLElement;
+    const scope = within(historySection);
+
+    expect(scope.getByText('767/900')).toBeInTheDocument();
+    expect(scope.getByText('620/900')).toBeInTheDocument();
+    expect(scope.getByText('Aprobado')).toBeInTheDocument();
+    expect(scope.getByText('No aprobado')).toBeInTheDocument();
+  });
+
+  it('no muestra el historial si no hay intentos', async () => {
+    setExamRepository(memoryRepository());
+
+    renderWithProviders(<ExamPage />, ['/exam']);
+    await settleUntil(() => screen.queryByRole('button', { name: /comenzar simulacro/i }) !== null);
+    // Se deja resolver la consulta del historial antes de comprobar su ausencia.
+    for (let tick = 0; tick < 3; tick += 1) await settle();
+
+    expect(
+      screen.queryByRole('heading', { name: 'Historial de simulacros' }),
+    ).not.toBeInTheDocument();
+  });
+
   it('presenta el plan y arranca el simulacro', async () => {
     setExamRepository(memoryRepository());
 

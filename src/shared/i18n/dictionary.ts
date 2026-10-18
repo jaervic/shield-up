@@ -61,6 +61,11 @@ const es = {
   'language.legend': 'Idioma',
   'language.hint': 'Solo cambia la interfaz. El contenido de estudio está en español.',
 
+  // Simulacro de examen (avisos del cronómetro; el resto de la página sigue en español)
+  'exam.timeTen': 'Quedan 10 minutos.',
+  'exam.timeFive': 'Quedan 5 minutos.',
+  'exam.timeOne': 'Queda 1 minuto.',
+
   // Ajustes
   'settings.title': 'Ajustes',
   'settings.lead':
@@ -138,6 +143,10 @@ const en: Record<TranslationKey, string> = {
 
   'language.legend': 'Language',
   'language.hint': 'Only the interface changes. The study content is in Spanish.',
+
+  'exam.timeTen': 'Ten minutes left.',
+  'exam.timeFive': 'Five minutes left.',
+  'exam.timeOne': 'One minute left.',
 
   'settings.title': 'Settings',
   'settings.lead':

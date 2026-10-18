@@ -2,7 +2,9 @@ import { useCallback, useState } from 'react';
 import { Button } from '@/shared/ui/Button';
 import { QuestionCard } from '@/shared/ui/QuestionCard';
 import { EXAM_PASS_SCORE } from '@/domain/exam';
-import { formatClock, isTimeRunningOut } from '../engine/timer';
+import { useTranslation } from '@/shared/i18n/useTranslation';
+import type { TranslationKey } from '@/shared/i18n/dictionary';
+import { formatClock, isTimeRunningOut, timeWarningLevel, type TimeWarningLevel } from '../engine/timer';
 import {
   countAnswered,
   countFlagged,
@@ -12,6 +14,13 @@ import {
 } from '../state/examStore';
 import { useExamTimer } from '../state/useExamTimer';
 import styles from './ExamPage.module.css';
+
+/** Traducción de cada umbral de aviso. */
+const WARNING_KEYS: Readonly<Record<TimeWarningLevel, TranslationKey>> = {
+  ten: 'exam.timeTen',
+  five: 'exam.timeFive',
+  one: 'exam.timeOne',
+};
 
 /** Ejecución del simulacro: cronómetro, navegador y pregunta actual. */
 export function ExamRunner() {
@@ -42,10 +51,15 @@ export function ExamRunner() {
   }, []);
 
   const timer = useExamTimer(startedAt, durationMinutes, handleExpire);
+  const { t } = useTranslation();
 
   const answered = countAnswered(questions, answers);
   const flaggedCount = countFlagged(questions, flagged);
   const isFlagged = question !== null && flagged[question.id] === true;
+
+  // El nivel es estable dentro de cada tramo, así que el anuncio solo se repite
+  // cuando se cruza un umbral, no cada segundo.
+  const warning = timeWarningLevel(timer.remainingSeconds);
 
   if (question === null) {
     return <p role="status">Preparando la pregunta…</p>;
@@ -66,6 +80,12 @@ export function ExamRunner() {
           {EXAM_PASS_SCORE}/900
         </p>
       </div>
+
+      {/* Aviso de tiempo para lectores de pantalla: el reloj ya es visible, pero
+          quien no lo mira no se entera de que se le acaba el tiempo. */}
+      <p className="visually-hidden" role="status" aria-live="polite">
+        {warning === null ? '' : t(WARNING_KEYS[warning])}
+      </p>
 
       <nav className={styles.navigator} aria-label="Navegador de preguntas">
         <ul className={styles.navigatorList} role="list">

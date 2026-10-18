@@ -4,7 +4,7 @@ import { formatDateTime } from '@/shared/utils/format';
 import { planExam } from '../data/examService';
 import { isFullLengthExam } from '../engine/selection';
 import { useExamStore } from '../state/examStore';
-import { useLatestExam } from '../state/useExam';
+import { useExamHistory, useLatestExam } from '../state/useExam';
 import { ExamResults } from './ExamResults';
 import { ExamRunner } from './ExamRunner';
 import styles from './ExamPage.module.css';
@@ -23,6 +23,7 @@ export function ExamPage() {
   const reset = useExamStore((state) => state.reset);
 
   const { data: latest } = useLatestExam();
+  const { data: history } = useExamHistory();
 
   if (status === 'running' || status === 'submitting') {
     return <ExamRunner />;
@@ -104,6 +105,27 @@ export function ExamPage() {
           Último simulacro: <strong>{latest.scaledScore}/{EXAM_MAX_SCORE}</strong>{' '}
           {latest.passed ? '(aprobado)' : '(no aprobado)'} · {formatDateTime(latest.completedAt)}
         </p>
+      ) : null}
+
+      {history !== undefined && history.length > 0 ? (
+        <section className={styles.history} aria-labelledby="exam-history-title">
+          <h2 id="exam-history-title" className={styles.historyTitle}>
+            Historial de simulacros
+          </h2>
+          <ul className={styles.historyList} role="list">
+            {history.slice(0, 5).map((attempt) => (
+              <li key={attempt.id} className={styles.historyItem}>
+                <span className={attempt.passed ? styles.historyPassed : styles.historyFailed}>
+                  {attempt.passed ? 'Aprobado' : 'No aprobado'}
+                </span>
+                <span className={styles.historyScore}>
+                  {attempt.scaledScore}/{EXAM_MAX_SCORE}
+                </span>
+                <span className={styles.historyDate}>{formatDateTime(attempt.completedAt)}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
       ) : null}
 
       <Button variant="primary" onClick={() => void start()}>

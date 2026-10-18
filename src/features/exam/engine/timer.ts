@@ -45,3 +45,25 @@ export const EXAM_WARNING_SECONDS = 300;
 export function isTimeRunningOut(remainingSeconds: number): boolean {
   return remainingSeconds > 0 && remainingSeconds <= EXAM_WARNING_SECONDS;
 }
+
+/** Umbrales de aviso, de más lejano a más inmediato. */
+export type TimeWarningLevel = 'ten' | 'five' | 'one';
+
+/**
+ * Nivel de aviso según el tiempo que queda.
+ *
+ * Devuelve un NIVEL y no un texto: el motor es puro y no sabe de idiomas. La
+ * interfaz lo traduce.
+ *
+ * Importante para accesibilidad: el valor es **estable dentro de cada tramo**
+ * (de 10 minutos hacia abajo devuelve `ten` hasta que entra en el siguiente
+ * umbral), así que una región `aria-live` solo anuncia cuando cambia de tramo y
+ * no cada segundo.
+ */
+export function timeWarningLevel(remainingSeconds: number): TimeWarningLevel | null {
+  if (remainingSeconds <= 0) return null;
+  if (remainingSeconds <= 60) return 'one';
+  if (remainingSeconds <= 300) return 'five';
+  if (remainingSeconds <= 600) return 'ten';
+  return null;
+}
