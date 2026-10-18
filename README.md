@@ -517,6 +517,33 @@ entre idiomas**: si el español dice `{count} tarjetas` y el inglés olvida el `
 - `ErrorBoundary` es una clase y no puede usar hooks, así que lee el idioma directamente del
   store: la pantalla de error tiene que funcionar pase lo que pase.
 
+### Tests end-to-end
+
+```bash
+npx playwright install chromium   # una vez
+npm run test:e2e
+```
+
+Se ejecuta contra el **bundle real** (`vite preview` sobre `dist`), no contra el servidor de
+desarrollo. El troceado por rutas y la minificación solo se ejercitan así, y son precisamente los
+cambios que los tests unitarios no pueden ver: si una ruta diferida dejara de cargar, los 449
+tests unitarios seguirían en verde.
+
+Cubre los flujos que romperían la aplicación si fallaran: repaso completo (plan → confianza →
+revelado → calificación), lección completa, PBQ de topología por el selector accesible, terminal
+simulada, simulacro con entrega confirmada y **copia de seguridad** (exportar e importar el mismo
+fichero). En móvil, un humo que comprueba la barra inferior y que **ninguna ruta desborda en
+horizontal**.
+
+Vitest excluye `tests/e2e/**` en su configuración: son runners distintos y el de Playwright
+necesita un navegador.
+
+**Defectos que encontraron al escribirlos:** dos aserciones mías ambiguas (`/89/` casaba con la
+celda del navegador de preguntas y con el diálogo de entrega; `/900` con la escala y el umbral de
+aprobado) y una **intermitencia real de diseño**: el test de la lección enlazaba con
+`a[href^="/lessons/"]`, que puede resolver a una recomendación o al catálogo según el momento, así
+que ahora se ancla a la región «Todas las lecciones».
+
 ---
 
 ## Pesos oficiales del examen (SY0-701)

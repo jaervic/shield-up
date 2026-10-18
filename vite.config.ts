@@ -1,6 +1,6 @@
 import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react()],
@@ -26,6 +26,9 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./tests/setup.ts'],
     include: ['tests/**/*.spec.{ts,tsx}'],
+    // Los tests de Playwright viven en tests/e2e y no los ejecuta Vitest: son
+    // de otro runner y necesitan un navegador.
+    exclude: [...configDefaults.exclude, 'tests/e2e/**'],
     css: false,
     /**
      * Los tests de integración montan árboles grandes (un simulacro de 90
