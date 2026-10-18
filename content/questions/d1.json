@@ -6,15 +6,32 @@
     "type": "single",
     "stem": "Un sistema heredado no soporta MFA, así que la organización lo aísla en una VLAN restringida con reglas de firewall estrictas. ¿Qué tipo de control es esta VLAN?",
     "options": [
-      { "id": "a", "text": "Control correctivo" },
-      { "id": "b", "text": "Control compensatorio" },
-      { "id": "c", "text": "Control directivo" },
-      { "id": "d", "text": "Control disuasorio" }
+      {
+        "id": "a",
+        "text": "Control correctivo"
+      },
+      {
+        "id": "b",
+        "text": "Control compensatorio"
+      },
+      {
+        "id": "c",
+        "text": "Control directivo"
+      },
+      {
+        "id": "d",
+        "text": "Control disuasorio"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "Un control compensatorio sustituye a un control que no se puede aplicar en el sistema original. La VLAN mitiga el riesgo que el MFA ausente dejaba abierto.",
     "difficulty": "medium",
-    "tags": ["controles", "categorias"]
+    "tags": [
+      "controles",
+      "categorias"
+    ]
   },
   {
     "id": "d1-q02",
@@ -23,15 +40,32 @@
     "type": "single",
     "stem": "Un ransomware cifra la base de datos de producción y los usuarios no pueden consultarla durante horas. ¿Qué propiedad de la tríada CIA se ha visto comprometida de forma principal?",
     "options": [
-      { "id": "a", "text": "Confidencialidad" },
-      { "id": "b", "text": "Integridad" },
-      { "id": "c", "text": "Disponibilidad" },
-      { "id": "d", "text": "No repudio" }
+      {
+        "id": "a",
+        "text": "Confidencialidad"
+      },
+      {
+        "id": "b",
+        "text": "Integridad"
+      },
+      {
+        "id": "c",
+        "text": "Disponibilidad"
+      },
+      {
+        "id": "d",
+        "text": "No repudio"
+      }
     ],
-    "correctOptionIds": ["c"],
+    "correctOptionIds": [
+      "c"
+    ],
     "explanation": "El impacto inmediato es la indisponibilidad del servicio. La confidencialidad solo se compromete si además hubo exfiltración (doble extorsión).",
     "difficulty": "medium",
-    "tags": ["cia", "ransomware"]
+    "tags": [
+      "cia",
+      "ransomware"
+    ]
   },
   {
     "id": "d1-q03",
@@ -40,15 +74,32 @@
     "type": "single",
     "stem": "¿Qué mecanismo criptográfico garantiza de forma más directa el NO repudio de un documento?",
     "options": [
-      { "id": "a", "text": "Cifrado simétrico con AES-256" },
-      { "id": "b", "text": "Función hash SHA-256" },
-      { "id": "c", "text": "Firma digital con la clave privada del emisor" },
-      { "id": "d", "text": "Túnel TLS entre las partes" }
+      {
+        "id": "a",
+        "text": "Cifrado simétrico con AES-256"
+      },
+      {
+        "id": "b",
+        "text": "Función hash SHA-256"
+      },
+      {
+        "id": "c",
+        "text": "Firma digital con la clave privada del emisor"
+      },
+      {
+        "id": "d",
+        "text": "Túnel TLS entre las partes"
+      }
     ],
-    "correctOptionIds": ["c"],
+    "correctOptionIds": [
+      "c"
+    ],
     "explanation": "Solo el titular de la clave privada puede generar la firma y cualquiera puede verificarla con la pública, lo que impide negar la autoría.",
     "difficulty": "easy",
-    "tags": ["no-repudio", "firma-digital"]
+    "tags": [
+      "no-repudio",
+      "firma-digital"
+    ]
   },
   {
     "id": "d1-q04",
@@ -57,15 +108,31 @@
     "type": "single",
     "stem": "¿Cuál de los siguientes NO es un principio del modelo Zero Trust?",
     "options": [
-      { "id": "a", "text": "Verificar explícitamente cada solicitud de acceso" },
-      { "id": "b", "text": "Aplicar el mínimo privilegio" },
-      { "id": "c", "text": "Asumir que la red interna es confiable" },
-      { "id": "d", "text": "Asumir el compromiso y diseñar para contenerlo" }
+      {
+        "id": "a",
+        "text": "Verificar explícitamente cada solicitud de acceso"
+      },
+      {
+        "id": "b",
+        "text": "Aplicar el mínimo privilegio"
+      },
+      {
+        "id": "c",
+        "text": "Asumir que la red interna es confiable"
+      },
+      {
+        "id": "d",
+        "text": "Asumir el compromiso y diseñar para contenerlo"
+      }
     ],
-    "correctOptionIds": ["c"],
+    "correctOptionIds": [
+      "c"
+    ],
     "explanation": "Zero Trust rompe precisamente con la idea de perímetro confiable: la confianza se evalúa por identidad, dispositivo y contexto en cada acceso.",
     "difficulty": "easy",
-    "tags": ["zero-trust"]
+    "tags": [
+      "zero-trust"
+    ]
   },
   {
     "id": "d1-q05",
@@ -74,14 +141,238 @@
     "type": "single",
     "stem": "Antes de desplegar un parche crítico en producción, ¿qué elemento es imprescindible en la solicitud de cambio?",
     "options": [
-      { "id": "a", "text": "El nombre del fabricante del parche" },
-      { "id": "b", "text": "Un plan de reversión (rollback) aprobado" },
-      { "id": "c", "text": "La captura de pantalla del escaneo de vulnerabilidades" },
-      { "id": "d", "text": "El coste de la licencia del software" }
+      {
+        "id": "a",
+        "text": "El nombre del fabricante del parche"
+      },
+      {
+        "id": "b",
+        "text": "Un plan de reversión (rollback) aprobado"
+      },
+      {
+        "id": "c",
+        "text": "La captura de pantalla del escaneo de vulnerabilidades"
+      },
+      {
+        "id": "d",
+        "text": "El coste de la licencia del software"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "La gestión de cambios exige aprobación, ventana de mantenimiento y un plan de reversión para poder volver atrás si el despliegue falla.",
     "difficulty": "medium",
-    "tags": ["gestion-de-cambios", "parcheo"]
+    "tags": [
+      "gestion-de-cambios",
+      "parcheo"
+    ]
+  },
+  {
+    "id": "d1-q06",
+    "domain": 1,
+    "objective": "1.1",
+    "type": "single",
+    "stem": "¿Cuál de los siguientes es un control físico?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Una política de contraseñas"
+      },
+      {
+        "id": "b",
+        "text": "Una cerradura con lector de tarjeta en la sala de servidores"
+      },
+      {
+        "id": "c",
+        "text": "Un firewall de aplicación web"
+      },
+      {
+        "id": "d",
+        "text": "Una regla del SIEM"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Los controles físicos actúan sobre el acceso material al activo. Las políticas son directivos, el WAF técnico y la regla del SIEM técnica y detective.",
+    "difficulty": "easy",
+    "tags": [
+      "controles",
+      "fisica"
+    ]
+  },
+  {
+    "id": "d1-q07",
+    "domain": 1,
+    "objective": "1.3",
+    "type": "single",
+    "stem": "¿Por qué la gestión de cambios es un control de seguridad y no solo burocracia?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque documenta quién trabajó cada día"
+      },
+      {
+        "id": "b",
+        "text": "Porque un cambio no revisado puede abrir una vulnerabilidad o tumbar un servicio, y el proceso lo detecta antes"
+      },
+      {
+        "id": "c",
+        "text": "Porque reduce el coste de las licencias"
+      },
+      {
+        "id": "d",
+        "text": "Porque sustituye al análisis de vulnerabilidades"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La mayoría de las caídas y de las brechas se originan en cambios: un puerto abierto, una regla relajada, una versión sin parchear. La revisión previa y el plan de reversión son el control.",
+    "difficulty": "medium",
+    "tags": [
+      "gestion-de-cambios",
+      "fundamentos"
+    ]
+  },
+  {
+    "id": "d1-q08",
+    "domain": 1,
+    "objective": "1.4",
+    "type": "single",
+    "stem": "¿Cuál es la diferencia principal entre cifrado simétrico y asimétrico?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El simétrico es más lento y usa dos claves"
+      },
+      {
+        "id": "b",
+        "text": "El simétrico usa una sola clave compartida y es más rápido; el asimétrico usa un par de claves"
+      },
+      {
+        "id": "c",
+        "text": "El asimétrico no sirve para firmar"
+      },
+      {
+        "id": "d",
+        "text": "El simétrico no se puede usar para datos en reposo"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El simétrico (AES) es rápido pero exige compartir la clave; el asimétrico (RSA, ECC) resuelve el intercambio y permite firmar, a costa de ser mucho más lento. En la práctica se combinan.",
+    "difficulty": "medium",
+    "tags": [
+      "criptografia",
+      "simetrico",
+      "asimetrico"
+    ]
+  },
+  {
+    "id": "d1-q09",
+    "domain": 1,
+    "objective": "1.4",
+    "type": "single",
+    "stem": "¿Qué garantiza una función hash que NO garantiza la codificación Base64?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Que el dato se puede recuperar"
+      },
+      {
+        "id": "b",
+        "text": "Integridad: cualquier cambio en la entrada produce un hash distinto"
+      },
+      {
+        "id": "c",
+        "text": "Confidencialidad del dato original"
+      },
+      {
+        "id": "d",
+        "text": "Compresión del dato"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Base64 solo transforma el formato y es reversible por cualquiera; no aporta seguridad. El hash es de un solo sentido y sirve como huella de integridad.",
+    "difficulty": "medium",
+    "tags": [
+      "hash",
+      "codificacion",
+      "integridad"
+    ]
+  },
+  {
+    "id": "d1-q10",
+    "domain": 1,
+    "objective": "1.4",
+    "type": "single",
+    "stem": "Dos usuarios con la misma contraseña tienen hashes distintos en la base de datos. ¿Qué lo explica?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El uso de un salt único por contraseña"
+      },
+      {
+        "id": "b",
+        "text": "Un error de la base de datos"
+      },
+      {
+        "id": "c",
+        "text": "Que se usa cifrado simétrico"
+      },
+      {
+        "id": "d",
+        "text": "Que el hash es reversible"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El salt es un valor aleatorio que se añade antes de calcular el hash. Así dos contraseñas iguales producen hashes distintos y las tablas precalculadas dejan de servir.",
+    "difficulty": "medium",
+    "tags": [
+      "salt",
+      "password",
+      "hash"
+    ]
+  },
+  {
+    "id": "d1-q11",
+    "domain": 1,
+    "objective": "1.2",
+    "type": "single",
+    "stem": "¿Qué significa aplicar defensa en profundidad?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Comprar el firewall más caro del mercado"
+      },
+      {
+        "id": "b",
+        "text": "Superponer controles de distinto tipo para que el fallo de uno no suponga el compromiso total"
+      },
+      {
+        "id": "c",
+        "text": "Cifrar todos los discos de la organización"
+      },
+      {
+        "id": "d",
+        "text": "Contratar un seguro de ciberseguridad"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Ningún control es infalible. La defensa en profundidad asume que alguno fallará y diseña capas independientes: si cae el perímetro, siguen el segmento, el endpoint y la detección.",
+    "difficulty": "easy",
+    "tags": [
+      "defensa-en-profundidad",
+      "fundamentos"
+    ]
   }
 ]

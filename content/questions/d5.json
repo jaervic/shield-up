@@ -6,15 +6,33 @@
     "type": "single",
     "stem": "En un análisis cuantitativo de riesgo, si el SLE de un incidente es 10.000 € y el ARO es 0,5 al año, ¿cuál es el ALE?",
     "options": [
-      { "id": "a", "text": "5.000 €" },
-      { "id": "b", "text": "10.000 €" },
-      { "id": "c", "text": "20.000 €" },
-      { "id": "d", "text": "0,5 €" }
+      {
+        "id": "a",
+        "text": "5.000 €"
+      },
+      {
+        "id": "b",
+        "text": "10.000 €"
+      },
+      {
+        "id": "c",
+        "text": "20.000 €"
+      },
+      {
+        "id": "d",
+        "text": "0,5 €"
+      }
     ],
-    "correctOptionIds": ["a"],
+    "correctOptionIds": [
+      "a"
+    ],
     "explanation": "ALE = SLE × ARO = 10.000 × 0,5 = 5.000 € anuales esperados. Es la cifra que se compara con el coste del control propuesto.",
     "difficulty": "medium",
-    "tags": ["riesgo", "analisis-cuantitativo", "ale"]
+    "tags": [
+      "riesgo",
+      "analisis-cuantitativo",
+      "ale"
+    ]
   },
   {
     "id": "d5-q02",
@@ -23,15 +41,32 @@
     "type": "single",
     "stem": "La organización contrata un seguro de ciberseguridad. ¿Qué estrategia de tratamiento del riesgo ha aplicado?",
     "options": [
-      { "id": "a", "text": "Mitigar" },
-      { "id": "b", "text": "Transferir" },
-      { "id": "c", "text": "Evitar" },
-      { "id": "d", "text": "Aceptar" }
+      {
+        "id": "a",
+        "text": "Mitigar"
+      },
+      {
+        "id": "b",
+        "text": "Transferir"
+      },
+      {
+        "id": "c",
+        "text": "Evitar"
+      },
+      {
+        "id": "d",
+        "text": "Aceptar"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El seguro traslada el impacto financiero a un tercero. No reduce la probabilidad del incidente, por lo que no sustituye a los controles técnicos.",
     "difficulty": "easy",
-    "tags": ["riesgo", "seguro"]
+    "tags": [
+      "riesgo",
+      "seguro"
+    ]
   },
   {
     "id": "d5-q03",
@@ -40,15 +75,33 @@
     "type": "single",
     "stem": "La dirección acepta hasta 4 horas de caída y hasta 15 minutos de pérdida de datos. ¿Qué representan esos valores?",
     "options": [
-      { "id": "a", "text": "MTTR y MTBF" },
-      { "id": "b", "text": "RTO y RPO, respectivamente" },
-      { "id": "c", "text": "SLA y NDA" },
-      { "id": "d", "text": "SLE y ARO" }
+      {
+        "id": "a",
+        "text": "MTTR y MTBF"
+      },
+      {
+        "id": "b",
+        "text": "RTO y RPO, respectivamente"
+      },
+      {
+        "id": "c",
+        "text": "SLA y NDA"
+      },
+      {
+        "id": "d",
+        "text": "SLE y ARO"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "RTO es el tiempo objetivo de recuperación (4 h); RPO, la pérdida máxima de datos tolerable (15 min), que determina la frecuencia de backup.",
     "difficulty": "medium",
-    "tags": ["continuidad", "rto", "rpo"]
+    "tags": [
+      "continuidad",
+      "rto",
+      "rpo"
+    ]
   },
   {
     "id": "d5-q04",
@@ -57,15 +110,32 @@
     "type": "single",
     "stem": "¿Qué documento define los niveles de servicio exigibles a un proveedor externo?",
     "options": [
-      { "id": "a", "text": "NDA" },
-      { "id": "b", "text": "SLA" },
-      { "id": "c", "text": "MOU" },
-      { "id": "d", "text": "BIA" }
+      {
+        "id": "a",
+        "text": "NDA"
+      },
+      {
+        "id": "b",
+        "text": "SLA"
+      },
+      {
+        "id": "c",
+        "text": "MOU"
+      },
+      {
+        "id": "d",
+        "text": "BIA"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El Service Level Agreement fija disponibilidad, tiempos de respuesta y penalizaciones. El NDA cubre confidencialidad; el MOU, intenciones sin fuerza contractual plena.",
     "difficulty": "easy",
-    "tags": ["terceros", "sla"]
+    "tags": [
+      "terceros",
+      "sla"
+    ]
   },
   {
     "id": "d5-q05",
@@ -74,15 +144,33 @@
     "type": "single",
     "stem": "Antes de compartir arquitectura interna con un proveedor en evaluación, ¿qué acuerdo debe firmarse?",
     "options": [
-      { "id": "a", "text": "SLA" },
-      { "id": "b", "text": "NDA" },
-      { "id": "c", "text": "BPA" },
-      { "id": "d", "text": "SOW" }
+      {
+        "id": "a",
+        "text": "SLA"
+      },
+      {
+        "id": "b",
+        "text": "NDA"
+      },
+      {
+        "id": "c",
+        "text": "BPA"
+      },
+      {
+        "id": "d",
+        "text": "SOW"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El Non-Disclosure Agreement protege la información confidencial revelada durante la evaluación, antes de que exista contrato de servicio.",
     "difficulty": "easy",
-    "tags": ["terceros", "nda", "confidencialidad"]
+    "tags": [
+      "terceros",
+      "nda",
+      "confidencialidad"
+    ]
   },
   {
     "id": "d5-q06",
@@ -91,15 +179,33 @@
     "type": "single",
     "stem": "¿Qué marco del NIST organiza la gestión de riesgos en funciones Identify, Protect, Detect, Respond y Recover?",
     "options": [
-      { "id": "a", "text": "NIST SP 800-53" },
-      { "id": "b", "text": "NIST Cybersecurity Framework (CSF)" },
-      { "id": "c", "text": "ISO 27001" },
-      { "id": "d", "text": "PCI DSS" }
+      {
+        "id": "a",
+        "text": "NIST SP 800-53"
+      },
+      {
+        "id": "b",
+        "text": "NIST Cybersecurity Framework (CSF)"
+      },
+      {
+        "id": "c",
+        "text": "ISO 27001"
+      },
+      {
+        "id": "d",
+        "text": "PCI DSS"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El CSF estructura la postura en cinco funciones. La 800-53 es un catálogo de controles, ISO 27001 un estándar de SGSI y PCI DSS una norma sectorial de pagos.",
     "difficulty": "medium",
-    "tags": ["gobernanza", "nist", "marcos"]
+    "tags": [
+      "gobernanza",
+      "nist",
+      "marcos"
+    ]
   },
   {
     "id": "d5-q07",
@@ -108,15 +214,33 @@
     "type": "single",
     "stem": "¿Cuál es el propósito principal de un ejercicio de simulación (tabletop) del plan de continuidad?",
     "options": [
-      { "id": "a", "text": "Cumplir un requisito de auditoría sin más" },
-      { "id": "b", "text": "Validar el plan, las roles y las comunicaciones sin afectar a producción" },
-      { "id": "c", "text": "Probar la velocidad real de los backups en cinta" },
-      { "id": "d", "text": "Sustituir al plan de respuesta a incidentes" }
+      {
+        "id": "a",
+        "text": "Cumplir un requisito de auditoría sin más"
+      },
+      {
+        "id": "b",
+        "text": "Validar el plan, las roles y las comunicaciones sin afectar a producción"
+      },
+      {
+        "id": "c",
+        "text": "Probar la velocidad real de los backups en cinta"
+      },
+      {
+        "id": "d",
+        "text": "Sustituir al plan de respuesta a incidentes"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El tabletop revela lagunas en roles, decisiones y comunicación. Es un ensayo de bajo coste que precede a los ejercicios funcionales en producción.",
     "difficulty": "medium",
-    "tags": ["continuidad", "tabletop", "bcdr"]
+    "tags": [
+      "continuidad",
+      "tabletop",
+      "bcdr"
+    ]
   },
   {
     "id": "d5-q08",
@@ -125,14 +249,344 @@
     "type": "single",
     "stem": "Bajo el RGPD, ¿en qué plazo debe notificarse una violación de seguridad con riesgo para los interesados?",
     "options": [
-      { "id": "a", "text": "24 horas" },
-      { "id": "b", "text": "72 horas desde que se tiene conocimiento" },
-      { "id": "c", "text": "7 días naturales" },
-      { "id": "d", "text": "30 días" }
+      {
+        "id": "a",
+        "text": "24 horas"
+      },
+      {
+        "id": "b",
+        "text": "72 horas desde que se tiene conocimiento"
+      },
+      {
+        "id": "c",
+        "text": "7 días naturales"
+      },
+      {
+        "id": "d",
+        "text": "30 días"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El RGPD exige notificar a la autoridad de control en un máximo de 72 horas desde el conocimiento del incidente, salvo que no entrañe riesgo.",
     "difficulty": "medium",
-    "tags": ["compliance", "gdpr", "notificacion"]
+    "tags": [
+      "compliance",
+      "gdpr",
+      "notificacion"
+    ]
+  },
+  {
+    "id": "d5-q09",
+    "domain": 5,
+    "objective": "5.2",
+    "type": "single",
+    "stem": "¿Para qué sirve un registro de riesgos (risk register)?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Para documentar cada riesgo, su propietario, su impacto y la decisión tomada"
+      },
+      {
+        "id": "b",
+        "text": "Para listar los servidores de la organización"
+      },
+      {
+        "id": "c",
+        "text": "Para registrar las incidencias de los usuarios"
+      },
+      {
+        "id": "d",
+        "text": "Para guardar las contraseñas cifradas"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "El registro es la prueba de que el riesgo se gestiona: sin propietario ni decisión documentada, un riesgo aceptado es simplemente un riesgo ignorado.",
+    "difficulty": "medium",
+    "tags": [
+      "riesgo",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "d5-q10",
+    "domain": 5,
+    "objective": "5.2",
+    "type": "single",
+    "stem": "¿Qué diferencia hay entre apetito de riesgo y tolerancia al riesgo?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Son sinónimos exactos"
+      },
+      {
+        "id": "b",
+        "text": "El apetito es cuánto riesgo se está dispuesto a asumir en conjunto; la tolerancia, la desviación admisible en un control concreto"
+      },
+      {
+        "id": "c",
+        "text": "El apetito lo fija el auditor y la tolerancia el proveedor"
+      },
+      {
+        "id": "d",
+        "text": "La tolerancia solo aplica a riesgos financieros"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El apetito es la postura de la dirección ante el riesgo; la tolerancia es el margen aceptable al aplicarla. Sin apetito definido, cualquier discusión sobre controles se vuelve arbitraria.",
+    "difficulty": "hard",
+    "tags": [
+      "riesgo",
+      "apetito",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "d5-q11",
+    "domain": 5,
+    "objective": "5.4",
+    "type": "single",
+    "stem": "¿Cuál es el propósito del análisis de impacto en el negocio (BIA)?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Inventariar el hardware de la organización"
+      },
+      {
+        "id": "b",
+        "text": "Determinar qué procesos son críticos y cuánto tiempo puede el negocio estar sin ellos"
+      },
+      {
+        "id": "c",
+        "text": "Calcular el coste de las licencias"
+      },
+      {
+        "id": "d",
+        "text": "Evaluar el rendimiento de los empleados"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "El BIA produce los RTO y RPO de cada proceso, que son los requisitos que después debe cumplir el plan de continuidad. Primero el negocio, después la tecnología.",
+    "difficulty": "medium",
+    "tags": [
+      "continuidad",
+      "bia",
+      "rto"
+    ]
+  },
+  {
+    "id": "d5-q12",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Qué aporta una auditoría interna de seguridad frente a un escaneo técnico?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Encuentra más vulnerabilidades de software"
+      },
+      {
+        "id": "b",
+        "text": "Comprueba que los controles existen, se aplican y están documentados"
+      },
+      {
+        "id": "c",
+        "text": "Sustituye al pentest"
+      },
+      {
+        "id": "d",
+        "text": "Mide el rendimiento de la red"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La auditoría evalúa el cumplimiento del marco de control: políticas, evidencias y aplicación real. Un escaneo dice si hay una vulnerabilidad; una auditoría dice si el proceso funciona.",
+    "difficulty": "medium",
+    "tags": [
+      "auditoria",
+      "compliance"
+    ]
+  },
+  {
+    "id": "d5-q13",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Por qué una política de retención de datos es un control de seguridad?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Porque reduce el consumo de disco"
+      },
+      {
+        "id": "b",
+        "text": "Porque los datos que ya no existen no se pueden filtrar ni reclamar legalmente"
+      },
+      {
+        "id": "c",
+        "text": "Porque acelera las consultas de la base de datos"
+      },
+      {
+        "id": "d",
+        "text": "Porque evita tener que hacer copias de seguridad"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Retener de más amplía la superficie de fuga y la exposición legal; retener de menos puede destruir prueba necesaria. La política define el equilibrio por tipo de dato.",
+    "difficulty": "medium",
+    "tags": [
+      "retencion",
+      "datos",
+      "compliance"
+    ]
+  },
+  {
+    "id": "d5-q14",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "Una empresa que procesa tarjetas de pago debe cumplir PCI DSS. ¿Qué obliga ese estándar?",
+    "options": [
+      {
+        "id": "a",
+        "text": "A publicar los incidentes en prensa"
+      },
+      {
+        "id": "b",
+        "text": "A proteger los datos de tarjeta con controles concretos y verificables en su entorno"
+      },
+      {
+        "id": "c",
+        "text": "A usar un proveedor cloud concreto"
+      },
+      {
+        "id": "d",
+        "text": "A notificar a la UE en 72 horas"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "PCI DSS es una norma sectorial centrada en el entorno que trata datos de tarjeta. El plazo de 72 horas pertenece al RGPD, que es otra norma con otro ámbito.",
+    "difficulty": "medium",
+    "tags": [
+      "compliance",
+      "pci-dss"
+    ]
+  },
+  {
+    "id": "d5-q15",
+    "domain": 5,
+    "objective": "5.3",
+    "type": "single",
+    "stem": "Al contratar a un proveedor que tratará datos de clientes, ¿qué cláusula es imprescindible en el contrato?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El color corporativo de su web"
+      },
+      {
+        "id": "b",
+        "text": "Obligaciones de seguridad, derecho de auditoría y notificación de incidentes"
+      },
+      {
+        "id": "c",
+        "text": "La marca de sus servidores"
+      },
+      {
+        "id": "d",
+        "text": "El número de empleados de la empresa"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La seguridad del proveedor es tu riesgo. Sin obligaciones exigibles, derecho a auditar y aviso de incidentes, no hay forma de verificar ni de reaccionar.",
+    "difficulty": "medium",
+    "tags": [
+      "terceros",
+      "contratos",
+      "riesgo"
+    ]
+  },
+  {
+    "id": "d5-q16",
+    "domain": 5,
+    "objective": "5.6",
+    "type": "single",
+    "stem": "¿Qué indica que un programa de concienciación funciona mejor que el número de personas que han hecho el curso?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El número de correos enviados"
+      },
+      {
+        "id": "b",
+        "text": "La caída de la tasa de clic en simulaciones de phishing y de los reportes de correo sospechoso"
+      },
+      {
+        "id": "c",
+        "text": "Las horas totales de formación"
+      },
+      {
+        "id": "d",
+        "text": "El presupuesto dedicado"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La formación completada mide actividad, no efecto. Lo que cambia el riesgo es que la gente deje de picar y que empiece a reportar: eso sí es medible.",
+    "difficulty": "medium",
+    "tags": [
+      "concienciacion",
+      "metricas",
+      "phishing"
+    ]
+  },
+  {
+    "id": "d5-q17",
+    "domain": 5,
+    "objective": "5.1",
+    "type": "single",
+    "stem": "¿Qué principio exige que quien solicita un pago no sea quien lo aprueba ni quien lo ejecuta?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Mínimo privilegio"
+      },
+      {
+        "id": "b",
+        "text": "Separación de funciones (separation of duties)"
+      },
+      {
+        "id": "c",
+        "text": "Necesidad de conocer"
+      },
+      {
+        "id": "d",
+        "text": "Defensa en profundidad"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Repartir una operación crítica entre varias personas impide que una sola la complete en fraude sin colusión. El mínimo privilegio limita el alcance de cada cuenta; la separación evita el abuso completo.",
+    "difficulty": "medium",
+    "tags": [
+      "gobernanza",
+      "segregacion",
+      "fraude"
+    ]
   }
 ]

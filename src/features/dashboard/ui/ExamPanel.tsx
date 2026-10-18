@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { EXAM_MAX_QUESTIONS, EXAM_MAX_SCORE, EXAM_PASS_SCORE } from '@/domain/exam';
 import { formatDateTime } from '@/shared/utils/format';
 import { planExam } from '@/features/exam/data/examService';
+import { isFullLengthExam } from '@/features/exam/engine/selection';
 import { useLatestExam } from '@/features/exam/state/useExam';
 import styles from './ExamPanel.module.css';
 
@@ -40,12 +41,12 @@ export function ExamPanel() {
         {latest === null || latest === undefined ? 'Hacer un simulacro' : 'Repetir simulacro'}
       </Link>
 
-      {plan.bankSize < EXAM_MAX_QUESTIONS ? (
+      {isFullLengthExam(plan.bankSize) ? null : (
         <p className={styles.note}>
           El banco tiene {plan.bankSize} de las {EXAM_MAX_QUESTIONS} preguntas del examen real: el
           simulacro es proporcional.
         </p>
-      ) : null}
+      )}
     </section>
   );
 }

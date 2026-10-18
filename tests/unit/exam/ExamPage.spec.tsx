@@ -45,7 +45,8 @@ describe('ExamPage', () => {
     expect(screen.getByRole('heading', { name: 'Simulador de examen' })).toBeInTheDocument();
     expect(screen.getByText(String(bank))).toBeInTheDocument();
     expect(screen.getByText('Aprobado').parentElement).toHaveTextContent('750/900');
-    expect(screen.getByText(/simulacro proporcional/i)).toBeInTheDocument();
+    // Con el banco a escala real (>=90% de 90) no se avisa de proporcionalidad.
+    expect(screen.queryByText(/simulacro proporcional/i)).not.toBeInTheDocument();
 
     fireEvent.click(screen.getByRole('button', { name: /comenzar simulacro/i }));
     await settleUntil(() => screen.queryByRole('timer') !== null);

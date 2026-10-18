@@ -27,6 +27,16 @@ export function examLengthFor(bankSize: number): number {
   return Math.max(1, Math.min(EXAM_MAX_QUESTIONS, bankSize));
 }
 
+/**
+ * ¿El banco permite un simulacro a escala real?
+ *
+ * Se admite un 10% de margen: con 89 de 90 preguntas el examen ya es
+ * equivalente y avisar de que «es proporcional» sería ruido.
+ */
+export function isFullLengthExam(bankSize: number): boolean {
+  return bankSize >= EXAM_MAX_QUESTIONS * 0.9;
+}
+
 /** Duración proporcional al número de preguntas, con el techo de 90 minutos. */
 export function examDurationMinutes(questionCount: number): number {
   if (questionCount <= 0) return 0;

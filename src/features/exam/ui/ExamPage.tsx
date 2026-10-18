@@ -2,6 +2,7 @@ import { EXAM_MAX_QUESTIONS, EXAM_MAX_SCORE, EXAM_PASS_SCORE } from '@/domain/ex
 import { Button } from '@/shared/ui/Button';
 import { formatDateTime } from '@/shared/utils/format';
 import { planExam } from '../data/examService';
+import { isFullLengthExam } from '../engine/selection';
 import { useExamStore } from '../state/examStore';
 import { useLatestExam } from '../state/useExam';
 import { ExamResults } from './ExamResults';
@@ -60,7 +61,7 @@ export function ExamPage() {
   }
 
   const plan = planExam();
-  const missing = EXAM_MAX_QUESTIONS - plan.bankSize;
+  const fullLength = isFullLengthExam(plan.bankSize);
 
   return (
     <div className={styles.intro}>
@@ -90,13 +91,13 @@ export function ExamPage() {
         </div>
       </dl>
 
-      {missing > 0 ? (
+      {fullLength ? null : (
         <p className={styles.note}>
           El banco tiene {plan.bankSize} preguntas y el examen real llega a {EXAM_MAX_QUESTIONS}:
           el simulacro usa todas las disponibles y ajusta la duración en consecuencia. Es un
           simulacro proporcional, no el examen completo.
         </p>
-      ) : null}
+      )}
 
       {latest !== null && latest !== undefined ? (
         <p className={styles.lastResult}>

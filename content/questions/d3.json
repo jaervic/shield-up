@@ -6,15 +6,32 @@
     "type": "single",
     "stem": "¿Qué modelo de servicio cloud otorga al cliente el MAYOR control sobre el sistema operativo y el runtime?",
     "options": [
-      { "id": "a", "text": "SaaS" },
-      { "id": "b", "text": "PaaS" },
-      { "id": "c", "text": "IaaS" },
-      { "id": "d", "text": "FaaS" }
+      {
+        "id": "a",
+        "text": "SaaS"
+      },
+      {
+        "id": "b",
+        "text": "PaaS"
+      },
+      {
+        "id": "c",
+        "text": "IaaS"
+      },
+      {
+        "id": "d",
+        "text": "FaaS"
+      }
     ],
-    "correctOptionIds": ["c"],
+    "correctOptionIds": [
+      "c"
+    ],
     "explanation": "En IaaS el proveedor gestiona virtualización, red y almacenamiento, mientras el cliente controla sistema operativo, parches y aplicaciones: máximo control, máxima responsabilidad.",
     "difficulty": "easy",
-    "tags": ["cloud", "responsabilidad-compartida"]
+    "tags": [
+      "cloud",
+      "responsabilidad-compartida"
+    ]
   },
   {
     "id": "d3-q02",
@@ -23,15 +40,32 @@
     "type": "single",
     "stem": "¿Qué caracteriza a una red definida por software (SDN)?",
     "options": [
-      { "id": "a", "text": "Separa el plano de control del plano de datos" },
-      { "id": "b", "text": "Elimina la necesidad de cifrado en tránsito" },
-      { "id": "c", "text": "Sustituye por completo a los firewalls" },
-      { "id": "d", "text": "Requiere que todo el tráfico salga a Internet" }
+      {
+        "id": "a",
+        "text": "Separa el plano de control del plano de datos"
+      },
+      {
+        "id": "b",
+        "text": "Elimina la necesidad de cifrado en tránsito"
+      },
+      {
+        "id": "c",
+        "text": "Sustituye por completo a los firewalls"
+      },
+      {
+        "id": "d",
+        "text": "Requiere que todo el tráfico salga a Internet"
+      }
     ],
-    "correctOptionIds": ["a"],
+    "correctOptionIds": [
+      "a"
+    ],
     "explanation": "SDN centraliza las decisiones (plano de control) y las separa del reenvío de paquetes (plano de datos), lo que permite políticas programables y microsegmentación.",
     "difficulty": "medium",
-    "tags": ["sdn", "arquitectura-de-red"]
+    "tags": [
+      "sdn",
+      "arquitectura-de-red"
+    ]
   },
   {
     "id": "d3-q03",
@@ -40,15 +74,32 @@
     "type": "single",
     "stem": "¿Qué afirmación es correcta sobre los contenedores frente a las máquinas virtuales?",
     "options": [
-      { "id": "a", "text": "Cada contenedor incluye su propio kernel completo" },
-      { "id": "b", "text": "Los contenedores comparten el kernel del host" },
-      { "id": "c", "text": "Los contenedores no pueden aislarse por red" },
-      { "id": "d", "text": "Las VM arrancan más rápido que los contenedores" }
+      {
+        "id": "a",
+        "text": "Cada contenedor incluye su propio kernel completo"
+      },
+      {
+        "id": "b",
+        "text": "Los contenedores comparten el kernel del host"
+      },
+      {
+        "id": "c",
+        "text": "Los contenedores no pueden aislarse por red"
+      },
+      {
+        "id": "d",
+        "text": "Las VM arrancan más rápido que los contenedores"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "Al compartir el kernel, los contenedores son más ligeros y rápidos, pero el kernel es una superficie de ataque común: de ahí la importancia de escanear imágenes y aplicar aislamiento.",
     "difficulty": "medium",
-    "tags": ["contenedores", "virtualizacion"]
+    "tags": [
+      "contenedores",
+      "virtualizacion"
+    ]
   },
   {
     "id": "d3-q04",
@@ -57,15 +108,32 @@
     "type": "single",
     "stem": "¿Cuál es la función principal de un bastion host (jump server)?",
     "options": [
-      { "id": "a", "text": "Servir de punto único y auditado para la administración de la red interna" },
-      { "id": "b", "text": "Balancear la carga de los servidores web" },
-      { "id": "c", "text": "Almacenar las copias de seguridad" },
-      { "id": "d", "text": "Resolver consultas DNS internas" }
+      {
+        "id": "a",
+        "text": "Servir de punto único y auditado para la administración de la red interna"
+      },
+      {
+        "id": "b",
+        "text": "Balancear la carga de los servidores web"
+      },
+      {
+        "id": "c",
+        "text": "Almacenar las copias de seguridad"
+      },
+      {
+        "id": "d",
+        "text": "Resolver consultas DNS internas"
+      }
     ],
-    "correctOptionIds": ["a"],
+    "correctOptionIds": [
+      "a"
+    ],
     "explanation": "El bastión concentra y registra el acceso administrativo, endurecido y con MFA, evitando exponer cada servidor interno por separado.",
     "difficulty": "medium",
-    "tags": ["bastion", "administracion"]
+    "tags": [
+      "bastion",
+      "administracion"
+    ]
   },
   {
     "id": "d3-q05",
@@ -74,15 +142,33 @@
     "type": "single",
     "stem": "Un RAID 5 con tres discos pierde dos discos simultáneamente. ¿Cuál es la conclusión correcta?",
     "options": [
-      { "id": "a", "text": "No hay pérdida de datos, porque RAID es una copia de seguridad" },
-      { "id": "b", "text": "Hay pérdida de datos: RAID aporta disponibilidad, no es un backup" },
-      { "id": "c", "text": "El sistema se recupera solo en la siguiente reinicialización" },
-      { "id": "d", "text": "RAID 5 tolera la pérdida de dos discos" }
+      {
+        "id": "a",
+        "text": "No hay pérdida de datos, porque RAID es una copia de seguridad"
+      },
+      {
+        "id": "b",
+        "text": "Hay pérdida de datos: RAID aporta disponibilidad, no es un backup"
+      },
+      {
+        "id": "c",
+        "text": "El sistema se recupera solo en la siguiente reinicialización"
+      },
+      {
+        "id": "d",
+        "text": "RAID 5 tolera la pérdida de dos discos"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "RAID 5 tolera un único fallo. RAID protege la disponibilidad ante fallos de disco, pero no cubre borrados, ransomware ni corrupción: para eso hacen falta backups.",
     "difficulty": "medium",
-    "tags": ["raid", "resiliencia", "backups"]
+    "tags": [
+      "raid",
+      "resiliencia",
+      "backups"
+    ]
   },
   {
     "id": "d3-q06",
@@ -91,15 +177,32 @@
     "type": "single",
     "stem": "¿Qué busca la microsegmentación en un centro de datos?",
     "options": [
-      { "id": "a", "text": "Cifrar todo el tráfico de salida a Internet" },
-      { "id": "b", "text": "Aplicar políticas granulares al tráfico este-oeste entre cargas de trabajo" },
-      { "id": "c", "text": "Eliminar las VLAN para simplificar la red" },
-      { "id": "d", "text": "Sustituir el firewall perimetral por NAT" }
+      {
+        "id": "a",
+        "text": "Cifrar todo el tráfico de salida a Internet"
+      },
+      {
+        "id": "b",
+        "text": "Aplicar políticas granulares al tráfico este-oeste entre cargas de trabajo"
+      },
+      {
+        "id": "c",
+        "text": "Eliminar las VLAN para simplificar la red"
+      },
+      {
+        "id": "d",
+        "text": "Sustituir el firewall perimetral por NAT"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "La microsegmentación limita el movimiento lateral aplicando controles entre cargas de trabajo (tráfico este-oeste), no solo en el perímetro norte-sur.",
     "difficulty": "medium",
-    "tags": ["segmentacion", "movimiento-lateral"]
+    "tags": [
+      "segmentacion",
+      "movimiento-lateral"
+    ]
   },
   {
     "id": "d3-q07",
@@ -108,14 +211,344 @@
     "type": "single",
     "stem": "Se roba un portátil corporativo apagado. ¿Qué control protege de forma más directa los datos en reposo?",
     "options": [
-      { "id": "a", "text": "Un túnel VPN configurado en el equipo" },
-      { "id": "b", "text": "Cifrado de disco completo con la clave sellada al TPM" },
-      { "id": "c", "text": "Habilitar HTTPS en el navegador" },
-      { "id": "d", "text": "Un EDR con detección de comportamiento" }
+      {
+        "id": "a",
+        "text": "Un túnel VPN configurado en el equipo"
+      },
+      {
+        "id": "b",
+        "text": "Cifrado de disco completo con la clave sellada al TPM"
+      },
+      {
+        "id": "c",
+        "text": "Habilitar HTTPS en el navegador"
+      },
+      {
+        "id": "d",
+        "text": "Un EDR con detección de comportamiento"
+      }
     ],
-    "correctOptionIds": ["b"],
+    "correctOptionIds": [
+      "b"
+    ],
     "explanation": "El cifrado de disco protege los datos cuando el equipo está apagado. La VPN y HTTPS protegen datos en tránsito; el EDR, la ejecución en caliente.",
     "difficulty": "easy",
-    "tags": ["cifrado", "datos-en-reposo", "tpm"]
+    "tags": [
+      "cifrado",
+      "datos-en-reposo",
+      "tpm"
+    ]
+  },
+  {
+    "id": "d3-q08",
+    "domain": 3,
+    "objective": "3.1",
+    "type": "single",
+    "stem": "En un servicio IaaS, ¿quién es responsable de parchear el sistema operativo invitado?",
+    "options": [
+      {
+        "id": "a",
+        "text": "El proveedor cloud en todos los casos"
+      },
+      {
+        "id": "b",
+        "text": "El cliente, porque el sistema operativo está dentro de su ámbito de control"
+      },
+      {
+        "id": "c",
+        "text": "Un tercero independiente"
+      },
+      {
+        "id": "d",
+        "text": "Nadie: el sistema operativo no necesita parches"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "En IaaS el proveedor cubre virtualización, red y almacenamiento; el sistema operativo, el runtime y la aplicación son responsabilidad del cliente. En PaaS y SaaS esa frontera se desplaza.",
+    "difficulty": "medium",
+    "tags": [
+      "cloud",
+      "responsabilidad-compartida",
+      "iaas"
+    ]
+  },
+  {
+    "id": "d3-q09",
+    "domain": 3,
+    "objective": "3.1",
+    "type": "single",
+    "stem": "¿Qué caracteriza a una arquitectura de confianza cero aplicada a la red?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Confiar en todo lo que esté dentro del perímetro"
+      },
+      {
+        "id": "b",
+        "text": "Evaluar identidad, dispositivo y contexto en cada acceso, sin conceder confianza por ubicación"
+      },
+      {
+        "id": "c",
+        "text": "Eliminar por completo la autenticación"
+      },
+      {
+        "id": "d",
+        "text": "Sustituir la VPN por una red plana"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "La confianza no se hereda de estar «dentro». Cada solicitud se autoriza por política según quién la pide, desde qué dispositivo y en qué contexto.",
+    "difficulty": "medium",
+    "tags": [
+      "zero-trust",
+      "arquitectura"
+    ]
+  },
+  {
+    "id": "d3-q10",
+    "domain": 3,
+    "objective": "3.3",
+    "type": "single",
+    "stem": "¿Para qué sirve fijar (pinning) el certificado de un servicio en una aplicación móvil?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Para acelerar la conexión TLS"
+      },
+      {
+        "id": "b",
+        "text": "Para aceptar solo el certificado esperado y rechazar un certificado válido pero fraudulento"
+      },
+      {
+        "id": "c",
+        "text": "Para eliminar la necesidad de HTTPS"
+      },
+      {
+        "id": "d",
+        "text": "Para cifrar el almacenamiento local"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Un atacante con una CA comprometida o un certificado instalado en el dispositivo podría interceptar TLS. El pinning rompe ese escenario porque la app no acepta ningún certificado que no sea el suyo.",
+    "difficulty": "hard",
+    "tags": [
+      "tls",
+      "pinning",
+      "mitm"
+    ]
+  },
+  {
+    "id": "d3-q11",
+    "domain": 3,
+    "objective": "3.2",
+    "type": "single",
+    "stem": "¿Qué añade un balanceador de carga respecto a un proxy inverso simple?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Cifrado de extremo a extremo"
+      },
+      {
+        "id": "b",
+        "text": "Reparto del tráfico entre varias instancias y comprobación de su salud"
+      },
+      {
+        "id": "c",
+        "text": "Resolución de nombres DNS"
+      },
+      {
+        "id": "d",
+        "text": "Almacenamiento en caché de la base de datos"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Ambos están delante del servicio, pero el balanceador añade reparto y comprobación de salud: si una instancia cae, deja de recibir tráfico. Eso es disponibilidad, no solo intermediación.",
+    "difficulty": "medium",
+    "tags": [
+      "balanceador",
+      "disponibilidad"
+    ]
+  },
+  {
+    "id": "d3-q12",
+    "domain": 3,
+    "objective": "3.1",
+    "type": "single",
+    "stem": "Una empresa debe mantener los datos de sus clientes europeos dentro de la UE. ¿Cómo se llama ese requisito?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Soberanía de datos"
+      },
+      {
+        "id": "b",
+        "text": "Alta disponibilidad"
+      },
+      {
+        "id": "c",
+        "text": "Escalabilidad horizontal"
+      },
+      {
+        "id": "d",
+        "text": "Latencia de borde"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "explanation": "La soberanía de datos exige que la información permanezca bajo la jurisdicción indicada, lo que condiciona la elección de región cloud y de proveedores.",
+    "difficulty": "medium",
+    "tags": [
+      "soberania",
+      "cloud",
+      "compliance"
+    ]
+  },
+  {
+    "id": "d3-q13",
+    "domain": 3,
+    "objective": "3.4",
+    "type": "single",
+    "stem": "¿Qué diferencia hay entre alta disponibilidad y tolerancia a fallos?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Son lo mismo"
+      },
+      {
+        "id": "b",
+        "text": "La alta disponibilidad minimiza la interrupción; la tolerancia a fallos busca que no haya interrupción alguna"
+      },
+      {
+        "id": "c",
+        "text": "La tolerancia a fallos solo aplica a la red"
+      },
+      {
+        "id": "d",
+        "text": "La alta disponibilidad implica duplicar el centro de datos siempre"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Con alta disponibilidad puede haber un breve corte mientras conmuta el servicio; con tolerancia a fallos el sistema sigue operando sin degradación perceptible. La segunda es más cara y se reserva a lo crítico.",
+    "difficulty": "hard",
+    "tags": [
+      "resiliencia",
+      "disponibilidad"
+    ]
+  },
+  {
+    "id": "d3-q14",
+    "domain": 3,
+    "objective": "3.2",
+    "type": "single",
+    "stem": "¿Qué riesgo introduce el crecimiento descontrolado de máquinas virtuales (VM sprawl)?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Aumenta el consumo eléctrico únicamente"
+      },
+      {
+        "id": "b",
+        "text": "Aparecen sistemas sin propietario, sin parchear y sin monitorizar"
+      },
+      {
+        "id": "c",
+        "text": "Reduce la seguridad del hipervisor automáticamente"
+      },
+      {
+        "id": "d",
+        "text": "Impide usar contenedores"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Una VM olvidada es un activo fuera de inventario: nadie la parchea, nadie la vigila y suele quedar accesible. El inventario y el ciclo de vida son el control que lo evita.",
+    "difficulty": "medium",
+    "tags": [
+      "virtualizacion",
+      "inventario",
+      "vm-sprawl"
+    ]
+  },
+  {
+    "id": "d3-q15",
+    "domain": 3,
+    "objective": "3.3",
+    "type": "single",
+    "stem": "¿Qué protege el cifrado de una copia de seguridad almacenada en cinta que se transporta en un vehículo?",
+    "options": [
+      {
+        "id": "a",
+        "text": "La disponibilidad de los datos"
+      },
+      {
+        "id": "b",
+        "text": "La confidencialidad si la cinta se pierde o se roba"
+      },
+      {
+        "id": "c",
+        "text": "La integridad de la cinta frente al desgaste"
+      },
+      {
+        "id": "d",
+        "text": "La velocidad de restauración"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "Una cinta en tránsito está fuera de todo control físico. El cifrado es lo único que evita que el robo del soporte se convierta en una fuga de datos.",
+    "difficulty": "medium",
+    "tags": [
+      "backups",
+      "cifrado",
+      "datos-en-transito"
+    ]
+  },
+  {
+    "id": "d3-q16",
+    "domain": 3,
+    "objective": "3.1",
+    "type": "single",
+    "stem": "¿Qué ventaja aporta SD-WAN frente a una red de sucursales con enlaces dedicados?",
+    "options": [
+      {
+        "id": "a",
+        "text": "Elimina la necesidad de cifrado"
+      },
+      {
+        "id": "b",
+        "text": "Selecciona la mejor ruta por aplicación y enlace, y aplica políticas de forma centralizada"
+      },
+      {
+        "id": "c",
+        "text": "Sustituye a los firewalls de sucursal"
+      },
+      {
+        "id": "d",
+        "text": "Garantiza el ancho de banda contratado"
+      }
+    ],
+    "correctOptionIds": [
+      "b"
+    ],
+    "explanation": "SD-WAN separa el plano de control del de datos en la WAN: elige ruta según la aplicación y el estado de cada enlace, y centraliza la política. El cifrado sigue siendo necesario.",
+    "difficulty": "hard",
+    "tags": [
+      "sd-wan",
+      "red",
+      "politicas"
+    ]
   }
 ]

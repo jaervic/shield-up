@@ -24,7 +24,8 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   constancia y modo concentración.
 - **Fase 5 — Simulador de examen.** Cuenta atrás, preguntas marcadas para revisar, entrega
   automática al agotarse el tiempo y **puntuación escalada sobre 900 con 750 para aprobar**,
-  como el examen real. Con resultado por dominio y repaso de lo fallado.
+  como el examen real. Con **89 preguntas** repartidas por dominio en la proporción exacta del
+  examen (11/20/16/25/17), resultado por dominio y repaso de lo fallado.
 
 ## Stack
 
@@ -416,9 +417,8 @@ Tres decisiones que merece la pena conocer:
 - **El tiempo no se decrementa, se recalcula** desde `startedAt` en cada tick. Así no se desvía
   si el navegador suspende la pestaña, y el estado del cronómetro es reproducible.
 - **La entrega no es inmediata**: antes muestra cuántas quedan sin responder y cuántas marcadas.
-- **El simulacro es proporcional, y lo dice.** El banco tiene 41 preguntas y el examen real llega
-  a 90, así que usa todas las disponibles y ajusta la duración (41 → 62 min) en lugar de fingir
-  un examen completo. La interfaz lo advierte de forma explícita.
+- **El simulacro es proporcional, y lo dice.** Con 89 de las 90 preguntas del examen real, el
+  simulacro ya dura los 90 minutos completos; si el banco creciera menos, se avisaría.
 
 El acceso está en el panel y no en la navegación: el simulacro es una actividad periódica, no
 diaria, y seis secciones no caben en la barra inferior del móvil sin truncar las etiquetas.
