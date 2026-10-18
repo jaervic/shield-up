@@ -5,7 +5,11 @@
     "type": "concept",
     "front": "Diferencia entre RTO y RPO en un plan de continuidad",
     "back": "RTO: tiempo máximo admisible de caída antes de reanudar el servicio. RPO: cantidad máxima de datos (en tiempo) que se puede perder. RTO mira el reloj, RPO mira los backups.",
-    "tags": ["continuidad", "bcdr", "recuperacion"]
+    "tags": [
+      "continuidad",
+      "bcdr",
+      "recuperacion"
+    ]
   },
   {
     "id": "gov-sle-ale-aro",
@@ -13,7 +17,10 @@
     "type": "concept",
     "front": "¿Cómo se calcula el ALE en un análisis cuantitativo de riesgo?",
     "back": "ALE = SLE × ARO. SLE es el valor esperado de pérdida por incidente; ARO, la frecuencia anual estimada. ALE es la pérdida anual esperada.",
-    "tags": ["riesgo", "analisis-cuantitativo"]
+    "tags": [
+      "riesgo",
+      "analisis-cuantitativo"
+    ]
   },
   {
     "id": "gov-risk-register",
@@ -21,7 +28,10 @@
     "type": "concept",
     "front": "¿Qué cuatro estrategias existen para tratar un riesgo?",
     "back": "Mitigar (reducir), Transferir (seguro, contrato), Evitar (eliminar la actividad) y Aceptar (asumir con justificación documentada).",
-    "tags": ["riesgo", "tratamiento"]
+    "tags": [
+      "riesgo",
+      "tratamiento"
+    ]
   },
   {
     "id": "gov-third-party",
@@ -29,7 +39,11 @@
     "type": "concept",
     "front": "¿Qué documentos formalizan una relación con un tercero?",
     "back": "SLA (nivel de servicio), MOU/MOA (entendimiento), BPA (socio de negocio), NDA (confidencialidad) y contrato con cláusulas de auditoría y derecho a revisión.",
-    "tags": ["terceros", "contratos", "sla"]
+    "tags": [
+      "terceros",
+      "contratos",
+      "sla"
+    ]
   },
   {
     "id": "gov-compliance-frameworks",
@@ -37,7 +51,11 @@
     "type": "concept",
     "front": "¿Para qué sirven marcos como ISO 27001, NIST CSF y SOC 2?",
     "back": "Estandarizan cómo gobernar y auditar la seguridad: ISO 27001 certifica un SGSI, NIST CSF organiza funciones (Identify/Protect/Detect/Respond/Recover) y SOC 2 reporta controles de confianza a clientes.",
-    "tags": ["compliance", "gobernanza", "auditoria"]
+    "tags": [
+      "compliance",
+      "gobernanza",
+      "auditoria"
+    ]
   },
   {
     "id": "gov-data-classification",
@@ -45,7 +63,11 @@
     "type": "concept",
     "front": "¿Por qué es previa la clasificación de datos a cualquier control?",
     "back": "Etiquetar los datos (público, interno, confidencial, restringido) determina los controles exigibles: cifrado, retención, acceso y destrucción. Sin clasificar, no hay política aplicable.",
-    "tags": ["clasificacion", "datos", "politicas"]
+    "tags": [
+      "clasificacion",
+      "datos",
+      "politicas"
+    ]
   },
   {
     "id": "gov-awareness-training",
@@ -53,7 +75,11 @@
     "type": "concept",
     "front": "¿Qué diferencia hay entre entrenamiento de concienciación y simulación de phishing?",
     "back": "El entrenamiento educa de forma periódica y obligatoria; la simulación mide la tasa de clic real y permite formación dirigida a quien falla. Juntos reducen el riesgo humano.",
-    "tags": ["concienciacion", "phishing", "personas"]
+    "tags": [
+      "concienciacion",
+      "phishing",
+      "personas"
+    ]
   },
   {
     "id": "gov-mttr-mtbf",
@@ -61,6 +87,153 @@
     "type": "concept",
     "front": "¿Qué miden MTTR y MTBF?",
     "back": "MTTR: tiempo medio de reparación (cuánto tardas en recuperar). MTBF: tiempo medio entre fallos (fiabilidad). Ambas alimentan el RTO y la selección de controles.",
-    "tags": ["disponibilidad", "metricas"]
+    "tags": [
+      "disponibilidad",
+      "metricas"
+    ]
+  },
+  {
+    "id": "gov-risk-heatmap",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Para qué sirve un mapa de calor de riesgos?",
+    "back": "Representa probabilidad frente a impacto para priorizar visualmente: arriba a la derecha lo urgente, abajo a la izquierda lo que puede esperar. Hace visible ante la dirección dónde se concentra la exposición.",
+    "tags": [
+      "riesgo",
+      "priorizacion",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "gov-due-diligence",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es la debida diligencia sobre un tercero?",
+    "back": "Investigar a un proveedor antes de contratarlo: certificaciones, incidentes previos, controles, subcontratistas y solvencia. No hacerla traslada un riesgo desconocido a tu organización.",
+    "tags": [
+      "terceros",
+      "riesgo",
+      "diligencia"
+    ]
+  },
+  {
+    "id": "gov-right-to-audit",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Por qué es imprescindible la cláusula de derecho de auditoría?",
+    "back": "Sin ella, la única evidencia sobre los controles del proveedor es lo que él mismo declare. Con ella puedes verificar. Si un proveedor se niega a incluirla, es información sobre su madurez.",
+    "tags": [
+      "terceros",
+      "contratos",
+      "auditoria"
+    ]
+  },
+  {
+    "id": "gov-aup",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es una política de uso aceptable (AUP)?",
+    "back": "Define qué uso de los recursos de la organización es aceptable y qué consecuencias tiene incumplirla. Sirve para poder actuar disciplinariamente: sin política publicada y firmada, no hay marco.",
+    "tags": [
+      "politicas",
+      "aup",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "gov-policy-hierarchy",
+    "domain": 5,
+    "type": "concept",
+    "front": "Ordena la jerarquía documental: política, estándar, procedimiento y línea base",
+    "back": "La política dice qué se exige y por qué; el estándar, qué configuración concreta es obligatoria; el procedimiento, cómo se hace paso a paso; la línea base, la configuración mínima de un sistema concreto.",
+    "tags": [
+      "politicas",
+      "documentacion",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "gov-soc2",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué acredita un informe SOC 2?",
+    "back": "Un auditor independiente valida los controles de un proveedor de servicios frente a cinco criterios: seguridad, disponibilidad, integridad de procesamiento, confidencialidad y privacidad. Es la evidencia que piden los clientes.",
+    "tags": [
+      "soc2",
+      "compliance",
+      "auditoria"
+    ]
+  },
+  {
+    "id": "gov-iso-nist",
+    "domain": 5,
+    "type": "concept",
+    "front": "Diferencia entre ISO 27001 y el NIST CSF",
+    "back": "ISO 27001 certifica que existe un sistema de gestión de seguridad (SGSI) con mejora continua. El CSF del NIST no certifica: organiza la postura en cinco funciones (identificar, proteger, detectar, responder, recuperar).",
+    "tags": [
+      "iso27001",
+      "nist",
+      "marcos"
+    ]
+  },
+  {
+    "id": "gov-pci-scope",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es reducir el alcance (scope) de PCI DSS y por qué se busca?",
+    "back": "Limitar el entorno que trata datos de tarjeta para que menos sistemas queden sujetos a la norma: tokenizar, segmentar o delegar el pago a un tercero. Menos alcance es menos coste y menos riesgo.",
+    "tags": [
+      "pci-dss",
+      "compliance",
+      "alcance"
+    ]
+  },
+  {
+    "id": "gov-vendor-tiers",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Por qué se clasifican los proveedores por criticidad?",
+    "back": "No todos merecen el mismo esfuerzo: un proveedor con acceso a datos de clientes exige auditoría y contrato detallado; el de material de oficina, no. La clasificación decide dónde va el tiempo de revisión.",
+    "tags": [
+      "terceros",
+      "riesgo",
+      "priorizacion"
+    ]
+  },
+  {
+    "id": "gov-awareness-metrics",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué mide de verdad un programa de concienciación?",
+    "back": "No las horas de formación, sino la tasa de clic en simulaciones de phishing y la de reporte de correos sospechosos. Lo primero baja, lo segundo sube: esas dos cifras cuentan el efecto real.",
+    "tags": [
+      "concienciacion",
+      "metricas",
+      "phishing"
+    ]
+  },
+  {
+    "id": "gov-retention-schedule",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es un calendario de retención de datos?",
+    "back": "Define cuánto tiempo se conserva cada tipo de dato y qué pasa al final: archivar o destruir. Retener de más amplía la exposición legal y de fuga; de menos puede destruir prueba necesaria.",
+    "tags": [
+      "retencion",
+      "datos",
+      "compliance"
+    ]
+  },
+  {
+    "id": "gov-exceptions",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué debe tener toda excepción a una política?",
+    "back": "Justificación, responsable que la aprueba, control compensatorio y fecha de caducidad. Sin caducidad, la excepción deja de ser temporal y se convierte en la norma de facto que nadie revisa.",
+    "tags": [
+      "excepciones",
+      "politicas",
+      "riesgo"
+    ]
   }
 ]

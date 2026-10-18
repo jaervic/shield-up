@@ -5,7 +5,10 @@
     "type": "acronym",
     "front": "¿Qué significa AAA y qué tres funciones agrupa?",
     "back": "Authentication, Authorization, Accounting. Quién eres, qué puedes hacer y qué hiciste (auditoría).",
-    "tags": ["aaa", "control-de-acceso"]
+    "tags": [
+      "aaa",
+      "control-de-acceso"
+    ]
   },
   {
     "id": "acr-cia",
@@ -13,7 +16,10 @@
     "type": "acronym",
     "front": "¿Qué es la tríada CIA?",
     "back": "Confidentiality, Integrity, Availability. Los tres objetivos primarios que toda medida de seguridad busca proteger.",
-    "tags": ["cia", "fundamentos"]
+    "tags": [
+      "cia",
+      "fundamentos"
+    ]
   },
   {
     "id": "acr-acl",
@@ -21,7 +27,11 @@
     "type": "acronym",
     "front": "¿Qué es una ACL?",
     "back": "Access Control List: reglas que permiten o deniegan tráfico o acceso a recursos, evaluadas por orden y con deny implícito final.",
-    "tags": ["acl", "control-de-acceso", "firewall"]
+    "tags": [
+      "acl",
+      "control-de-acceso",
+      "firewall"
+    ]
   },
   {
     "id": "acr-mfa",
@@ -29,7 +39,10 @@
     "type": "acronym",
     "front": "¿Qué es MFA y qué factores combina?",
     "back": "Multi-Factor Authentication: combina al menos dos factores distintos — algo que sabes, algo que tienes, algo que eres.",
-    "tags": ["mfa", "autenticacion"]
+    "tags": [
+      "mfa",
+      "autenticacion"
+    ]
   },
   {
     "id": "acr-nac",
@@ -37,7 +50,10 @@
     "type": "acronym",
     "front": "¿Qué es NAC?",
     "back": "Network Access Control: evalúa la postura de un dispositivo (parches, AV, cumplimiento) antes de concederle acceso a la red.",
-    "tags": ["nac", "acceso-a-red"]
+    "tags": [
+      "nac",
+      "acceso-a-red"
+    ]
   },
   {
     "id": "acr-dlp",
@@ -45,7 +61,10 @@
     "type": "acronym",
     "front": "¿Qué es DLP?",
     "back": "Data Loss Prevention: inspecciona y bloquea la exfiltración de datos sensibles en endpoints, red y cloud.",
-    "tags": ["dlp", "prevencion-de-fuga"]
+    "tags": [
+      "dlp",
+      "prevencion-de-fuga"
+    ]
   },
   {
     "id": "acr-edr",
@@ -53,7 +72,11 @@
     "type": "acronym",
     "front": "¿Qué es EDR y en qué se diferencia de un antivirus?",
     "back": "Endpoint Detection and Response: telemetría continua, detección por comportamiento y respuesta (aislar, matar proceso, hacer rollback). El AV clásico se basa en firmas.",
-    "tags": ["edr", "endpoint", "deteccion"]
+    "tags": [
+      "edr",
+      "endpoint",
+      "deteccion"
+    ]
   },
   {
     "id": "acr-siem",
@@ -61,7 +84,11 @@
     "type": "acronym",
     "front": "¿Qué es SIEM?",
     "back": "Security Information and Event Management: centraliza logs, correlaciona eventos y genera alertas. Es el cerebro de la monitorización del SOC.",
-    "tags": ["siem", "soc", "logs"]
+    "tags": [
+      "siem",
+      "soc",
+      "logs"
+    ]
   },
   {
     "id": "acr-soar",
@@ -69,7 +96,11 @@
     "type": "acronym",
     "front": "¿Qué es SOAR?",
     "back": "Security Orchestration, Automation and Response: automatiza playbooks y respuestas (enriquecer alertas, abrir tickets, contener hosts) sobre el SIEM.",
-    "tags": ["soar", "automatizacion", "soc"]
+    "tags": [
+      "soar",
+      "automatizacion",
+      "soc"
+    ]
   },
   {
     "id": "acr-ioc",
@@ -77,7 +108,10 @@
     "type": "acronym",
     "front": "¿Qué es un IOC?",
     "back": "Indicator of Compromise: artefacto observable que sugiere intrusión — hashes, IPs, dominios, claves de registro, firmas de tráfico.",
-    "tags": ["ioc", "threat-intel"]
+    "tags": [
+      "ioc",
+      "threat-intel"
+    ]
   },
   {
     "id": "acr-cve-cvss",
@@ -85,7 +119,11 @@
     "type": "acronym",
     "front": "Diferencia entre CVE y CVSS",
     "back": "CVE es el identificador único de una vulnerabilidad; CVSS es la puntuación de severidad 0.0–10.0. CVE nombra, CVSS prioriza.",
-    "tags": ["cve", "cvss", "vulnerabilidades"]
+    "tags": [
+      "cve",
+      "cvss",
+      "vulnerabilidades"
+    ]
   },
   {
     "id": "acr-arp",
@@ -93,7 +131,11 @@
     "type": "acronym",
     "front": "¿Qué es ARP y qué ataque lo explota?",
     "back": "Address Resolution Protocol resuelve IP → MAC. ARP spoofing/poisoning permite MITM en la misma subred; se mitiga con DAI.",
-    "tags": ["arp", "mitm", "capa-2"]
+    "tags": [
+      "arp",
+      "mitm",
+      "capa-2"
+    ]
   },
   {
     "id": "acr-xss-csrf-sqli",
@@ -101,7 +143,12 @@
     "type": "acronym",
     "front": "Diferencia entre XSS, CSRF y SQL injection",
     "back": "XSS inyecta script en el navegador de la víctima; CSRF fuerza acciones autenticadas sin consentimiento; SQLi manipula consultas a la base de datos.",
-    "tags": ["xss", "csrf", "sqli", "web"]
+    "tags": [
+      "xss",
+      "csrf",
+      "sqli",
+      "web"
+    ]
   },
   {
     "id": "acr-rbac",
@@ -109,7 +156,10 @@
     "type": "acronym",
     "front": "¿Qué es RBAC y cómo se relaciona con el least privilege?",
     "back": "Role-Based Access Control: los permisos se asignan a roles, no a personas. Facilita aplicar mínimo privilegio y separation of duties.",
-    "tags": ["rbac", "control-de-acceso"]
+    "tags": [
+      "rbac",
+      "control-de-acceso"
+    ]
   },
   {
     "id": "acr-tpm",
@@ -117,7 +167,11 @@
     "type": "acronym",
     "front": "¿Qué es un TPM?",
     "back": "Trusted Platform Module: chip que almacena claves y mide la integridad del arranque. Habilita BitLocker, secure boot y attestation.",
-    "tags": ["tpm", "hardware", "cifrado"]
+    "tags": [
+      "tpm",
+      "hardware",
+      "cifrado"
+    ]
   },
   {
     "id": "acr-zero-trust",
@@ -125,6 +179,300 @@
     "type": "acronym",
     "front": "¿Qué es el modelo Zero Trust?",
     "back": "Nunca confiar, siempre verificar. El acceso se decide por identidad, dispositivo y contexto en cada solicitud; no por estar dentro de la red.",
-    "tags": ["zero-trust", "arquitectura"]
+    "tags": [
+      "zero-trust",
+      "arquitectura"
+    ]
+  },
+  {
+    "id": "acr-apt",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué es un APT?",
+    "back": "Advanced Persistent Threat: actor con financiación y objetivos concretos que mantiene el acceso durante meses. Su detección depende de correlación y anomalías, no de firmas.",
+    "tags": [
+      "apt",
+      "threat-actors"
+    ]
+  },
+  {
+    "id": "acr-bia",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué es un BIA?",
+    "back": "Business Impact Analysis: identifica los procesos críticos y cuánto tiempo puede el negocio estar sin ellos. De ahí salen los RTO y RPO que debe cumplir el plan de continuidad.",
+    "tags": [
+      "bia",
+      "continuidad"
+    ]
+  },
+  {
+    "id": "acr-bcp-drp",
+    "domain": 5,
+    "type": "acronym",
+    "front": "Diferencia entre BCP y DRP",
+    "back": "El BCP mantiene el negocio operando durante la interrupción; el DRP restaura la infraestructura tecnológica. El DRP es un componente del BCP.",
+    "tags": [
+      "bcp",
+      "drp",
+      "continuidad"
+    ]
+  },
+  {
+    "id": "acr-casb",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es un CASB?",
+    "back": "Cloud Access Security Broker: intermediario entre los usuarios y los servicios cloud que aplica política, cifra, registra y detecta uso no autorizado (shadow IT).",
+    "tags": [
+      "casb",
+      "cloud",
+      "shadow-it"
+    ]
+  },
+  {
+    "id": "acr-ciso",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué responsabilidad tiene el CISO?",
+    "back": "Chief Information Security Officer: define la estrategia de seguridad, fija el apetito de riesgo con la dirección y responde ante ella. No es un puesto técnico de operación.",
+    "tags": [
+      "ciso",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "acr-ddos",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué es un DDoS y en qué se diferencia de un DoS?",
+    "back": "Distributed Denial of Service: la denegación llega desde muchos orígenes a la vez (a menudo una botnet), lo que hace inútil bloquear por IP de origen.",
+    "tags": [
+      "ddos",
+      "disponibilidad"
+    ]
+  },
+  {
+    "id": "acr-dmz",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es una DMZ?",
+    "back": "Demilitarized Zone: segmento intermedio que aloja servicios accesibles desde Internet, con reglas estrictas hacia dentro y hacia fuera. Nunca es sitio para datos sensibles.",
+    "tags": [
+      "dmz",
+      "segmentacion"
+    ]
+  },
+  {
+    "id": "acr-eol",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué significa EOL/EOSL y por qué importa?",
+    "back": "End of Life / End of Service Life: el fabricante deja de publicar parches. El sistema no se vuelve más vulnerable, pero cada fallo nuevo queda sin corregir para siempre.",
+    "tags": [
+      "eol",
+      "ciclo-de-vida",
+      "vulnerabilidades"
+    ]
+  },
+  {
+    "id": "acr-fde",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es FDE y qué protege exactamente?",
+    "back": "Full Disk Encryption: cifra el disco completo. Protege los datos si el equipo se pierde o se roba apagado; no protege nada con el equipo encendido y la sesión abierta.",
+    "tags": [
+      "fde",
+      "cifrado",
+      "datos-en-reposo"
+    ]
+  },
+  {
+    "id": "acr-hsm",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es un HSM?",
+    "back": "Hardware Security Module: appliance dedicado a custodiar claves y hacer operaciones criptográficas a alto rendimiento. El TPM está en un solo equipo; el HSM sirve a toda la organización.",
+    "tags": [
+      "hsm",
+      "criptografia",
+      "claves"
+    ]
+  },
+  {
+    "id": "acr-ids-ips",
+    "domain": 4,
+    "type": "acronym",
+    "front": "Diferencia entre IDS e IPS",
+    "back": "El IDS detecta y alerta (pasivo); el IPS está en el camino del tráfico y además bloquea. El riesgo del IPS es el falso positivo: puede cortar tráfico legítimo.",
+    "tags": [
+      "ids",
+      "ips",
+      "deteccion"
+    ]
+  },
+  {
+    "id": "acr-kdc",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es el KDC en Kerberos?",
+    "back": "Key Distribution Center: emite el TGT y los tickets de servicio. Se ejecuta en el controlador de dominio; RADIUS y TACACS+ son para acceso a red y dispositivos, no para esto.",
+    "tags": [
+      "kerberos",
+      "kdc",
+      "autenticacion"
+    ]
+  },
+  {
+    "id": "acr-mttr-mtbf",
+    "domain": 4,
+    "type": "acronym",
+    "front": "Diferencia entre MTTD, MTTR y MTBF",
+    "back": "MTTD es el tiempo medio hasta detectar, MTTR el tiempo medio hasta recuperar y MTBF el tiempo medio entre fallos. Los dos primeros miden la respuesta; el tercero, la fiabilidad.",
+    "tags": [
+      "metricas",
+      "mttr",
+      "disponibilidad"
+    ]
+  },
+  {
+    "id": "acr-ngfw",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué añade un NGFW a un firewall tradicional?",
+    "back": "Inspección profunda de paquetes, identificación de aplicación e usuario, IPS integrado y filtrado por reputación. No basta con decidir por IP y puerto.",
+    "tags": [
+      "ngfw",
+      "firewall"
+    ]
+  },
+  {
+    "id": "acr-pam",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es PAM en el contexto de identidades?",
+    "back": "Privileged Access Management: custodia las cuentas privilegiadas, concede privilegio temporal y graba las sesiones. Es lo que permite dejar de compartir la contraseña de administrador.",
+    "tags": [
+      "pam",
+      "privilegios",
+      "iam"
+    ]
+  },
+  {
+    "id": "acr-rto-rpo",
+    "domain": 5,
+    "type": "acronym",
+    "front": "Diferencia entre RTO y RPO",
+    "back": "RTO es el tiempo máximo de caída admisible (mira el reloj); RPO es la cantidad máxima de datos que se puede perder (mira la frecuencia de copia). El RPO se compra con frecuencia; el RTO, con velocidad de recuperación.",
+    "tags": [
+      "rto",
+      "rpo",
+      "continuidad"
+    ]
+  },
+  {
+    "id": "acr-sase",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es SASE?",
+    "back": "Secure Access Service Edge: convergencia en un solo servicio cloud de red (SD-WAN) y seguridad (CASB, SWG, ZTNA, firewall). El control se acerca al usuario, no al centro de datos.",
+    "tags": [
+      "sase",
+      "cloud",
+      "arquitectura"
+    ]
+  },
+  {
+    "id": "acr-sbom",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es un SBOM y para qué sirve?",
+    "back": "Software Bill of Materials: inventario de los componentes y versiones de un producto. Permite responder en horas a «¿me afecta esta vulnerabilidad?» en lugar de semanas.",
+    "tags": [
+      "sbom",
+      "cadena-de-suministro",
+      "vulnerabilidades"
+    ]
+  },
+  {
+    "id": "acr-sla",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué es un SLA?",
+    "back": "Service Level Agreement: define los niveles de servicio exigibles a un proveedor (disponibilidad, tiempos de respuesta, penalizaciones). El NDA cubre confidencialidad; el MOU, intenciones.",
+    "tags": [
+      "sla",
+      "terceros",
+      "contratos"
+    ]
+  },
+  {
+    "id": "acr-soc",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es un SOC?",
+    "back": "Security Operations Center: equipo y procesos que monitorizan, detectan y responden 24×7. El SIEM es su herramienta; el SOC es quien decide con esa información.",
+    "tags": [
+      "soc",
+      "monitorizacion"
+    ]
+  },
+  {
+    "id": "acr-ssdlc",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es el SSDLC?",
+    "back": "Secure Software Development Life Cycle: integrar seguridad en cada fase del desarrollo (requisitos, diseño, código, pruebas, despliegue), en lugar de auditar solo al final.",
+    "tags": [
+      "ssdlc",
+      "desarrollo-seguro"
+    ]
+  },
+  {
+    "id": "acr-ueba",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es UEBA?",
+    "back": "User and Entity Behavior Analytics: establece una línea base de comportamiento de usuarios y equipos y alerta de las desviaciones. Detecta lo que no tiene firma conocida.",
+    "tags": [
+      "ueba",
+      "deteccion",
+      "anomalias"
+    ]
+  },
+  {
+    "id": "acr-waf",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es un WAF y qué NO es?",
+    "back": "Web Application Firewall: filtra peticiones HTTP según reglas (inyección, XSS, bots). No corrige el código: es defensa en profundidad, no la solución de raíz.",
+    "tags": [
+      "waf",
+      "aplicaciones-web"
+    ]
+  },
+  {
+    "id": "acr-xdr",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué añade XDR frente a EDR?",
+    "back": "Extended Detection and Response: correlaciona telemetría de endpoint, red, correo, identidad y cloud. El EDR ve el equipo; el XDR ve el incidente completo entre sistemas.",
+    "tags": [
+      "xdr",
+      "edr",
+      "deteccion"
+    ]
+  },
+  {
+    "id": "acr-ztna",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es ZTNA y en qué se diferencia de una VPN?",
+    "back": "Zero Trust Network Access: concede acceso por aplicación y por sesión, sin meter al usuario en la red. La VPN tradicional mete al usuario dentro y desde ahí alcanza lo que las reglas permitan.",
+    "tags": [
+      "ztna",
+      "zero-trust",
+      "acceso"
+    ]
   }
 ]

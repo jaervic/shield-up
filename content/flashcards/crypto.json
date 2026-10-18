@@ -5,7 +5,10 @@
     "type": "crypto",
     "front": "¿Qué tipo de cifrado es AES y qué longitudes de clave admite?",
     "back": "Simétrico por bloques de 128 bits, claves de 128, 192 o 256 bits. Estándar FIPS 197; el modo importa (GCM para autenticado).",
-    "tags": ["aes", "simetrico"]
+    "tags": [
+      "aes",
+      "simetrico"
+    ]
   },
   {
     "id": "cry-rsa",
@@ -13,7 +16,10 @@
     "type": "crypto",
     "front": "¿Qué tipo de cifrado es RSA y para qué se usa principalmente?",
     "back": "Asimétrico basado en la dificultad de factorizar primos grandes. Se usa para intercambio de claves y firmas; hoy con claves de 2048–4096 bits.",
-    "tags": ["rsa", "asimetrico"]
+    "tags": [
+      "rsa",
+      "asimetrico"
+    ]
   },
   {
     "id": "cry-ecc",
@@ -21,7 +27,10 @@
     "type": "crypto",
     "front": "¿Qué ventaja aporta ECC frente a RSA?",
     "back": "Criptografía de curva elíptica: seguridad equivalente con claves mucho más cortas (256 bits ECC ≈ 3072 bits RSA), ideal para móviles e IoT.",
-    "tags": ["ecc", "asimetrico"]
+    "tags": [
+      "ecc",
+      "asimetrico"
+    ]
   },
   {
     "id": "cry-sha256",
@@ -29,7 +38,11 @@
     "type": "crypto",
     "front": "¿Qué es SHA-256 y garantiza confidencialidad?",
     "back": "Función hash criptográfica de 256 bits (familia SHA-2). Aporta integridad, no confidencialidad: es irreversible y sensible a colisiones evitadas.",
-    "tags": ["sha", "hash", "integridad"]
+    "tags": [
+      "sha",
+      "hash",
+      "integridad"
+    ]
   },
   {
     "id": "cry-hmac",
@@ -37,7 +50,11 @@
     "type": "crypto",
     "front": "¿Qué es HMAC y qué garantiza?",
     "back": "Hash-based Message Authentication Code: combina una clave secreta con un hash para dar integridad Y autenticidad del mensaje.",
-    "tags": ["hmac", "integridad", "autenticacion"]
+    "tags": [
+      "hmac",
+      "integridad",
+      "autenticacion"
+    ]
   },
   {
     "id": "cry-dh",
@@ -45,7 +62,10 @@
     "type": "crypto",
     "front": "¿Para qué sirve Diffie-Hellman?",
     "back": "Intercambio de claves sobre canal inseguro sin transmitir la clave. Por sí solo no autentica: requiere certificados para evitar MITM.",
-    "tags": ["diffie-hellman", "intercambio-de-claves"]
+    "tags": [
+      "diffie-hellman",
+      "intercambio-de-claves"
+    ]
   },
   {
     "id": "cry-pfs",
@@ -53,7 +73,11 @@
     "type": "crypto",
     "front": "¿Qué es Perfect Forward Secrecy y con qué se logra?",
     "back": "Garantiza que comprometer la clave privada no descifre sesiones pasadas. Se consigue con intercambios efímeros como ECDHE.",
-    "tags": ["pfs", "ecdhe", "tls"]
+    "tags": [
+      "pfs",
+      "ecdhe",
+      "tls"
+    ]
   },
   {
     "id": "cry-kdf",
@@ -61,7 +85,11 @@
     "type": "crypto",
     "front": "¿Qué es el key stretching y qué algoritmos lo implementan?",
     "back": "Derivar claves lentamente para frenar ataques de diccionario: PBKDF2, bcrypt, scrypt y Argon2. Siempre con salt único por contraseña.",
-    "tags": ["kdf", "password", "salt"]
+    "tags": [
+      "kdf",
+      "password",
+      "salt"
+    ]
   },
   {
     "id": "cry-signature",
@@ -69,7 +97,10 @@
     "type": "crypto",
     "front": "¿Cómo funciona una firma digital?",
     "back": "El emisor hashea el mensaje y cifra ese hash con su clave privada; el receptor lo verifica con la clave pública. Da integridad, autenticidad y no repudio.",
-    "tags": ["firma-digital", "no-repudio"]
+    "tags": [
+      "firma-digital",
+      "no-repudio"
+    ]
   },
   {
     "id": "cry-pki",
@@ -77,7 +108,11 @@
     "type": "crypto",
     "front": "¿Qué elementos componen una PKI?",
     "back": "CA raíz, CAs intermedias, certificados X.509, CRL/OCSP para revocación y registro. La cadena de confianza ancla en la CA raíz.",
-    "tags": ["pki", "certificados", "x509"]
+    "tags": [
+      "pki",
+      "certificados",
+      "x509"
+    ]
   },
   {
     "id": "cry-iv-salt",
@@ -85,7 +120,11 @@
     "type": "crypto",
     "front": "Diferencia entre salt, IV y nonce",
     "back": "Salt: aleatorio por contraseña en KDF. IV: valor inicial único por operación en cifrado por bloques. Nonce: número de un solo uso para evitar replay.",
-    "tags": ["iv", "salt", "nonce"]
+    "tags": [
+      "iv",
+      "salt",
+      "nonce"
+    ]
   },
   {
     "id": "cry-hsm",
@@ -93,7 +132,11 @@
     "type": "crypto",
     "front": "¿Qué es un HSM y en qué se diferencia de un TPM?",
     "back": "Hardware Security Module: appliance dedicado de alto rendimiento para custodia de claves y operaciones criptográficas. El TPM está integrado en un solo equipo; el HSM sirve a toda una organización.",
-    "tags": ["hsm", "tpm", "hardware"]
+    "tags": [
+      "hsm",
+      "tpm",
+      "hardware"
+    ]
   },
   {
     "id": "cry-steganography",
@@ -101,7 +144,10 @@
     "type": "crypto",
     "front": "¿Qué es la esteganografía y en qué se diferencia del cifrado?",
     "back": "Oculta la existencia del mensaje dentro de otro soporte (imagen, audio). El cifrado oculta el contenido; la esteganografía oculta que hay un mensaje.",
-    "tags": ["esteganografia", "ocultacion"]
+    "tags": [
+      "esteganografia",
+      "ocultacion"
+    ]
   },
   {
     "id": "cry-homomorphic",
@@ -109,6 +155,132 @@
     "type": "crypto",
     "front": "¿Qué permite el cifrado homomórfico?",
     "back": "Operar sobre datos cifrados sin descifrarlos, devolviendo un resultado que al descifrarse coincide con la operación sobre el texto claro. Clave para cloud y privacidad.",
-    "tags": ["homomorfico", "privacidad", "cloud"]
+    "tags": [
+      "homomorfico",
+      "privacidad",
+      "cloud"
+    ]
+  },
+  {
+    "id": "cry-chacha",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué es ChaCha20-Poly1305 y cuándo se prefiere a AES-GCM?",
+    "back": "Cifrado de flujo autenticado (AEAD): ChaCha20 cifra y Poly1305 autentica. Se prefiere en dispositivos sin aceleración AES por hardware, donde es más rápido que AES.",
+    "tags": [
+      "chacha20",
+      "aead",
+      "simetrico"
+    ]
+  },
+  {
+    "id": "cry-des3",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Por qué DES y 3DES están obsoletos?",
+    "back": "DES usa claves de 56 bits: se rompe por fuerza bruta. 3DES aplica DES tres veces, pero con un bloque de 64 bits sufre el ataque Sweet32 y su rendimiento es pobre. El sustituto es AES.",
+    "tags": [
+      "des",
+      "3des",
+      "obsoleto"
+    ]
+  },
+  {
+    "id": "cry-ecdsa",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué es ECDSA y qué ventaja tiene sobre RSA para firmar?",
+    "back": "Elliptic Curve Digital Signature Algorithm: firmas con claves mucho más cortas para la misma seguridad (256 bits ECC ≈ 3072 RSA), lo que ahorra CPU y ancho de banda en certificados.",
+    "tags": [
+      "ecdsa",
+      "firma",
+      "ecc"
+    ]
+  },
+  {
+    "id": "cry-ocsp-crl",
+    "domain": 3,
+    "type": "crypto",
+    "front": "Diferencia entre CRL y OCSP para comprobar la revocación de un certificado",
+    "back": "La CRL es una lista completa de certificados revocados que el cliente descarga; OCSP pregunta por un certificado concreto en tiempo real. OCSP es más ligero pero revela qué sitios visitas; OCSP stapling lo evita.",
+    "tags": [
+      "crl",
+      "ocsp",
+      "revocacion",
+      "pki"
+    ]
+  },
+  {
+    "id": "cry-san-wildcard",
+    "domain": 3,
+    "type": "crypto",
+    "front": "Diferencia entre un certificado wildcard y uno con SAN",
+    "back": "El wildcard cubre un nivel de subdominio (*.ejemplo.com, pero no a.b.ejemplo.com); el campo SAN lista nombres concretos, incluidos los de otros dominios. SAN es hoy el mecanismo estándar.",
+    "tags": [
+      "certificados",
+      "san",
+      "wildcard",
+      "pki"
+    ]
+  },
+  {
+    "id": "cry-pqc",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué es la criptografía post-cuántica (PQC) y por qué urge?",
+    "back": "Algoritmos resistentes a computación cuántica (Kyber, Dilithium). Urge porque el tráfico cifrado hoy puede grabarse y descifrarse cuando llegue el cuántico: «recoger ahora, descifrar después».",
+    "tags": [
+      "pqc",
+      "cuantica",
+      "futuro"
+    ]
+  },
+  {
+    "id": "cry-key-rotation",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Por qué se rotan las claves criptográficas?",
+    "back": "Limita el daño de una clave comprometida: si se rota, el atacante solo descifra el periodo expuesto. La rotación debe ser automática y auditada; las claves que no se rotan se vuelven deuda silenciosa.",
+    "tags": [
+      "rotacion",
+      "claves",
+      "kms"
+    ]
+  },
+  {
+    "id": "cry-key-escrow",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué es el key escrow y qué riesgo introduce?",
+    "back": "Custodiar una copia de las claves para poder recuperar datos si se pierde la original (empleados que se van, discos cifrados). El riesgo es evidente: quien custodia la copia puede descifrar todo.",
+    "tags": [
+      "key-escrow",
+      "claves",
+      "recuperacion"
+    ]
+  },
+  {
+    "id": "cry-zkp",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué demuestra una prueba de conocimiento cero (ZKP)?",
+    "back": "Que conoces un dato sin revelarlo. Ejemplo: demostrar que sabes la contraseña sin enviarla. Es la base de esquemas de autenticación que no transmiten el secreto.",
+    "tags": [
+      "zkp",
+      "autenticacion",
+      "privacidad"
+    ]
+  },
+  {
+    "id": "cry-secure-enclave",
+    "domain": 3,
+    "type": "crypto",
+    "front": "¿Qué es un enclave seguro y en qué se diferencia de un TPM?",
+    "back": "Región aislada del procesador que protege código y datos incluso del sistema operativo anfitrión (SGX, TrustZone). El TPM custodia claves e informa del arranque; el enclave protege cómputo en ejecución.",
+    "tags": [
+      "enclave",
+      "tpm",
+      "hardware"
+    ]
   }
 ]
