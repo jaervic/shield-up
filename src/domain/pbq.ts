@@ -116,6 +116,13 @@ export interface HostState {
   hostname: string;
   interfaces: NetworkInterface[];
   routes: RouteEntry[];
+  /**
+   * Ruta por defecto configurada en el host.
+   *
+   * Es opcional para no obligar a repetirla en los estados que ya la incluyen
+   * como una entrada `0.0.0.0/0` en `routes`.
+   */
+  defaultGateway?: { gateway: string; iface: string };
   arp: ArpEntry[];
   listening: ListeningPort[];
   processes: SimulatedProcess[];

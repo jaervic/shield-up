@@ -183,10 +183,46 @@ describe('ip', () => {
     const lines = run('ip a').join('\n');
     expect(lines).toContain('eth0');
     expect(lines).toContain('inet 10.0.0.9/24');
+    expect(lines).toContain('brd 10.0.0.255');
   });
 
   it('ip route muestra la tabla de rutas', () => {
     expect(run('ip route').join('\n')).toContain('10.0.0.0/24 via 0.0.0.0 dev eth0');
+  });
+
+  it('ip route usa la puerta de enlace por defecto del estado', () => {
+    const state: HostState = {
+      ...STATE,
+      defaultGateway: { gateway: '10.0.0.1', iface: 'eth0' },
+    };
+    const result = executeCommand('ip route', state);
+    expect(result?.lines[0]).toBe('default via 10.0.0.1 dev eth0 proto static');
+  });
+
+  it('ip route deriva la ruta por defecto de routes si no hay defaultGateway', () => {
+    const state: HostState = {
+      ...STATE,
+      routes: [
+        { destination: '10.0.0.0/24', gateway: '0.0.0.0', iface: 'eth0' },
+        { destination: '0.0.0.0/0', gateway: '10.0.0.254', iface: 'eth0' },
+      ],
+    };
+    const result = executeCommand('ip route', state);
+    expect(result?.lines[0]).toBe('default via 10.0.0.254 dev eth0 proto static');
+    expect(result?.lines.filter((line) => line.includes('0.0.0.0/0'))).toHaveLength(0);
+  });
+
+  it('ip a calcula el broadcast de cada subred', () => {
+    const state: HostState = {
+      ...STATE,
+      interfaces: [
+        { name: 'eth0', ip: '10.0.40.42/24', mac: '52:54:00:00:00:09', state: 'UP' },
+        { name: 'lo', ip: '127.0.0.1/8', mac: '00:00:00:00:00:00', state: 'UP' },
+      ],
+    };
+    const lines = executeCommand('ip a', state)?.lines.join('\n') ?? '';
+    expect(lines).toContain('inet 10.0.40.42/24 brd 10.0.40.255');
+    expect(lines).toContain('inet 127.0.0.1/8 brd 127.255.255.255');
   });
 
   it('ip neigh muestra la tabla ARP', () => {

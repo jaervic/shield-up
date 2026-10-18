@@ -190,4 +190,735 @@
       }
     ]
   }
+,
+  {
+    "kind": "terminal",
+    "id": "pbq-auditoria-de-cuentas",
+    "domain": 1,
+    "blueprintObjectives": [
+      "1.2",
+      "3.2"
+    ],
+    "title": "Auditoría de cuentas y privilegios",
+    "summary": "Revisa las cuentas del servidor, quién puede usar sudo y si hubo accesos fallidos recientes.",
+    "instructions": "Antes de cerrar el informe de acceso, revisa el servidor: (1) lista las cuentas locales y sus shells, (2) busca qué usuarios tienen privilegios sin contraseña en sudoers y (3) revisa los intentos de acceso fallidos en el log de autenticación.",
+    "estimatedMinutes": 6,
+    "difficulty": "easy",
+    "tags": [
+      "auditoria",
+      "cuentas",
+      "sudo",
+      "auth.log"
+    ],
+    "explanation": "La auditoría de cuentas se hace en tres capas: passwd dice qué cuentas existen y si pueden abrir shell, sudoers dice quién puede elevar privilegios (un NOPASSWD para un usuario humano es un hallazgo) y auth.log muestra si alguien lo está intentando. Las cuentas de servicio deben tener shell nologin y ningún privilegio interactivo.",
+    "state": {
+      "hostname": "srv-auth-01",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ip": "10.10.5.12/24",
+          "mac": "52:54:00:5a:01:12",
+          "state": "UP"
+        },
+        {
+          "name": "lo",
+          "ip": "127.0.0.1/8",
+          "mac": "00:00:00:00:00:00",
+          "state": "UP"
+        }
+      ],
+      "routes": [
+        {
+          "destination": "10.10.5.0/24",
+          "gateway": "0.0.0.0",
+          "iface": "eth0"
+        }
+      ],
+      "defaultGateway": {
+        "gateway": "10.10.5.1",
+        "iface": "eth0"
+      },
+      "arp": [
+        {
+          "ip": "10.10.5.1",
+          "mac": "52:54:00:5a:01:01"
+        }
+      ],
+      "listening": [
+        {
+          "port": 22,
+          "protocol": "tcp",
+          "process": "sshd",
+          "pid": 812,
+          "address": "0.0.0.0"
+        }
+      ],
+      "processes": [
+        {
+          "pid": 812,
+          "user": "root",
+          "command": "/usr/sbin/sshd -D"
+        }
+      ],
+      "dns": {},
+      "hosts": [],
+      "packets": [],
+      "files": {
+        "/etc/passwd": "root:x:0:0:root:/root:/bin/bash\nsvc_backup:x:998:998:Backup service:/var/lib/backup:/usr/sbin/nologin\nanalista:x:1001:1001:Analista SOC:/home/analista:/bin/bash\ninvitado:x:1002:1002:Cuenta temporal:/home/invitado:/bin/bash\n",
+        "/etc/sudoers": "Defaults env_reset\nDefaults use_pty\nroot ALL=(ALL:ALL) ALL\nanalista ALL=(ALL) NOPASSWD: ALL\n%sudo ALL=(ALL:ALL) ALL\n",
+        "/var/log/auth.log": "Oct 18 09:12:04 srv-auth-01 sshd[3312]: Failed password for invalid user admin from 203.0.113.45 port 40221 ssh2\nOct 18 09:12:09 srv-auth-01 sshd[3312]: Failed password for invalid user oracle from 203.0.113.45 port 40244 ssh2\nOct 18 09:12:31 srv-auth-01 sshd[3320]: Failed password for analista from 203.0.113.45 port 40298 ssh2\n"
+      }
+    },
+    "tasks": [
+      {
+        "id": "cuentas",
+        "description": "Lista las cuentas locales y la shell de cada una.",
+        "matcher": {
+          "program": "cat",
+          "args": [
+            "/etc/passwd"
+          ]
+        }
+      },
+      {
+        "id": "sudo",
+        "description": "Busca en sudoers los privilegios sin contraseña.",
+        "matcher": {
+          "program": "grep",
+          "args": [
+            "NOPASSWD",
+            "/etc/sudoers"
+          ]
+        }
+      },
+      {
+        "id": "fallos",
+        "description": "Revisa los intentos de acceso fallidos en auth.log.",
+        "matcher": {
+          "program": "grep",
+          "args": [
+            "Failed",
+            "/var/log/auth.log"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "terminal",
+    "id": "pbq-enumerar-subred",
+    "domain": 2,
+    "blueprintObjectives": [
+      "2.3",
+      "4.3"
+    ],
+    "title": "Enumerar la subred de servidores",
+    "summary": "Localiza en la subred de servidores el host con un servicio obsoleto antes de priorizar el parcheo.",
+    "instructions": "El inventario no está actualizado. Descubre qué hay en 10.0.30.0/24: (1) identifica servicios y versiones de la subred, (2) comprueba el puerto 8080 del host sospechoso y (3) confirma que ese host responde.",
+    "estimatedMinutes": 7,
+    "difficulty": "medium",
+    "tags": [
+      "nmap",
+      "enumeracion",
+      "gestion-de-vulnerabilidades"
+    ],
+    "explanation": "Enumerar la subred antes de parchear evita dos errores: parchear el host equivocado y confiar en un inventario que ya no existe. El 8080 con Tomcat 9.0.31 en web-prod sube de prioridad porque está expuesto; el PostgreSQL de db-01 se revisa después, aunque su CVE puntúe más, porque no está publicado.",
+    "state": {
+      "hostname": "kali-ops",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ip": "10.0.30.5/24",
+          "mac": "52:54:00:30:00:05",
+          "state": "UP"
+        }
+      ],
+      "routes": [
+        {
+          "destination": "10.0.30.0/24",
+          "gateway": "0.0.0.0",
+          "iface": "eth0"
+        }
+      ],
+      "defaultGateway": {
+        "gateway": "10.0.30.1",
+        "iface": "eth0"
+      },
+      "arp": [
+        {
+          "ip": "10.0.30.1",
+          "mac": "52:54:00:30:00:01"
+        }
+      ],
+      "listening": [],
+      "processes": [
+        {
+          "pid": 1,
+          "user": "root",
+          "command": "/sbin/init"
+        }
+      ],
+      "dns": {
+        "web-prod.corp.local": "10.0.30.20"
+      },
+      "hosts": [
+        {
+          "ip": "10.0.30.10",
+          "hostname": "app-01.corp.local",
+          "up": true,
+          "ports": [
+            {
+              "port": 22,
+              "protocol": "tcp",
+              "service": "ssh",
+              "version": "OpenSSH 9.6p1"
+            },
+            {
+              "port": 443,
+              "protocol": "tcp",
+              "service": "ssl/https",
+              "version": "nginx 1.26.0"
+            }
+          ]
+        },
+        {
+          "ip": "10.0.30.20",
+          "hostname": "web-prod.corp.local",
+          "up": true,
+          "ports": [
+            {
+              "port": 22,
+              "protocol": "tcp",
+              "service": "ssh",
+              "version": "OpenSSH 8.9p1"
+            },
+            {
+              "port": 80,
+              "protocol": "tcp",
+              "service": "http",
+              "version": "nginx 1.24.0"
+            },
+            {
+              "port": 8080,
+              "protocol": "tcp",
+              "service": "http-proxy",
+              "version": "Apache Tomcat 9.0.31"
+            }
+          ]
+        },
+        {
+          "ip": "10.0.30.30",
+          "hostname": "db-01.corp.local",
+          "up": true,
+          "ports": [
+            {
+              "port": 5432,
+              "protocol": "tcp",
+              "service": "postgresql",
+              "version": "PostgreSQL 14.9"
+            }
+          ]
+        }
+      ],
+      "packets": [],
+      "files": {
+        "/etc/hosts": "127.0.0.1 localhost\n10.0.30.20 web-prod.corp.local"
+      }
+    },
+    "tasks": [
+      {
+        "id": "servicios",
+        "description": "Identifica los servicios y versiones de toda la subred.",
+        "matcher": {
+          "program": "nmap",
+          "flags": [
+            "sV"
+          ],
+          "args": [
+            "10.0.30.0/24"
+          ]
+        }
+      },
+      {
+        "id": "puerto-8080",
+        "description": "Comprueba el puerto 8080 de 10.0.30.20.",
+        "matcher": {
+          "program": "nmap",
+          "flags": [
+            "p"
+          ],
+          "args": [
+            "8080",
+            "10.0.30.20"
+          ]
+        }
+      },
+      {
+        "id": "responde",
+        "description": "Confirma que 10.0.30.20 responde a ICMP.",
+        "matcher": {
+          "program": "ping",
+          "args": [
+            "10.0.30.20"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "terminal",
+    "id": "pbq-diagnostico-ruta-dns",
+    "domain": 3,
+    "blueprintObjectives": [
+      "3.2",
+      "3.4"
+    ],
+    "title": "El servidor no resuelve nombres",
+    "summary": "Un servidor interno perdió la salida: revisa interfaz, ruta por defecto y DNS antes de tocar nada.",
+    "instructions": "Diagnostica el servidor 10.0.40.42: (1) revisa sus interfaces, (2) revisa la tabla de rutas, (3) comprueba a qué DNS apunta y (4) verifica si hay salida a Internet. La causa está en la configuración local.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "diagnostico",
+      "rutas",
+      "dns",
+      "ip"
+    ],
+    "explanation": "La ruta por defecto apunta a 10.0.40.254, pero la puerta de enlace del segmento es 10.0.40.1: sin ruta correcta no sale nada. Además, resolv.conf apunta a 10.0.40.53, que no responde. Se corrige primero la ruta y después el DNS; diagnosticar nombres con la red rota solo produce falsos negativos.",
+    "state": {
+      "hostname": "srv-app-03",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ip": "10.0.40.42/24",
+          "mac": "52:54:00:40:00:42",
+          "state": "UP"
+        },
+        {
+          "name": "eth1",
+          "ip": "172.16.8.10/24",
+          "mac": "52:54:00:16:08:10",
+          "state": "DOWN"
+        }
+      ],
+      "routes": [
+        {
+          "destination": "10.0.40.0/24",
+          "gateway": "0.0.0.0",
+          "iface": "eth0"
+        },
+        {
+          "destination": "172.16.8.0/24",
+          "gateway": "0.0.0.0",
+          "iface": "eth1"
+        }
+      ],
+      "defaultGateway": {
+        "gateway": "10.0.40.254",
+        "iface": "eth0"
+      },
+      "arp": [
+        {
+          "ip": "10.0.40.1",
+          "mac": "52:54:00:40:00:01"
+        }
+      ],
+      "listening": [
+        {
+          "port": 8080,
+          "protocol": "tcp",
+          "process": "java",
+          "pid": 2044,
+          "address": "0.0.0.0"
+        }
+      ],
+      "processes": [
+        {
+          "pid": 2044,
+          "user": "app",
+          "command": "java -jar /opt/app/service.jar"
+        }
+      ],
+      "dns": {},
+      "hosts": [
+        {
+          "ip": "10.0.40.1",
+          "hostname": "gw.corp.local",
+          "up": true,
+          "ports": []
+        }
+      ],
+      "packets": [],
+      "files": {
+        "/etc/resolv.conf": "# Generado por netplan\nnameserver 10.0.40.53\nsearch corp.local\n",
+        "/etc/netplan/01-netcfg.yaml": "network:\n  version: 2\n  ethernets:\n    eth0:\n      addresses: [10.0.40.42/24]\n      gateway4: 10.0.40.254\n      nameservers:\n        addresses: [10.0.40.53]\n"
+      }
+    },
+    "tasks": [
+      {
+        "id": "interfaces",
+        "description": "Revisa la configuración de las interfaces de red.",
+        "matcher": {
+          "program": "ip",
+          "args": [
+            "a"
+          ]
+        }
+      },
+      {
+        "id": "rutas",
+        "description": "Revisa la tabla de rutas del servidor.",
+        "matcher": {
+          "program": "ip",
+          "args": [
+            "route"
+          ]
+        }
+      },
+      {
+        "id": "dns",
+        "description": "Comprueba a qué servidor DNS apunta el sistema.",
+        "matcher": {
+          "program": "cat",
+          "args": [
+            "/etc/resolv.conf"
+          ]
+        }
+      },
+      {
+        "id": "salida",
+        "description": "Verifica si hay salida a Internet.",
+        "matcher": {
+          "program": "ping",
+          "args": [
+            "8.8.8.8"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "terminal",
+    "id": "pbq-caza-exfiltracion",
+    "domain": 4,
+    "blueprintObjectives": [
+      "4.4",
+      "4.5"
+    ],
+    "title": "Caza de una exfiltración",
+    "summary": "Una alerta de volumen saliente apunta a un servidor web. Confirma el canal y busca el acceso inicial.",
+    "instructions": "Investiga srv-web-07: (1) lista los puertos en escucha con su proceso, (2) captura el tráfico del puerto 8443 y (3) busca en el log de autenticación cómo entraron.",
+    "estimatedMinutes": 8,
+    "difficulty": "hard",
+    "tags": [
+      "exfiltracion",
+      "tcpdump",
+      "ss",
+      "respuesta-a-incidentes"
+    ],
+    "explanation": "El puerto 8443 lo abre un proceso de la aplicación que no debería escuchar en todas las interfaces; la captura confirma sesiones salientes largas y el log muestra fuerza bruta seguida de un acceso válido. Contener es aislar el host y revocar la clave; erradicar es reconstruirlo, no solo matar el proceso.",
+    "state": {
+      "hostname": "srv-web-07",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ip": "10.50.2.31/24",
+          "mac": "52:54:00:50:02:31",
+          "state": "UP"
+        }
+      ],
+      "routes": [
+        {
+          "destination": "10.50.2.0/24",
+          "gateway": "0.0.0.0",
+          "iface": "eth0"
+        }
+      ],
+      "defaultGateway": {
+        "gateway": "10.50.2.1",
+        "iface": "eth0"
+      },
+      "arp": [
+        {
+          "ip": "10.50.2.1",
+          "mac": "52:54:00:50:02:01"
+        }
+      ],
+      "listening": [
+        {
+          "port": 22,
+          "protocol": "tcp",
+          "process": "sshd",
+          "pid": 2210,
+          "address": "0.0.0.0"
+        },
+        {
+          "port": 443,
+          "protocol": "tcp",
+          "process": "nginx",
+          "pid": 3301,
+          "address": "0.0.0.0"
+        },
+        {
+          "port": 8443,
+          "protocol": "tcp",
+          "process": "node",
+          "pid": 4402,
+          "address": "0.0.0.0"
+        },
+        {
+          "port": 3306,
+          "protocol": "tcp",
+          "process": "mysqld",
+          "pid": 1180,
+          "address": "127.0.0.1"
+        }
+      ],
+      "processes": [
+        {
+          "pid": 2210,
+          "user": "root",
+          "command": "/usr/sbin/sshd -D"
+        },
+        {
+          "pid": 3301,
+          "user": "www-data",
+          "command": "nginx: worker process"
+        },
+        {
+          "pid": 4402,
+          "user": "www-data",
+          "command": "/opt/app/node server.js --port 8443"
+        },
+        {
+          "pid": 1180,
+          "user": "mysql",
+          "command": "/usr/sbin/mysqld"
+        }
+      ],
+      "dns": {
+        "storage.example": "198.51.100.77"
+      },
+      "hosts": [
+        {
+          "ip": "198.51.100.77",
+          "hostname": "storage.example",
+          "up": true,
+          "ports": [
+            {
+              "port": 8443,
+              "protocol": "tcp",
+              "service": "https-alt"
+            }
+          ]
+        }
+      ],
+      "packets": [
+        {
+          "time": 1.02,
+          "src": "10.50.2.31",
+          "dst": "198.51.100.77",
+          "protocol": "TCP",
+          "srcPort": 52410,
+          "dstPort": 8443,
+          "flags": "S",
+          "length": 0
+        },
+        {
+          "time": 1.04,
+          "src": "198.51.100.77",
+          "dst": "10.50.2.31",
+          "protocol": "TCP",
+          "srcPort": 8443,
+          "dstPort": 52410,
+          "flags": "SA",
+          "length": 0
+        },
+        {
+          "time": 1.06,
+          "src": "10.50.2.31",
+          "dst": "198.51.100.77",
+          "protocol": "TCP",
+          "srcPort": 52410,
+          "dstPort": 8443,
+          "flags": "PA",
+          "length": 1420
+        },
+        {
+          "time": 2.18,
+          "src": "10.50.2.31",
+          "dst": "198.51.100.77",
+          "protocol": "TCP",
+          "srcPort": 52410,
+          "dstPort": 8443,
+          "flags": "PA",
+          "length": 1420
+        },
+        {
+          "time": 3.47,
+          "src": "10.50.2.31",
+          "dst": "198.51.100.77",
+          "protocol": "TCP",
+          "srcPort": 52410,
+          "dstPort": 8443,
+          "flags": "PA",
+          "length": 1380
+        },
+        {
+          "time": 4.03,
+          "src": "10.50.2.31",
+          "dst": "10.50.2.1",
+          "protocol": "UDP",
+          "srcPort": 41022,
+          "dstPort": 123,
+          "length": 76
+        }
+      ],
+      "files": {
+        "/var/log/auth.log": "Oct 18 02:11:08 srv-web-07 sshd[5510]: Failed password for root from 198.51.100.77 port 51022 ssh2\nOct 18 02:11:15 srv-web-07 sshd[5510]: Failed password for root from 198.51.100.77 port 51044 ssh2\nOct 18 02:11:22 srv-web-07 sshd[5512]: Accepted publickey for deploy from 198.51.100.77 port 51066 ssh2\nOct 18 02:11:23 srv-web-07 systemd[5514]: Session opened for user deploy.\n",
+        "/etc/hosts": "127.0.0.1 localhost\n198.51.100.77 storage.example"
+      }
+    },
+    "tasks": [
+      {
+        "id": "escuchas",
+        "description": "Lista los puertos en escucha con el proceso que los abre.",
+        "matcher": {
+          "program": "ss",
+          "flags": [
+            "l",
+            "p"
+          ]
+        }
+      },
+      {
+        "id": "captura",
+        "description": "Captura el tráfico del puerto 8443.",
+        "matcher": {
+          "program": "tcpdump",
+          "args": [
+            "port",
+            "8443"
+          ]
+        }
+      },
+      {
+        "id": "acceso",
+        "description": "Busca en auth.log los intentos fallidos de acceso.",
+        "matcher": {
+          "program": "grep",
+          "args": [
+            "Failed",
+            "/var/log/auth.log"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "kind": "terminal",
+    "id": "pbq-configuracion-auditoria",
+    "domain": 5,
+    "blueprintObjectives": [
+      "5.4",
+      "5.5"
+    ],
+    "title": "Revisión de configuración para la auditoría",
+    "summary": "El auditor pide evidencia de que la auditoría del sistema y el acceso remoto cumplen la línea base.",
+    "instructions": "Reúne la evidencia: (1) revisa la configuración del demonio de auditoría, (2) confirma dónde escribe el log y (3) comprueba si SSH permite acceso directo de root.",
+    "estimatedMinutes": 5,
+    "difficulty": "easy",
+    "tags": [
+      "auditoria",
+      "cumplimiento",
+      "auditd",
+      "ssh"
+    ],
+    "explanation": "La evidencia se lee del sistema, no del documento: auditd.conf demuestra que hay auditoría y cuánto se retiene, y sshd_config demuestra que root no entra directamente. Un auditor acepta una captura de la configuración con fecha y host; un PDF de la política sin evidencia de aplicación no demuestra nada.",
+    "state": {
+      "hostname": "srv-bastion-01",
+      "interfaces": [
+        {
+          "name": "eth0",
+          "ip": "10.60.0.10/24",
+          "mac": "52:54:00:60:00:10",
+          "state": "UP"
+        }
+      ],
+      "routes": [
+        {
+          "destination": "10.60.0.0/24",
+          "gateway": "0.0.0.0",
+          "iface": "eth0"
+        }
+      ],
+      "defaultGateway": {
+        "gateway": "10.60.0.1",
+        "iface": "eth0"
+      },
+      "arp": [
+        {
+          "ip": "10.60.0.1",
+          "mac": "52:54:00:60:00:01"
+        }
+      ],
+      "listening": [
+        {
+          "port": 22,
+          "protocol": "tcp",
+          "process": "sshd",
+          "pid": 900,
+          "address": "0.0.0.0"
+        }
+      ],
+      "processes": [
+        {
+          "pid": 900,
+          "user": "root",
+          "command": "/usr/sbin/sshd -D"
+        }
+      ],
+      "dns": {},
+      "hosts": [],
+      "packets": [],
+      "files": {
+        "/etc/audit/auditd.conf": "# Configuracion de auditd\nlog_file = /var/log/audit/audit.log\nmax_log_file = 50\nnum_logs = 5\nspace_left_action = email\nadmin_space_left_action = halt\n",
+        "/etc/ssh/sshd_config": "Port 22\nPermitRootLogin no\nPasswordAuthentication no\nPubkeyAuthentication yes\nAllowUsers deploy\n"
+      }
+    },
+    "tasks": [
+      {
+        "id": "auditd",
+        "description": "Revisa la configuración del demonio de auditoría.",
+        "matcher": {
+          "program": "cat",
+          "args": [
+            "/etc/audit/auditd.conf"
+          ]
+        }
+      },
+      {
+        "id": "log",
+        "description": "Confirma en qué archivo escribe auditd.",
+        "matcher": {
+          "program": "grep",
+          "args": [
+            "log_file",
+            "/etc/audit/auditd.conf"
+          ]
+        }
+      },
+      {
+        "id": "ssh",
+        "description": "Comprueba si SSH permite el login directo de root.",
+        "matcher": {
+          "program": "grep",
+          "args": [
+            "PermitRootLogin",
+            "/etc/ssh/sshd_config"
+          ]
+        }
+      }
+    ]
+  }
 ]

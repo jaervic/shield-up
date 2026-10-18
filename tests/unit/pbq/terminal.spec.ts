@@ -152,12 +152,21 @@ describe('banco de PBQ del contenido', () => {
   const bank = loadPbq();
 
   it('carga sin errores de validación', () => {
-    expect(bank.length).toBeGreaterThanOrEqual(5);
+    expect(bank.length).toBeGreaterThanOrEqual(15);
   });
 
   it('incluye las dos familias', () => {
     expect(bank.some(isTopology)).toBe(true);
     expect(bank.some(isTerminal)).toBe(true);
+  });
+
+  it('cada dominio tiene al menos una PBQ', () => {
+    for (const domain of [1, 2, 3, 4, 5] as const) {
+      expect(
+        bank.some((pbq) => pbq.domain === domain),
+        `el dominio ${domain} no tiene ninguna PBQ`,
+      ).toBe(true);
+    }
   });
 
   it('cada PBQ declara dominio, objetivos y explicación útiles', () => {

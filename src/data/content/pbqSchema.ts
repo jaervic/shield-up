@@ -67,6 +67,9 @@ const hostStateSchema = z.object({
   hostname: z.string().min(1),
   interfaces: z.array(interfaceSchema).min(1),
   routes: z.array(routeSchema),
+  defaultGateway: z
+    .object({ gateway: z.string().min(7), iface: z.string().min(1) })
+    .optional(),
   arp: z.array(arpSchema),
   listening: z.array(listeningSchema),
   processes: z.array(processSchema),

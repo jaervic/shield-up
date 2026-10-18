@@ -243,18 +243,56 @@ const netstat: CommandHandler = ({ invocation, state }) => ({
   lines: listeningLines(state, invocation, 'netstat'),
 });
 
+/** Dirección de broadcast de una interfaz en notación CIDR. */
+function broadcastAddress(cidr: string): string | null {
+  const [address = '', prefixRaw = ''] = cidr.split('/');
+  const octets = address.split('.').map(Number);
+  const prefix = Number(prefixRaw);
+
+  if (
+    octets.length !== 4 ||
+    octets.some((octet) => !Number.isInteger(octet) || octet < 0 || octet > 255) ||
+    !Number.isInteger(prefix) ||
+    prefix < 0 ||
+    prefix > 32
+  ) {
+    return null;
+  }
+
+  const [a = 0, b = 0, c = 0, d = 0] = octets;
+  const value = ((a << 24) | (b << 16) | (c << 8) | d) >>> 0;
+  const hostMask = prefix === 32 ? 0 : 0xffff_ffff >>> prefix;
+  const broadcast = (value | hostMask) >>> 0;
+
+  return [
+    (broadcast >>> 24) & 255,
+    (broadcast >>> 16) & 255,
+    (broadcast >>> 8) & 255,
+    broadcast & 255,
+  ].join('.');
+}
+
 const ip: CommandHandler = ({ invocation, state }) => {
   const args = positionalArgs(invocation);
   const subcommand = (args[0] ?? '').toLowerCase();
 
   if (subcommand.startsWith('r')) {
+    const configuredDefault = state.routes.find(
+      (route) => route.destination === '0.0.0.0/0' || route.destination === 'default',
+    );
+    const defaultGateway = state.defaultGateway ?? configuredDefault;
+    const defaultLine =
+      defaultGateway === undefined
+        ? 'default via 10.0.0.1 dev eth0 proto static'
+        : `default via ${defaultGateway.gateway} dev ${defaultGateway.iface} proto static`;
+
     return {
       exitCode: 0,
       lines: [
-        'default via 10.0.0.1 dev eth0 proto static',
-        ...state.routes.map(
-          (route) => `${route.destination} via ${route.gateway} dev ${route.iface}`,
-        ),
+        defaultLine,
+        ...state.routes
+          .filter((route) => route !== configuredDefault)
+          .map((route) => `${route.destination} via ${route.gateway} dev ${route.iface}`),
       ],
     };
   }
@@ -269,9 +307,12 @@ const ip: CommandHandler = ({ invocation, state }) => {
   const lines: string[] = [];
   let index = 1;
   for (const iface of state.interfaces) {
+    const broadcast = broadcastAddress(iface.ip);
     lines.push(`${index}: ${iface.name}: <BROADCAST,MULTICAST,${iface.state}> mtu 1500`);
     lines.push(`    link/ether ${iface.mac} brd ff:ff:ff:ff:ff:ff`);
-    lines.push(`    inet ${iface.ip} brd 10.0.0.255 scope global ${iface.name}`);
+    lines.push(
+      `    inet ${iface.ip}${broadcast === null ? '' : ` brd ${broadcast}`} scope global ${iface.name}`,
+    );
     index += 1;
   }
   return { exitCode: 0, lines };

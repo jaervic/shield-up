@@ -56,4 +56,514 @@
       { "id": "cintas", "label": "Cintas de backup semanales", "hint": "Se guardan en una caja fuerte física.", "correctZoneId": "backup" }
     ]
   }
+,
+  {
+    "kind": "topology",
+    "id": "pbq-zero-trust-planos",
+    "domain": 1,
+    "blueprintObjectives": [
+      "1.1",
+      "1.2"
+    ],
+    "title": "Controles de Zero Trust por plano",
+    "summary": "Coloca cada control en el plano de Zero Trust que protege: identidad, dispositivo, red o datos.",
+    "instructions": "Zero Trust no es un producto, es una arquitectura con planos de control. Coloca cada medida donde actúa de verdad y desconfía de las que parecen de red pero verifican identidad.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "zero-trust",
+      "controles",
+      "identidad"
+    ],
+    "explanation": "Zero Trust se organiza por planos de control, no por productos: la identidad decide quién entra, el dispositivo aporta el contexto de salud, la red limita el movimiento lateral y los datos se protegen aunque salgan del perímetro. La pregunta útil no es qué appliance comprar, sino qué plano verifica esa medida.",
+    "zones": [
+      {
+        "id": "identidad",
+        "label": "Identidad",
+        "description": "Quién es y qué puede hacer"
+      },
+      {
+        "id": "dispositivo",
+        "label": "Dispositivo",
+        "description": "Salud y confianza del endpoint"
+      },
+      {
+        "id": "red",
+        "label": "Red",
+        "description": "Segmentación y microsegmentación"
+      },
+      {
+        "id": "datos",
+        "label": "Datos",
+        "description": "Clasificación, cifrado y etiquetado"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "mfa",
+        "label": "MFA resistente al phishing",
+        "hint": "Verifica al usuario con una clave ligada al origen.",
+        "correctZoneId": "identidad"
+      },
+      {
+        "id": "pim",
+        "label": "Acceso privilegiado just-in-time",
+        "hint": "Eleva el rol solo durante la tarea.",
+        "correctZoneId": "identidad"
+      },
+      {
+        "id": "edr",
+        "label": "EDR en el portátil",
+        "hint": "Comprueba el estado de parches antes de dar acceso.",
+        "correctZoneId": "dispositivo"
+      },
+      {
+        "id": "mdm",
+        "label": "Gestión de dispositivos (MDM)",
+        "hint": "Solo admite equipos corporativos y actualizados.",
+        "correctZoneId": "dispositivo"
+      },
+      {
+        "id": "microsegmentacion",
+        "label": "Microsegmentación",
+        "hint": "Reglas este-oeste entre cargas de trabajo.",
+        "correctZoneId": "red"
+      },
+      {
+        "id": "nac",
+        "label": "Control de admisión a la red (NAC)",
+        "hint": "Niega el puerto hasta validar el equipo.",
+        "correctZoneId": "red"
+      },
+      {
+        "id": "dlp",
+        "label": "DLP en correo y endpoints",
+        "hint": "Marca y bloquea información clasificada.",
+        "correctZoneId": "datos"
+      },
+      {
+        "id": "etiquetas",
+        "label": "Cifrado con etiquetas de sensibilidad",
+        "hint": "La clave sigue a la clasificación del dato.",
+        "correctZoneId": "datos"
+      }
+    ]
+  },
+  {
+    "kind": "topology",
+    "id": "pbq-cadena-de-ataque",
+    "domain": 2,
+    "blueprintObjectives": [
+      "2.2",
+      "2.4"
+    ],
+    "title": "Reconstruir la cadena de ataque",
+    "summary": "Ordena los artefactos de un incidente en la fase del kill chain a la que pertenecen.",
+    "instructions": "El EDR y el firewall dejaron pistas de un mismo ataque. Coloca cada artefacto en la fase del kill chain en la que ocurrió; la clave es el orden lógico, no el momento en que lo detectaste.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "kill-chain",
+      "indicadores",
+      "incidentes"
+    ],
+    "explanation": "Cada artefacto pertenece a una fase distinta del kill chain, y la detección puede ocurrir en cualquiera: el valor está en reconstruir el orden para saber qué control falló y dónde cortar. Un escaneo es reconocimiento, la macro es explotación, la tarea programada es persistencia, el DNS raro es mando y control y el cifrado es la acción final.",
+    "zones": [
+      {
+        "id": "reconocimiento",
+        "label": "Reconocimiento",
+        "description": "Buscar objetivos y superficie"
+      },
+      {
+        "id": "armamento",
+        "label": "Armamento",
+        "description": "Preparar el payload"
+      },
+      {
+        "id": "entrega",
+        "label": "Entrega",
+        "description": "Hacer llegar el vector"
+      },
+      {
+        "id": "explotacion",
+        "label": "Explotación",
+        "description": "Ejecutar la vulnerabilidad"
+      },
+      {
+        "id": "instalacion",
+        "label": "Instalación",
+        "description": "Persistir en el host"
+      },
+      {
+        "id": "mando-control",
+        "label": "Mando y control",
+        "description": "Canal con el atacante"
+      },
+      {
+        "id": "acciones",
+        "label": "Acciones sobre el objetivo",
+        "description": "Robo o cifrado"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "escaneo",
+        "label": "Escaneo de puertos desde 198.51.100.23",
+        "hint": "Todavía no ha tocado el payload.",
+        "correctZoneId": "reconocimiento"
+      },
+      {
+        "id": "exploit",
+        "label": "Exploit empaquetado para una CVE",
+        "hint": "Se prepara antes de enviarlo.",
+        "correctZoneId": "armamento"
+      },
+      {
+        "id": "correo",
+        "label": "Correo con macro adjunta",
+        "hint": "El vector llega a la víctima.",
+        "correctZoneId": "entrega"
+      },
+      {
+        "id": "macro",
+        "label": "Macro habilitada al abrir el adjunto",
+        "hint": "Es el momento en que se ejecuta.",
+        "correctZoneId": "explotacion"
+      },
+      {
+        "id": "tarea",
+        "label": "Tarea programada que relanza el binario",
+        "hint": "Sobrevive al reinicio.",
+        "correctZoneId": "instalacion"
+      },
+      {
+        "id": "dns",
+        "label": "Consultas DNS periódicas a un dominio raro",
+        "hint": "Balizas hacia el exterior.",
+        "correctZoneId": "mando-control"
+      },
+      {
+        "id": "cifrado",
+        "label": "Cifrado masivo de archivos",
+        "hint": "El objetivo final del ransomware.",
+        "correctZoneId": "acciones"
+      }
+    ]
+  },
+  {
+    "kind": "topology",
+    "id": "pbq-segmentar-it-ot",
+    "domain": 3,
+    "blueprintObjectives": [
+      "3.2",
+      "3.4"
+    ],
+    "title": "Segmentar IT, OT e invitados",
+    "summary": "Reparte los activos de una planta conectada en el segmento que limita el impacto de un compromiso.",
+    "instructions": "La planta comparte un único switch con la oficina y la wifi de visitantes. Coloca cada activo en su segmento y evita que un portátil comprometido llegue a los PLC.",
+    "estimatedMinutes": 7,
+    "difficulty": "hard",
+    "tags": [
+      "segmentacion",
+      "ot",
+      "dmz",
+      "invitados"
+    ],
+    "explanation": "IT y OT tienen prioridades opuestas: en IT manda la confidencialidad y el parcheo rápido; en OT manda la disponibilidad y no se puede reiniciar un PLC para parchear. Por eso se separan con un salto auditado en la zona de gestión, la DMZ publica solo lo necesario y los invitados nunca comparten VLAN con la planta. La segmentación no evita el incidente: evita que un portátil de oficina llegue al PLC.",
+    "zones": [
+      {
+        "id": "it",
+        "label": "Red IT corporativa",
+        "description": "Usuarios y servidores de negocio"
+      },
+      {
+        "id": "ot",
+        "label": "Red OT industrial",
+        "description": "Control de procesos, sin Internet"
+      },
+      {
+        "id": "dmz",
+        "label": "DMZ",
+        "description": "Servicios publicados al exterior"
+      },
+      {
+        "id": "invitados",
+        "label": "Wifi de invitados",
+        "description": "Solo salida a Internet"
+      },
+      {
+        "id": "gestion",
+        "label": "Zona de gestión",
+        "description": "Salto auditado entre IT y OT"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "erp",
+        "label": "ERP de producción",
+        "hint": "Gestiona pedidos y facturación.",
+        "correctZoneId": "it"
+      },
+      {
+        "id": "rrhh",
+        "label": "Base de datos de empleados",
+        "hint": "Datos personales del personal.",
+        "correctZoneId": "it"
+      },
+      {
+        "id": "scada",
+        "label": "Servidor SCADA",
+        "hint": "Supervisa la línea de envasado.",
+        "correctZoneId": "ot"
+      },
+      {
+        "id": "plc",
+        "label": "PLC de la línea 2",
+        "hint": "Habla Modbus con el SCADA.",
+        "correctZoneId": "ot"
+      },
+      {
+        "id": "hmi",
+        "label": "HMI del operario",
+        "hint": "Panel de planta, sin salida a Internet.",
+        "correctZoneId": "ot"
+      },
+      {
+        "id": "portal",
+        "label": "Portal de proveedores",
+        "hint": "Publicado fuera y habla con el ERP por API.",
+        "correctZoneId": "dmz"
+      },
+      {
+        "id": "api",
+        "label": "API de pedidos",
+        "hint": "Expuesta a Internet tras el balanceador.",
+        "correctZoneId": "dmz"
+      },
+      {
+        "id": "moviles",
+        "label": "Móviles de visitantes",
+        "hint": "Solo necesitan navegar.",
+        "correctZoneId": "invitados"
+      },
+      {
+        "id": "jump",
+        "label": "Host de salto IT a OT",
+        "hint": "Punto único y auditado de administración.",
+        "correctZoneId": "gestion"
+      },
+      {
+        "id": "consola",
+        "label": "Consola de gestión del firewall",
+        "hint": "Administra las reglas entre segmentos.",
+        "correctZoneId": "gestion"
+      }
+    ]
+  },
+  {
+    "kind": "topology",
+    "id": "pbq-fases-respuesta-incidentes",
+    "domain": 4,
+    "blueprintObjectives": [
+      "4.4",
+      "4.8"
+    ],
+    "title": "Fases de respuesta a un incidente",
+    "summary": "Clasifica cada acción del equipo en la fase de respuesta a incidentes que le corresponde.",
+    "instructions": "El comité activó el plan tras detectar ransomware. Coloca cada acción en su fase; recuerda que contener no es lo mismo que erradicar y que la lección aprendida llega al final.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "respuesta-a-incidentes",
+      "contencion",
+      "lecciones-aprendidas"
+    ],
+    "explanation": "La respuesta se ordena por fases y cada una tiene una salida verificable: preparación con playbook, identificación del alcance, contención aislando y revocando, erradicación con reimagen y cierre del vector, recuperación restaurando y vigilando, y lecciones aprendidas. Confundir contención con erradicación es lo que hace que el atacante vuelva por la misma puerta.",
+    "zones": [
+      {
+        "id": "preparacion",
+        "label": "Preparación",
+        "description": "Antes de que ocurra"
+      },
+      {
+        "id": "identificacion",
+        "label": "Identificación",
+        "description": "Confirmar y acotar el alcance"
+      },
+      {
+        "id": "contencion",
+        "label": "Contención",
+        "description": "Frenar la propagación"
+      },
+      {
+        "id": "erradicacion",
+        "label": "Erradicación",
+        "description": "Eliminar la causa y el malware"
+      },
+      {
+        "id": "recuperacion",
+        "label": "Recuperación",
+        "description": "Volver a operar con seguridad"
+      },
+      {
+        "id": "lecciones",
+        "label": "Lecciones aprendidas",
+        "description": "Cerrar el ciclo"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "playbook",
+        "label": "Playbook revisado y contactos actualizados",
+        "hint": "Se hace antes del incidente.",
+        "correctZoneId": "preparacion"
+      },
+      {
+        "id": "alerta",
+        "label": "Alerta del EDR y alcance del cifrado",
+        "hint": "Primero hay que saber qué pasó.",
+        "correctZoneId": "identificacion"
+      },
+      {
+        "id": "aislar",
+        "label": "Aislar los hosts de la VLAN",
+        "hint": "Corta la propagación sin borrar evidencia.",
+        "correctZoneId": "contencion"
+      },
+      {
+        "id": "revocar",
+        "label": "Revocar credenciales comprometidas",
+        "hint": "El atacante no debe poder volver a entrar.",
+        "correctZoneId": "contencion"
+      },
+      {
+        "id": "reimagen",
+        "label": "Reimagen de los equipos afectados",
+        "hint": "Elimina la persistencia.",
+        "correctZoneId": "erradicacion"
+      },
+      {
+        "id": "parche",
+        "label": "Cerrar el vector de entrada",
+        "hint": "La causa raíz deja de existir.",
+        "correctZoneId": "erradicacion"
+      },
+      {
+        "id": "restaurar",
+        "label": "Restaurar desde un backup verificado",
+        "hint": "Devuelve el servicio.",
+        "correctZoneId": "recuperacion"
+      },
+      {
+        "id": "vigilancia",
+        "label": "Vigilancia reforzada tras volver a producción",
+        "hint": "Confirma que no hay reinfección.",
+        "correctZoneId": "recuperacion"
+      },
+      {
+        "id": "postmortem",
+        "label": "Reunión post-incidente y acciones",
+        "hint": "Mejora el plan para la próxima.",
+        "correctZoneId": "lecciones"
+      }
+    ]
+  },
+  {
+    "kind": "topology",
+    "id": "pbq-artefactos-de-gobierno",
+    "domain": 5,
+    "blueprintObjectives": [
+      "5.1",
+      "5.4"
+    ],
+    "title": "Artefactos del programa de seguridad",
+    "summary": "Coloca cada documento en el nivel de gobierno que le corresponde y no mezcles política con procedimiento.",
+    "instructions": "En la auditoría pidieron el paquete documental. Coloca cada artefacto en su nivel: política, estándar, procedimiento o registro. Una política no dice cómo; un procedimiento no decide el qué.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "gobierno",
+      "documentacion",
+      "auditoria"
+    ],
+    "explanation": "La jerarquía documental evita contradicciones: la política fija la intención y el apetito de riesgo, el estándar concreta valores obligatorios, el procedimiento describe los pasos y el registro demuestra que se hizo. Si un auditor pide evidencia, lo que vale es el registro; si pide la regla, es el estándar; si pide el porqué, es la política.",
+    "zones": [
+      {
+        "id": "politica",
+        "label": "Política",
+        "description": "Intención y apetito de riesgo"
+      },
+      {
+        "id": "estandar",
+        "label": "Estándar",
+        "description": "Valores obligatorios y medibles"
+      },
+      {
+        "id": "procedimiento",
+        "label": "Procedimiento",
+        "description": "Pasos concretos de ejecución"
+      },
+      {
+        "id": "registro",
+        "label": "Registro",
+        "description": "Evidencia de que se cumplió"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "politica-seguridad",
+        "label": "Política de seguridad de la información",
+        "hint": "La aprueba la dirección.",
+        "correctZoneId": "politica"
+      },
+      {
+        "id": "apetito",
+        "label": "Declaración de apetito de riesgo",
+        "hint": "Cuánto riesgo acepta la organización.",
+        "correctZoneId": "politica"
+      },
+      {
+        "id": "estandar-cifrado",
+        "label": "Estándar de cifrado AES-256",
+        "hint": "Fija el algoritmo y la longitud de clave.",
+        "correctZoneId": "estandar"
+      },
+      {
+        "id": "estandar-contrasenas",
+        "label": "Estándar de longitud de contraseñas",
+        "hint": "Valor mínimo obligatorio.",
+        "correctZoneId": "estandar"
+      },
+      {
+        "id": "procedimiento-alta",
+        "label": "Procedimiento de alta de usuario",
+        "hint": "Quién aprueba y en qué orden.",
+        "correctZoneId": "procedimiento"
+      },
+      {
+        "id": "procedimiento-backup",
+        "label": "Procedimiento de restauración de backup",
+        "hint": "Pasos y comprobaciones tras restaurar.",
+        "correctZoneId": "procedimiento"
+      },
+      {
+        "id": "registro-accesos",
+        "label": "Registro de accesos privilegiados",
+        "hint": "Demuestra quién hizo qué.",
+        "correctZoneId": "registro"
+      },
+      {
+        "id": "acta",
+        "label": "Acta de aprobación del comité",
+        "hint": "Evidencia de la decisión.",
+        "correctZoneId": "registro"
+      },
+      {
+        "id": "informe-auditoria",
+        "label": "Informe de auditoría interna",
+        "hint": "Resultado documentado de la revisión.",
+        "correctZoneId": "registro"
+      }
+    ]
+  }
 ]

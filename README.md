@@ -357,7 +357,8 @@ de un control. El test de contraste documenta por qué queda fuera de la lista d
 ## PBQ: simulaciones (Fase 4)
 
 Una PBQ no se responde eligiendo: **se resuelve**. Hay dos familias, y en ambas la corrección es
-lógica pura y testeable.
+lógica pura y testeable. El banco tiene **15 PBQ** —7 de topología y 8 de terminal— repartidas por
+los cinco dominios, así que ningún dominio se queda sin práctica resolutiva.
 
 ### Topología
 
@@ -480,7 +481,7 @@ la navegación.
 ### Rendimiento
 
 Las rutas se cargan con `lazy()`. Antes, entrar al panel descargaba también el banco de 139
-preguntas, las 58 tarjetas, las lecciones y las PBQ:
+preguntas, las 58 tarjetas, las lecciones y las 15 PBQ:
 
 | | Antes | Ahora |
 |---|---|---|
