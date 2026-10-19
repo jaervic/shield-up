@@ -1,0 +1,241 @@
+[
+  {
+    "id": "def-kill-chain",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Qué es la cyber kill chain y para qué sirve?",
+    "back": "Modelo que descompone el ataque en fases (reconocimiento, armamento, entrega, explotación, instalación, C2 y acciones). Sirve para colocar un control en cada fase: quien corta una, rompe la cadena.",
+    "tags": [
+      "kill-chain",
+      "deteccion",
+      "incidentes"
+    ]
+  },
+  {
+    "id": "def-tipos-malware",
+    "domain": 2,
+    "type": "concept",
+    "front": "Diferencia entre virus, gusano, troyano y ransomware",
+    "back": "El virus necesita un huésped y ejecución; el gusano se propaga solo por la red; el troyano se disfraza de software legítimo; el ransomware cifra y exige rescate. Pueden combinarse en un mismo ataque.",
+    "tags": [
+      "malware",
+      "ransomware",
+      "amenazas"
+    ]
+  },
+  {
+    "id": "def-rootkit",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Por qué un rootkit es difícil de detectar?",
+    "back": "Se instala con privilegios y oculta su presencia modificando el propio sistema (procesos, ficheros, registro). La detección fiable exige analizar desde fuera del sistema comprometido.",
+    "tags": [
+      "rootkit",
+      "malware",
+      "deteccion"
+    ]
+  },
+  {
+    "id": "def-fileless",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Qué es un ataque fileless?",
+    "back": "No deja binario en disco: vive en memoria usando herramientas del sistema (PowerShell, WMI, macros). Por eso la detección por firmas falla y pesa la de comportamiento.",
+    "tags": [
+      "fileless",
+      "malware",
+      "edr"
+    ]
+  },
+  {
+    "id": "def-ingenieria-social",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Por qué la ingeniería social es tan eficaz?",
+    "back": "No ataca la tecnología, ataca la decisión humana: urgencia, autoridad, miedo o deseo de ayudar. Un correo convincente evade controles que el atacante no habría podido vencer por la vía técnica.",
+    "tags": [
+      "ingenieria-social",
+      "phishing",
+      "personas"
+    ]
+  },
+  {
+    "id": "def-priorizar-vulnerabilidades",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Cómo se prioriza un hallazgo de vulnerabilidad?",
+    "back": "La puntuación CVSS orienta, pero no decide: pesan la exposición, la criticidad del activo, la existencia de exploit público y el impacto real. Un 9.8 en un host aislado puede esperar más que un 6.5 expuesto.",
+    "tags": [
+      "vulnerabilidades",
+      "cvss",
+      "priorizacion"
+    ]
+  },
+  {
+    "id": "def-dia-cero",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Qué diferencia hay entre una vulnerabilidad de día cero y una conocida?",
+    "back": "La de día cero no tiene parche ni firma pública cuando se explota: solo cabe mitigar. La conocida ya tiene solución o mitigación documentada, así que dejarla abierta es una decisión, no una fatalidad.",
+    "tags": [
+      "zero-day",
+      "vulnerabilidades",
+      "parcheo"
+    ]
+  },
+  {
+    "id": "def-defensa-profundidad",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Qué significa defensa en profundidad?",
+    "back": "Capas independientes de control (perímetro, red, endpoint, identidad y datos) para que fallar una no implique el compromiso total. No es tener muchos productos: es que ninguno sea el único.",
+    "tags": [
+      "defensa-en-profundidad",
+      "arquitectura",
+      "controles"
+    ]
+  },
+  {
+    "id": "def-superficie-ataque",
+    "domain": 2,
+    "type": "concept",
+    "front": "¿Qué compone la superficie de ataque?",
+    "back": "Todo lo alcanzable por un atacante: servicios expuestos, puertos, cuentas, APIs, dependencias y error humano. Reducirla (apagar lo que no se usa) es más barato que defenderla entera.",
+    "tags": [
+      "superficie-de-ataque",
+      "hardening"
+    ]
+  },
+  {
+    "id": "def-inteligencia-amenazas",
+    "domain": 2,
+    "type": "concept",
+    "front": "Diferencia entre inteligencia de amenazas estratégica y táctica",
+    "back": "La estratégica describe qué actores y riesgos importan a la organización; la táctica, IOCs y TTP concretas que se llevan a las reglas de detección. Sin la primera, la segunda es ruido.",
+    "tags": [
+      "threat-intel",
+      "ioc",
+      "ttp"
+    ]
+  },
+  {
+    "id": "def-playbook",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué debe tener un playbook de respuesta?",
+    "back": "Disparador, pasos verificables, responsables, criterios de escalado, evidencias a recoger y criterios de cierre. Si no se puede ejecutar a las 3 de la mañana por quien está de guardia, no sirve.",
+    "tags": [
+      "playbook",
+      "respuesta-a-incidentes",
+      "procesos"
+    ]
+  },
+  {
+    "id": "def-contencion-erradicacion",
+    "domain": 4,
+    "type": "concept",
+    "front": "Diferencia entre contención y erradicación",
+    "back": "Contener detiene la propagación (aislar hosts, revocar credenciales); erradicar elimina la causa y el malware (reimagen, parcheo). Confundirlas hace que el atacante vuelva por la misma puerta.",
+    "tags": [
+      "contencion",
+      "erradicacion",
+      "respuesta-a-incidentes"
+    ]
+  },
+  {
+    "id": "def-orden-volatilidad",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué es el orden de volatilidad en forense?",
+    "back": "Se recoge primero lo que más rápido desaparece: memoria y conexiones antes que disco, y disco antes que backups o logs remotos. Alterar el orden destruye la evidencia más valiosa.",
+    "tags": [
+      "forense",
+      "evidencia",
+      "respuesta-a-incidentes"
+    ]
+  },
+  {
+    "id": "def-cadena-custodia",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué es la cadena de custodia de una evidencia?",
+    "back": "Registro ininterrumpido de quién, cuándo y dónde manipuló la prueba, con hashes de integridad. Sin cadena de custodia, la evidencia técnica no se sostiene en un procedimiento disciplinario o judicial.",
+    "tags": [
+      "forense",
+      "evidencia",
+      "custodia"
+    ]
+  },
+  {
+    "id": "def-honeypot",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Para qué sirve un honeypot?",
+    "back": "Para detectar y estudiar actividad no esperada: nada legítimo debería tocarlo. Genera alertas de alta fidelidad y distrae del activo real, pero no sustituye a la detección del resto del entorno.",
+    "tags": [
+      "honeypot",
+      "deteccion",
+      "engaño"
+    ]
+  },
+  {
+    "id": "def-automatizacion-soc",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué conviene automatizar en un SOC y qué no?",
+    "back": "Automatizar el enriquecimiento, las consultas y la contención de bajo riesgo (bloquear un IOC, aislar un host). No automatizar decisiones destructivas o de alto impacto sin revisión humana.",
+    "tags": [
+      "soar",
+      "automatizacion",
+      "soc"
+    ]
+  },
+  {
+    "id": "def-correlacion-siem",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué aporta la correlación de un SIEM frente a mirar logs sueltos?",
+    "back": "Une eventos de sistemas distintos en un mismo incidente: una autenticación, un proceso y una conexión saliente que por separado parecen normales pueden formar juntos una intrusión.",
+    "tags": [
+      "siem",
+      "logs",
+      "correlacion"
+    ]
+  },
+  {
+    "id": "def-linea-base",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué es una línea base de configuración (baseline)?",
+    "back": "El conjunto mínimo de configuración segura de un sistema: servicios permitidos, cuentas, parches y logs. Sirve para detectar desviaciones y para reconstruir de forma consistente.",
+    "tags": [
+      "baseline",
+      "hardening",
+      "configuracion"
+    ]
+  },
+  {
+    "id": "def-gestion-vulnerabilidades",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Qué distingue la gestión de vulnerabilidades del mero escaneo?",
+    "back": "Gestionar es un ciclo: inventariar, escanear, priorizar por riesgo, remediar, verificar y medir. El escaneo es solo un paso; sin el resto, produce listas que nadie cierra.",
+    "tags": [
+      "vulnerabilidades",
+      "ciclo",
+      "remediacion"
+    ]
+  },
+  {
+    "id": "def-aislamiento-host",
+    "domain": 4,
+    "type": "concept",
+    "front": "¿Cuándo se aísla un host y qué se pierde al hacerlo?",
+    "back": "Cuando hay compromiso activo y riesgo de propagación. Aislar corta el C2 y el movimiento lateral, pero también puede destruir contexto de red y avisar al atacante: primero se recoge lo volátil.",
+    "tags": [
+      "aislamiento",
+      "contencion",
+      "respuesta-a-incidentes"
+    ]
+  }
+]

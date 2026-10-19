@@ -23,6 +23,9 @@ test-results/
 # Capturas de la revisión visual
 screenshots/
 
+# Notas locales
+compact.txt
+
 # Editor
 .vscode/*
 !.vscode/extensions.json

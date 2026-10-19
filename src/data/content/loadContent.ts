@@ -8,12 +8,13 @@
 import type { CardSeed } from '@/domain/card';
 import acronymsRaw from '@content/flashcards/acronyms.json';
 import cryptoRaw from '@content/flashcards/crypto.json';
+import defenseRaw from '@content/flashcards/defense.json';
 import portsRaw from '@content/flashcards/ports.json';
 import programRaw from '@content/flashcards/program.json';
 import { cardSeedListSchema } from './cardSeedSchema';
 
 export function loadCardSeeds(): CardSeed[] {
-  const raw = [...portsRaw, ...acronymsRaw, ...cryptoRaw, ...programRaw];
+  const raw = [...portsRaw, ...acronymsRaw, ...cryptoRaw, ...programRaw, ...defenseRaw];
   const parsed = cardSeedListSchema.safeParse(raw);
 
   if (!parsed.success) {

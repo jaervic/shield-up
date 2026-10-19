@@ -135,4 +135,241 @@
       }
     ]
   }
+,
+  {
+    "id": "d2-l3",
+    "domain": 2,
+    "objectives": [
+      "2.1"
+    ],
+    "title": "Quién te ataca y por qué cambia tu defensa",
+    "summary": "No es lo mismo un actor oportunista que un APT: el objetivo y los recursos deciden qué controles importan.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "threat-actors",
+      "apt",
+      "motivacion"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Dos incidentes, dos firmas distintas",
+        "prompt": "En la misma semana, una pyme sufre un cifrado masivo pidiendo 2.000 euros y un hospital detecta accesos persistentes y silenciosos durante cuatro meses. Nadie sabe si es el mismo actor.",
+        "explanation": "Son dos perfiles distintos: uno oportunista y económico, otro paciente y con recursos. Se defienden de forma diferente.",
+        "takeaway": "El perfil del actor decide la defensa: oportunista contra persistente no es lo mismo."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Identificar el actor persistente",
+        "prompt": "¿Qué caracteriza a un APT frente a un atacante oportunista?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Financiación, objetivos concretos y presencia prolongada sin llamar la atención"
+          },
+          {
+            "id": "b",
+            "text": "Usa siempre malware desconocido, por eso es indetectable"
+          },
+          {
+            "id": "c",
+            "text": "Ataca solo a gobiernos; una empresa no es objetivo"
+          },
+          {
+            "id": "d",
+            "text": "Cifra los datos en la primera hora para forzar el rescate"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Lo definitorio es el objetivo y el tiempo: recursos para mantener el acceso y moverse despacio. El ransomware a la carrera responde a otro móvil.",
+        "takeaway": "El APT se detecta por anomalías y correlación, no por firmas de malware."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Qué defensas priorizas",
+        "prompt": "Aumentas presupuesto contra actores persistentes. ¿Qué dos controles aportan más frente a ese perfil?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Monitorización de comportamiento de usuarios y endpoints con UEBA"
+          },
+          {
+            "id": "b",
+            "text": "Rotación y control estricto de cuentas privilegiadas"
+          },
+          {
+            "id": "c",
+            "text": "Bloquear a mano las IPs de un listado de atacantes"
+          },
+          {
+            "id": "d",
+            "text": "Comprar antivirus con más firmas"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b"
+        ],
+        "explanation": "Un actor persistente se esconde en el uso legítimo: hay que vigilar desviaciones de comportamiento y endurecer el acceso privilegiado. Las listas de IP y las firmas quedan obsoletas enseguida.",
+        "takeaway": "Contra lo persistente: comportamiento anómalo y control del privilegio."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El móvil detrás del ataque",
+        "prompt": "El actor perseguía robar propiedad intelectual, no dinero. ¿Qué tipo de actor es más probable?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Un actor de espionaje o competidor con interés estratégico"
+          },
+          {
+            "id": "b",
+            "text": "Un hacktivista que busca notoriedad inmediata"
+          },
+          {
+            "id": "c",
+            "text": "Un script kiddie que reutiliza una herramienta pública"
+          },
+          {
+            "id": "d",
+            "text": "Un empleado despistado que abrió un adjunto"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "El robo silencioso de información valiosa apunta a un interés estratégico o económico de largo plazo, no a la fama ni al rescate.",
+        "takeaway": "La motivación (dinero, espionaje, ideología) anticipa qué buscan y cómo protegen su acceso."
+      }
+    ]
+  },
+  {
+    "id": "d2-l4",
+    "domain": 2,
+    "objectives": [
+      "2.3",
+      "2.5"
+    ],
+    "title": "De la vulnerabilidad a la mitigación",
+    "summary": "Clasificar vulnerabilidades sin traducirlas en mitigación concreta no reduce el riesgo de nada.",
+    "estimatedMinutes": 6,
+    "difficulty": "hard",
+    "tags": [
+      "vulnerabilidades",
+      "mitigacion",
+      "priorizacion"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "El escaneo del trimestre",
+        "prompt": "El escaneo devuelve 480 hallazgos: 12 críticos, 90 altos y el resto medios y bajos. La dirección pregunta cuándo estarán cerrados «todos».",
+        "explanation": "Cerrar 480 no es el objetivo; reducir riesgo sí. Sin criterio de priorización, el informe se convierte en una lista que nadie termina.",
+        "takeaway": "La gestión de vulnerabilidades prioriza riesgo, no cierra listas."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Cómo priorizar",
+        "prompt": "¿Cuál es el criterio más correcto para ordenar la cola de remediación?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Exposición, criticidad del activo, explotabilidad e impacto real"
+          },
+          {
+            "id": "b",
+            "text": "Ordenar por CVSS de mayor a menor y empezar por arriba"
+          },
+          {
+            "id": "c",
+            "text": "Empezar por los que tengan el parche más fácil de aplicar"
+          },
+          {
+            "id": "d",
+            "text": "Atender primero los que reportó el escaneo más reciente"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "CVSS es un insumo, no la decisión: un 9.8 en un host aislado puede esperar más que un 6.5 expuesto y con exploit público. El riesgo combina severidad con contexto.",
+        "takeaway": "Prioriza por riesgo (exposición + activo + exploit), no por puntuación en solitario."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Cuando no hay parche",
+        "prompt": "Una vulnerabilidad crítica no tiene parche disponible y el servicio no se puede apagar. ¿Qué haces?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Aplicar una mitigación compensatoria (segmentar, WAF, deshabilitar la función)"
+          },
+          {
+            "id": "b",
+            "text": "Marcarla como aceptada y pasar a la siguiente"
+          },
+          {
+            "id": "c",
+            "text": "Esperar al parche sin hacer nada más"
+          },
+          {
+            "id": "d",
+            "text": "Ocultar el hallazgo del informe para no alarmar"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Sin parche, se reduce la exposición con controles compensatorios y se documenta el riesgo residual. Ocultarlo o ignorarlo no cambia la realidad técnica.",
+        "takeaway": "Sin parche: mitigación compensatoria y riesgo residual documentado."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Vulnerabilidades que no son CVE",
+        "prompt": "¿Qué otros tipos de vulnerabilidad deben entrar en el inventario de gestión?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Configuraciones inseguras (servicios abiertos, cuentas por defecto)"
+          },
+          {
+            "id": "b",
+            "text": "Debilidades del proceso humano (falta de MFA, personal sin formación)"
+          },
+          {
+            "id": "c",
+            "text": "Software sin soporte o al final de su vida útil (EOL)"
+          },
+          {
+            "id": "d",
+            "text": "Solo los CVE publicados; lo demás no es una vulnerabilidad"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b",
+          "c"
+        ],
+        "explanation": "La gestión cubre CVE, pero también mala configuración, software sin soporte y debilidades humanas o de proceso. Reducirlo a los CVE deja fuera la mayoría del riesgo real.",
+        "takeaway": "Vulnerabilidad no es solo CVE: configuración, EOL y proceso cuentan igual."
+      }
+    ]
+  }
 ]

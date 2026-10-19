@@ -135,4 +135,211 @@
       }
     ]
   }
+,
+  {
+    "id": "d1-l3",
+    "domain": 1,
+    "objectives": [
+      "1.4"
+    ],
+    "title": "Cifrado, hashes y firmas: elige la herramienta",
+    "summary": "La misma palabra —cifrado— no resuelve confidencialidad, integridad y autenticidad: cada problema tiene su primitiva.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "criptografia",
+      "firmas",
+      "confidencialidad",
+      "integridad"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Un archivo que sale de la empresa",
+        "prompt": "Vas a enviar a un socio un informe con datos de clientes. Necesitas que solo él pueda leerlo y que, si alguien lo altera por el camino, se note. En el equipo proponen «cifrarlo con SHA-256 y adjuntarlo».",
+        "explanation": "SHA-256 no cifra: es una función hash, irreversible y sin clave. Aplicarla no oculta el contenido a nadie.",
+        "takeaway": "El hash no tiene vuelta atrás: no sirve para confidencialidad, sirve para integridad."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Confidencialidad primero",
+        "prompt": "¿Cómo proteges el contenido del informe para que solo el socio pueda leerlo?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Cifrarlo con AES y guardar aparte un hash del original"
+          },
+          {
+            "id": "b",
+            "text": "Calcula el hash y envía el valor junto al archivo"
+          },
+          {
+            "id": "c",
+            "text": "Renombrar el archivo con una extensión confusa"
+          },
+          {
+            "id": "d",
+            "text": "Comprimirlo con contraseña débil para que pese menos"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "La confidencialidad se logra cifrando (AES), y la integridad se verifica con el hash del original. Son dos operaciones distintas y complementarias, no alternativas.",
+        "takeaway": "Cifra para ocultar y hashea para detectar alteraciones: cada primitiva, su problema."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Y la clave, ¿cómo llega?",
+        "prompt": "El socio no comparte red contigo. ¿Cómo le haces llegar la clave de AES sin enviarla en claro?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Cifrar la clave de AES con la clave pública del socio y adjuntarla"
+          },
+          {
+            "id": "b",
+            "text": "Enviarla en el mismo correo que el archivo, en un párrafo aparte"
+          },
+          {
+            "id": "c",
+            "text": "Publicarla en un foro interno para que la copie"
+          },
+          {
+            "id": "d",
+            "text": "Usar una clave corta y confiar en la seguridad por oscuridad"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "El cifrado asimétrico resuelve justo el reparto de claves: la pública cifra y solo la privada descifra. Es el patrón que usa TLS al acordar la clave de sesión.",
+        "takeaway": "Lo simétrico cifra el dato; lo asimétrico reparte la clave de forma segura."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Qué aporta además la firma",
+        "prompt": "El socio exige que el informe vaya firmado. ¿Qué garantiza la firma digital?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Autentica el origen: procede de quien dice firmarlo"
+          },
+          {
+            "id": "b",
+            "text": "Garantiza la integridad: cualquier cambio invalida la firma"
+          },
+          {
+            "id": "c",
+            "text": "Oculta el contenido del informe a terceros"
+          },
+          {
+            "id": "d",
+            "text": "Permite que el emisor niegue haberlo enviado"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b"
+        ],
+        "explanation": "La firma da autenticidad, integridad y no repudio. No aporta confidencialidad: para eso sigue haciendo falta cifrar el contenido.",
+        "takeaway": "Firmar no es cifrar: la firma prueba quién y que no cambió, no oculta."
+      }
+    ]
+  },
+  {
+    "id": "d1-l4",
+    "domain": 1,
+    "objectives": [
+      "1.3"
+    ],
+    "title": "El parche urgente y la ventana de cambio",
+    "summary": "Por qué el control de cambios protege la disponibilidad y no es burocracia que retrasa la seguridad.",
+    "estimatedMinutes": 5,
+    "difficulty": "easy",
+    "tags": [
+      "gestion-de-cambios",
+      "parcheo",
+      "disponibilidad"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Un CVE crítico a las 17:00",
+        "prompt": "A las 17:00 se publica un CVE crítico que afecta al servidor de base de datos de producción. El equipo de seguridad presiona para aplicar el parche esa misma noche, sin ventana ni pruebas.",
+        "explanation": "El parche tapa la vulnerabilidad, pero un despliegue sin plan puede tumbar el servicio que precisamente intentas proteger.",
+        "takeaway": "Un cambio sin control cambia un riesgo por otro: el de disponibilidad."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El propósito del control de cambios",
+        "prompt": "¿Por qué el control de cambios es un control de seguridad y no solo burocracia?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Porque evita que un cambio no probado provoque una caída o abra un fallo nuevo"
+          },
+          {
+            "id": "b",
+            "text": "Porque así hay un documento firmado por si algo sale mal"
+          },
+          {
+            "id": "c",
+            "text": "Porque obliga a que todo cambio lo apruebe dirección general"
+          },
+          {
+            "id": "d",
+            "text": "Porque reduce el número de cambios, y con menos cambios todo va mejor"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "El objetivo es gestionar el riesgo del cambio: impacto, plan de reversión, pruebas y responsable. El documento es la evidencia, no el fin.",
+        "takeaway": "El control de cambios protege la disponibilidad y evita regresiones de seguridad."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Cómo se tramita un cambio urgente",
+        "prompt": "La vulnerabilidad es real y no puedes esperar tres semanas. ¿Qué haces con el cambio?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Aplicar un procedimiento de emergencia con aprobación expresada y plan de reversión"
+          },
+          {
+            "id": "b",
+            "text": "Probar el parche en un entorno equivalente antes de producción"
+          },
+          {
+            "id": "c",
+            "text": "Aplicarlo directamente en producción y documentar después si sale bien"
+          },
+          {
+            "id": "d",
+            "text": "Aplicar una mitigación temporal hasta la ventana programada, si existe"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b",
+          "d"
+        ],
+        "explanation": "La urgencia cambia la vía, no elimina el control: aprobación rápida, prueba equivalente y, si el parche no está listo, mitigación. Documentar después rompe la trazabilidad.",
+        "takeaway": "Ante la urgencia: vía de emergencia, prueba equivalente y mitigación temporal."
+      }
+    ]
+  }
 ]

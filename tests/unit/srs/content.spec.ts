@@ -7,7 +7,7 @@ describe('contenido seed', () => {
   const seeds = loadCardSeeds();
 
   it('carga sin errores de validación', () => {
-    expect(seeds.length).toBeGreaterThanOrEqual(30);
+    expect(seeds.length).toBeGreaterThanOrEqual(180);
   });
 
   it('no contiene IDs duplicados', () => {

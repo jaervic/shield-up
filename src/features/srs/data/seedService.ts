@@ -1,7 +1,8 @@
 /**
- * Seed del contenido: la primera vez que se abre la app, el contenido de
- * /content/flashcards se inserta en IndexedDB. En ejecuciones posteriores se
- * respeta el progreso del usuario.
+ * Seed del contenido: al abrir la app, asegura que TODAS las tarjetas de
+ * /content/flashcards existen en IndexedDB. En el primer arranque inserta el
+ * mazo completo; en los siguientes solo añade las tarjetas nuevas del contenido
+ * (por ejemplo, al ampliar el banco), sin tocar el progreso de las existentes.
  */
 
 import { loadCardSeeds } from '@/data/content/loadContent';
@@ -15,14 +16,16 @@ export interface SeedResult {
 
 export async function ensureContentSeeded(now: Date = new Date()): Promise<SeedResult> {
   const repository = getSrsRepository();
-  const existing = await repository.countCards();
+  const existing = await repository.getCards();
+  const existingIds = new Set(existing.map((card) => card.id));
 
-  if (existing > 0) {
-    return { seeded: false, cardCount: existing };
+  const missing = loadCardSeeds().filter((seed) => !existingIds.has(seed.id));
+
+  if (missing.length === 0) {
+    return { seeded: false, cardCount: existing.length };
   }
 
-  const cards = createCardsFromSeeds(loadCardSeeds(), now);
-  await repository.saveCards(cards);
+  await repository.saveCards(createCardsFromSeeds(missing, now));
 
-  return { seeded: true, cardCount: cards.length };
+  return { seeded: true, cardCount: existing.length + missing.length };
 }

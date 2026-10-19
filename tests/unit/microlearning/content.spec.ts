@@ -7,7 +7,7 @@ describe('contenido de lecciones', () => {
   const lessons = loadLessons();
 
   it('carga sin errores de validación', () => {
-    expect(lessons.length).toBeGreaterThanOrEqual(8);
+    expect(lessons.length).toBeGreaterThanOrEqual(16);
   });
 
   it('no contiene IDs duplicados', () => {

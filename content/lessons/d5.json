@@ -83,4 +83,125 @@
       }
     ]
   }
+,
+  {
+    "id": "d5-l2",
+    "domain": 5,
+    "objectives": [
+      "5.1",
+      "5.5"
+    ],
+    "title": "La auditoría que descubre lo que el informe oculta",
+    "summary": "Cumplir en el papel no es cumplir: lo que se audita es la evidencia, no las buenas intenciones.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "auditoria",
+      "gobernanza",
+      "evidencia",
+      "cumplimiento"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Todo aprobado, nada demostrado",
+        "prompt": "La organización tiene políticas aprobadas para todo. En la auditoría interna, el auditor pide los registros de accesos privilegiados de los últimos seis meses y no existen: no se activó el registro.",
+        "explanation": "Una política sin evidencia de aplicación es una intención. La auditoría comprueba el diseño Y la operación efectiva del control.",
+        "takeaway": "La política dice lo que se exige; la evidencia demuestra que se cumple."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Qué audita realmente la auditoría",
+        "prompt": "¿Qué distingue una auditoría de seguridad de un escaneo técnico?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Comprueba que los procesos y controles se aplican, con evidencias y registros"
+          },
+          {
+            "id": "b",
+            "text": "Busca vulnerabilidades con herramientas automáticas"
+          },
+          {
+            "id": "c",
+            "text": "Revisa únicamente el código fuente de las aplicaciones"
+          },
+          {
+            "id": "d",
+            "text": "Mide la velocidad de la red interna"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "El escaneo encuentra fallos técnicos puntuales; la auditoría verifica el gobierno y la operación de los controles (evidencias, segregación, registros). Un sistema parcheado puede suspender igual.",
+        "takeaway": "La auditoría pregunta no solo qué control existe, sino si funciona y se demuestra."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Evidencia que sí vale",
+        "prompt": "¿Qué documentos sirven como evidencia de un control de acceso?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Registro de altas, bajas y cambios de permisos con fecha y responsable"
+          },
+          {
+            "id": "b",
+            "text": "Informe de la revisión periódica de accesos con las acciones tomadas"
+          },
+          {
+            "id": "c",
+            "text": "Una captura de pantalla del manual de la herramienta"
+          },
+          {
+            "id": "d",
+            "text": "La política de acceso aprobada y su fecha de revisión"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b",
+          "d"
+        ],
+        "explanation": "La evidencia es trazable y del sistema real: registros con fechas, revisiones con acciones y la política vigente. El manual del fabricante no demuestra nada sobre tu operación.",
+        "takeaway": "Evidencia es lo verificable y fechado sobre tu sistema, no la documentación del producto."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El hallazgo y su respuesta",
+        "prompt": "El auditor registra el hallazgo «no hay registro de accesos privilegiados». ¿Cuál es la respuesta correcta?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Corregir el control, documentar la fecha y actualizar el plan con seguimiento"
+          },
+          {
+            "id": "b",
+            "text": "Discutir el hallazgo hasta que el auditor lo retire"
+          },
+          {
+            "id": "c",
+            "text": "Crear el registro solo para el periodo del próximo examen"
+          },
+          {
+            "id": "d",
+            "text": "Marcarlo como falso positivo sin más evidencia"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Un hallazgo se resuelve con plan de acción, responsable, plazo y evidencia de la corrección. Los hallazgos no se ganan discutiendo: se cierran corrigiendo.",
+        "takeaway": "Un hallazgo se cierra con evidencia de la corrección, no con argumentos."
+      }
+    ]
+  }
 ]

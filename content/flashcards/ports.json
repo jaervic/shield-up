@@ -437,5 +437,79 @@
       "backups",
       "puertos"
     ]
+  },
+  {
+    "id": "port-doh",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puerto usa DNS over HTTPS (DoH)?",
+    "back": "TCP 443, porque empaqueta las consultas DNS dentro de HTTPS. Las mezcla con el tráfico web: más privacidad, pero también más difícil de filtrar desde la red.",
+    "tags": [
+      "dns",
+      "doh",
+      "puertos"
+    ]
+  },
+  {
+    "id": "port-tacacs",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puerto usa TACACS+ y en qué se diferencia de RADIUS?",
+    "back": "TCP 49. TACACS+ cifra todo el cuerpo y separa autenticación, autorización y accounting; se usa para administrar dispositivos de red. RADIUS (UDP 1812/1813) solo cifra la contraseña y combina autenticación con autorización.",
+    "tags": [
+      "tacacs",
+      "radius",
+      "aaa",
+      "puertos"
+    ]
+  },
+  {
+    "id": "port-opcua",
+    "domain": 3,
+    "type": "port",
+    "front": "¿Qué puerto usa OPC UA en entornos industriales?",
+    "back": "TCP 4840. Es el protocolo de interoperabilidad de OT; expuesto sin segmentar es una puerta directa de IT a la planta, y a menudo se despliega sin autenticación.",
+    "tags": [
+      "opcua",
+      "ot",
+      "industrial",
+      "puertos"
+    ]
+  },
+  {
+    "id": "port-redis",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Qué puerto usa Redis y por qué es un riesgo si se expone?",
+    "back": "TCP 6379. Sin autenticación por defecto y con comandos potentes: expuesto a Internet es compromiso casi inmediato (minado de criptomonedas y exfiltración de datos en memoria).",
+    "tags": [
+      "redis",
+      "bases-de-datos",
+      "puertos"
+    ]
+  },
+  {
+    "id": "port-elasticsearch",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Qué puertos usa Elasticsearch y qué exposición implica?",
+    "back": "TCP 9200 (API REST) y 9300 (clúster). En versiones antiguas sin autenticación, un índice expuesto filtra toda la información indexada sin necesidad de explotar nada.",
+    "tags": [
+      "elasticsearch",
+      "datos",
+      "puertos"
+    ]
+  },
+  {
+    "id": "port-docker-api",
+    "domain": 4,
+    "type": "port",
+    "front": "¿Qué puertos usa la API de Docker y por qué son críticos?",
+    "back": "TCP 2375 (sin TLS) y 2376 (con TLS). Quien alcanza la API del demonio puede crear un contenedor con acceso al host: es, en la práctica, ejecución remota de código.",
+    "tags": [
+      "docker",
+      "contenedores",
+      "puertos"
+    ]
   }
 ]

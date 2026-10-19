@@ -282,5 +282,126 @@
       "tpm",
       "hardware"
     ]
+  },
+  {
+    "id": "cry-simetrico-asimetrico",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Cuándo conviene cifrado simétrico y cuándo asimétrico?",
+    "back": "El simétrico (AES) es rápido y cifra el volumen de datos; el asimétrico (RSA/ECC) resuelve el intercambio de claves y las firmas. TLS usa los dos: asimétrico para acordar la clave, simétrico para la sesión.",
+    "tags": [
+      "cifrado",
+      "simetrico",
+      "asimetrico",
+      "tls"
+    ]
+  },
+  {
+    "id": "cry-hash-no-cifra",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Por qué un hash no sirve para cifrar?",
+    "back": "Porque es irreversible y no tiene clave: no existe el descifrado. Su función es la integridad y la verificación, no la confidencialidad.",
+    "tags": [
+      "hash",
+      "integridad"
+    ]
+  },
+  {
+    "id": "cry-salt-pimienta",
+    "domain": 1,
+    "type": "crypto",
+    "front": "Diferencia entre salt y pepper en el almacenamiento de contraseñas",
+    "back": "El salt es único por contraseña y se guarda junto al hash (evita tablas precalculadas y hashes iguales). El pepper es un secreto global que no se guarda con el hash. Ambos se combinan con funciones lentas (bcrypt, Argon2).",
+    "tags": [
+      "hash",
+      "contrasenas",
+      "salt"
+    ]
+  },
+  {
+    "id": "cry-certificado-x509",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué contiene un certificado X.509?",
+    "back": "Clave pública, identidad del titular, emisor (CA), periodo de validez, usos permitidos, número de serie y huella. Todo firmado por la CA: eso permite confiar en una clave pública que no conocías.",
+    "tags": [
+      "pki",
+      "certificados",
+      "x509"
+    ]
+  },
+  {
+    "id": "cry-cadena-confianza",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué es la cadena de confianza de un certificado?",
+    "back": "El certificado del servidor lo firma una CA intermedia, y a esta la firma una CA raíz que ya está en el almacén del sistema. Si un eslabón no se valida, el navegador avisa: certificado no confiable.",
+    "tags": [
+      "pki",
+      "ca",
+      "certificados"
+    ]
+  },
+  {
+    "id": "cry-ciclo-claves",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué etapas tiene el ciclo de vida de una clave?",
+    "back": "Generación, distribución, uso, rotación, revocación y destrucción. Una clave sin fecha de rotación es un riesgo silencioso; sin revocación, un compromiso se prolonga.",
+    "tags": [
+      "claves",
+      "criptografia",
+      "rotacion"
+    ]
+  },
+  {
+    "id": "cry-estados-datos",
+    "domain": 1,
+    "type": "crypto",
+    "front": "Cifrado en tránsito, en reposo y en uso: ¿qué protege cada uno?",
+    "back": "En tránsito protege los datos viajando (TLS/IPsec); en reposo, los almacenados (FDE, cifrado de base de datos); en uso, los que se procesan en memoria (enclaves, confidential computing). Son tres problemas distintos.",
+    "tags": [
+      "cifrado",
+      "datos",
+      "tls"
+    ]
+  },
+  {
+    "id": "cry-handshake-tls",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Qué se consigue en el handshake de TLS?",
+    "back": "Autenticar el servidor con su certificado, acordar una clave de sesión y elegir los algoritmos. Solo después viaja el dato: el cifrado empieza en el handshake, no antes.",
+    "tags": [
+      "tls",
+      "handshake",
+      "certificados"
+    ]
+  },
+  {
+    "id": "cry-cuantica",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Por qué la computación cuántica amenaza a RSA y ECC?",
+    "back": "El algoritmo de Shor factoriza enteros y resuelve logaritmos discretos en tiempo polinómico, lo que rompe la clave pública actual. Por eso se estandariza criptografía post-cuántica basada en retículos.",
+    "tags": [
+      "cuantica",
+      "rsa",
+      "ecc",
+      "post-cuantica"
+    ]
+  },
+  {
+    "id": "cry-blockchain-integridad",
+    "domain": 1,
+    "type": "crypto",
+    "front": "¿Por qué blockchain aporta integridad pero no confidencialidad?",
+    "back": "Su cadena de hashes hace evidente cualquier alteración del historial, pero los datos escritos suelen ser legibles por todos los nodos. Integridad no es lo mismo que cifrado.",
+    "tags": [
+      "blockchain",
+      "integridad",
+      "hash"
+    ]
   }
 ]

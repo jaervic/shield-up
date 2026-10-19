@@ -474,5 +474,173 @@
       "zero-trust",
       "acceso"
     ]
+  },
+  {
+    "id": "acr-pii",
+    "domain": 1,
+    "type": "acronym",
+    "front": "¿Qué son los PII?",
+    "back": "Personally Identifiable Information: datos que identifican a una persona (nombre, documento, biometría, dirección). Determinan obligaciones legales de protección y de notificación de brechas.",
+    "tags": [
+      "pii",
+      "datos",
+      "privacidad"
+    ]
+  },
+  {
+    "id": "acr-iam",
+    "domain": 1,
+    "type": "acronym",
+    "front": "¿Qué abarca IAM?",
+    "back": "Identity and Access Management: autenticación, autorización, aprovisionamiento, revisión de accesos y ciclo de vida de las identidades. Es el plano de identidad del que cuelga todo el control de acceso.",
+    "tags": [
+      "iam",
+      "identidad",
+      "control-de-acceso"
+    ]
+  },
+  {
+    "id": "acr-mitre-attack",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué es MITRE ATT&CK?",
+    "back": "Base de conocimiento de tácticas, técnicas y procedimientos (TTP) observados en ataques reales, organizada por fase. Sirve para mapear detecciones y medir cobertura; no es una lista de CVEs.",
+    "tags": [
+      "mitre",
+      "ttp",
+      "threat-intel"
+    ]
+  },
+  {
+    "id": "acr-ttp",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué es una TTP?",
+    "back": "Tactic, Technique and Procedure: el cómo actúa un atacante. Las TTP sobreviven al cambio de herramienta o de IOC, por eso la detección por comportamiento dura más que la firma.",
+    "tags": [
+      "ttp",
+      "deteccion",
+      "threat-intel"
+    ]
+  },
+  {
+    "id": "acr-osint",
+    "domain": 2,
+    "type": "acronym",
+    "front": "¿Qué es OSINT?",
+    "back": "Open-Source Intelligence: información recopilada de fuentes públicas (redes, foros, registros). La usa el atacante para reconocimiento y el defensor para inteligencia de amenazas.",
+    "tags": [
+      "osint",
+      "reconocimiento",
+      "threat-intel"
+    ]
+  },
+  {
+    "id": "acr-tls",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es TLS y a qué sustituyó?",
+    "back": "Transport Layer Security: cifra y autentica la capa de transporte (HTTPS, IMAPS, LDAPS). Sustituyó a SSL, ya obsoleto; sus versiones seguras son TLS 1.2 y 1.3.",
+    "tags": [
+      "tls",
+      "cifrado",
+      "protocolos"
+    ]
+  },
+  {
+    "id": "acr-oauth",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es OAuth 2.0 y qué NO es?",
+    "back": "Marco de autorización delegada que otorga tokens de acceso limitados a un servicio sin compartir la contraseña. No es autenticación: para eso se construye OpenID Connect encima.",
+    "tags": [
+      "oauth",
+      "autorizacion",
+      "tokens"
+    ]
+  },
+  {
+    "id": "acr-sso",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué es SSO y qué riesgo hay que cuidar?",
+    "back": "Single Sign-On: una autenticación da acceso a varios servicios. Mejora la usabilidad y elimina contraseñas repetidas, pero convierte la cuenta de identidad en objetivo crítico: exige MFA y monitorización.",
+    "tags": [
+      "sso",
+      "identidad",
+      "autenticacion"
+    ]
+  },
+  {
+    "id": "acr-dnssec",
+    "domain": 3,
+    "type": "acronym",
+    "front": "¿Qué resuelve DNSSEC?",
+    "back": "Firma criptográficamente los registros DNS para que no puedan falsificarse (cache poisoning, spoofing). No cifra las consultas: para eso están DoT y DoH.",
+    "tags": [
+      "dnssec",
+      "dns",
+      "integridad"
+    ]
+  },
+  {
+    "id": "acr-threat-hunting",
+    "domain": 4,
+    "type": "acronym",
+    "front": "¿Qué es threat hunting?",
+    "back": "Búsqueda proactiva y guiada por hipótesis de amenazas que ya están dentro, antes de que el SIEM alerte. Complementa la detección pasiva, no la sustituye.",
+    "tags": [
+      "threat-hunting",
+      "soc",
+      "deteccion"
+    ]
+  },
+  {
+    "id": "acr-csf",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué son las cinco funciones del NIST CSF?",
+    "back": "Identify, Protect, Detect, Respond y Recover. Organizan la postura de seguridad como un ciclo, no como una lista de productos, y sirven para comparar madurez entre áreas.",
+    "tags": [
+      "nist",
+      "csf",
+      "marcos"
+    ]
+  },
+  {
+    "id": "acr-rmf",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué es el RMF del NIST?",
+    "back": "Risk Management Framework: proceso de seis pasos (categorizar, seleccionar, implementar, evaluar, autorizar y monitorizar controles) para aceptar formalmente el riesgo de un sistema.",
+    "tags": [
+      "rmf",
+      "riesgo",
+      "nist"
+    ]
+  },
+  {
+    "id": "acr-gdpr",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué obliga el RGPD ante una brecha de datos personales?",
+    "back": "Notificarla a la autoridad de control en un plazo de 72 horas si hay riesgo para los derechos, y a los afectados si el riesgo es alto. Además impone minimización y registro de las actividades de tratamiento.",
+    "tags": [
+      "rgpd",
+      "privacidad",
+      "compliance"
+    ]
+  },
+  {
+    "id": "acr-iso27001",
+    "domain": 5,
+    "type": "acronym",
+    "front": "¿Qué certifica la ISO/IEC 27001?",
+    "back": "Que la organización ha implantado y mantiene un sistema de gestión de seguridad de la información (SGSI) con análisis de riesgos y mejora continua. No certifica productos ni un nivel técnico concreto.",
+    "tags": [
+      "iso27001",
+      "sgsi",
+      "gobernanza"
+    ]
   }
 ]

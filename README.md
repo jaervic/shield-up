@@ -15,8 +15,9 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
   y testeado, persistencia offline-first, sesión de repaso funcional y dashboard de métricas.
 - **Fase 2 — Test de diagnóstico + ruta de estudio personalizada.** Banco de 41 preguntas
   ponderadas por el peso del examen, motor de selección/corrección y ruta ordenada por impacto.
-- **Fase 3 — Microlearning.** 8 lecciones-problema (28 pasos) basadas en *active recall*,
-  progreso reanudable y recomendaciones ligadas a la ruta de estudio.
+- **Fase 3 — Microlearning.** 16 lecciones-problema (65 pasos, 49 de ellos decisiones
+  evaluables) basadas en *active recall*, progreso reanudable y recomendaciones ligadas a la ruta
+  de estudio.
 - **Diseño** — Paleta anclada a la identidad de CompTIA, temas claro/oscuro, interfaz
   mobile-first con barra inferior de cuatro secciones (diagnóstico, simulacro y PBQ agrupados en
   "Evaluación"), secciones plegables y esqueletos de carga en móvil, **test automático de contraste
@@ -83,7 +84,7 @@ src/
 ├─ shared/       # ui/ (Skeleton, CollapsibleSection…), hooks/, utils/ y state/ reutilizables
 └─ styles/       # tokens.css (temas claro/oscuro), reset.css, global.css
 content/
-├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program)
+├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program, defense)
 ├─ questions/    # banco de preguntas del diagnóstico (d1..d5)
 ├─ lessons/      # lecciones de microlearning (d1..d5)
 └─ pbq/          # PBQ: topology.json y terminal.json
@@ -141,6 +142,13 @@ componentes ni la capa de datos cambian.
 La app depende de `SrsRepository`, no de Dexie. Añadir cuentas/multidispositivo
 consiste en implementar otro repositorio (p. ej. Supabase) y registrarlo con
 `setSrsRepository`.
+
+### Sembrado al arrancar
+
+`ensureContentSeeded` corre en cada arranque, no solo la primera vez: compara las tarjetas del
+contenido con las de IndexedDB y **solo inserta las que faltan**. Así, ampliar el banco de
+tarjetas añade las nuevas sin tocar el progreso (intervalos, fechas, ease) de las que el usuario
+ya repasaba, y el mazo nunca queda a medias tras importar una copia antigua.
 
 ---
 
@@ -496,7 +504,7 @@ la navegación.
 ### Rendimiento
 
 Las rutas se cargan con `lazy()`. Antes, entrar al panel descargaba también el banco de 139
-preguntas, las 58 tarjetas, las lecciones y las 15 PBQ:
+preguntas, las 181 tarjetas, las lecciones y las 15 PBQ:
 
 | | Antes | Ahora |
 |---|---|---|

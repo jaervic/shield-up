@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, it } from 'vitest';
+import { loadCardSeeds } from '@/data/content/loadContent';
 import { reviewCard } from '@/features/srs/data/reviewService';
 import { resetSrsRepository, setSrsRepository } from '@/features/srs/data/repository';
 import { ensureContentSeeded } from '@/features/srs/data/seedService';
@@ -47,5 +48,23 @@ describe('ensureContentSeeded', () => {
     expect(second.seeded).toBe(false);
     expect(second.cardCount).toBe(first.cardCount);
     expect(repository.cards).toHaveLength(first.cardCount);
+  });
+
+  it('al ampliar el contenido añade solo las tarjetas nuevas, sin tocar el progreso', async () => {
+    const seeds = loadCardSeeds();
+    const existingCard = makeCard({ id: seeds[0]?.id ?? 'port-ssh', repetitions: 3 });
+    const repository = createMemoryRepository([existingCard]);
+    setSrsRepository(repository);
+
+    const result = await ensureContentSeeded(NOW);
+
+    expect(result.seeded).toBe(true);
+    expect(repository.cards).toHaveLength(seeds.length);
+
+    const ids = repository.cards.map((card) => card.id);
+    expect(new Set(ids).size).toBe(seeds.length);
+
+    // La tarjeta que ya existía conserva su estado (repetitions incluido).
+    expect(repository.cards.find((card) => card.id === existingCard.id)).toEqual(existingCard);
   });
 });

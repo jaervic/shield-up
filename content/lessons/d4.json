@@ -151,4 +151,125 @@
       }
     ]
   }
+,
+  {
+    "id": "d4-l3",
+    "domain": 4,
+    "objectives": [
+      "4.1",
+      "4.3"
+    ],
+    "title": "Endurecer antes de parchear",
+    "summary": "Reducir la superficie de ataque primero hace que la gestión de vulnerabilidades sea más pequeña y manejable.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "hardening",
+      "superficie-de-ataque",
+      "vulnerabilidades",
+      "baseline"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Un servidor con 60 vulnerabilidades",
+        "prompt": "Un servidor heredado acumula 60 vulnerabilidades. Nadie lo usa por una interfaz web opcional que quedó activada, pero es la que más hallazgos aporta.",
+        "explanation": "Antes de parchear cada fallo, conviene quitar lo que no se necesita: apagar el servicio elimina de golpe todas las vulnerabilidades que dependían de él.",
+        "takeaway": "Eliminar superficie de ataque resuelve hallazgos enteros de una vez."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "El primer paso",
+        "prompt": "¿Cuál es la acción de mayor impacto inmediato en ese servidor?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Deshabilitar los servicios y puertos que no se usan"
+          },
+          {
+            "id": "b",
+            "text": "Parchear los 60 hallazgos uno a uno, empezando por el CVSS más alto"
+          },
+          {
+            "id": "c",
+            "text": "Instalar otro antivirus"
+          },
+          {
+            "id": "d",
+            "text": "Reducir el número de administradores"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Deshabilitar el servicio opcional elimina su superficie y buena parte de los hallazgos asociados: menos riesgo con menos esfuerzo y menos cambios.",
+        "takeaway": "Hardening primero: la vulnerabilidad que no se expone no se explota."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Qué incluye una línea base",
+        "prompt": "¿Qué incluye una línea base de configuración segura (baseline)?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Servicios permitidos y cuentas habilitadas"
+          },
+          {
+            "id": "b",
+            "text": "Registro de eventos y retención de logs"
+          },
+          {
+            "id": "c",
+            "text": "La marca y modelo del hardware exclusivamente"
+          },
+          {
+            "id": "d",
+            "text": "Requisitos de cifrado y de contraseñas"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b",
+          "d"
+        ],
+        "explanation": "La baseline fija qué es una configuración aceptable (servicios, cuentas, logs, cifrado) para detectar desviaciones y reconstruir de forma consistente. El hardware no es su contenido.",
+        "takeaway": "La baseline es el mínimo aceptable y medible de configuración de un sistema."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Verificar el endurecimiento",
+        "prompt": "¿Cómo compruebas que el endurecimiento se mantiene en el tiempo?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Comparando periódicamente la configuración real con la línea base"
+          },
+          {
+            "id": "b",
+            "text": "Confiar en que nadie cambiará la configuración tras el despliegue"
+          },
+          {
+            "id": "c",
+            "text": "Repetir el escaneo una vez y archivarlo"
+          },
+          {
+            "id": "d",
+            "text": "Revisar solo cuando ocurra un incidente"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "La deriva de configuración es lo habitual: se compara y se corrige de forma continua, no una sola vez. Un escaneo archivado no refleja el sistema actual.",
+        "takeaway": "Endurecer es un estado que se comprueba: la configuración se desvía sola."
+      }
+    ]
+  }
 ]

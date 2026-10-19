@@ -67,4 +67,243 @@
       }
     ]
   }
+,
+  {
+    "id": "d3-l2",
+    "domain": 3,
+    "objectives": [
+      "3.1",
+      "3.4"
+    ],
+    "title": "Responsabilidad compartida en la nube",
+    "summary": "Dónde acaba el proveedor y dónde empiezas tú decide quién responde ante una brecha.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "cloud",
+      "responsabilidad-compartida",
+      "arquitectura"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "Una base de datos pública",
+        "prompt": "Un equipo sube a la nube una base de datos con datos de clientes. Al activar el servicio, la configuración por defecto deja el almacenamiento accesible desde Internet. Filtración al día siguiente.",
+        "explanation": "El proveedor garantiza la seguridad DE la nube (su infraestructura); el cliente, la seguridad EN la nube (su configuración). Aquí falló lo segundo.",
+        "takeaway": "En cloud, el proveedor protege su plataforma; tú proteges tu configuración."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Repartir responsabilidades",
+        "prompt": "En un modelo IaaS, ¿quién es responsable de parchear el sistema operativo de la máquina virtual?",
+        "options": [
+          {
+            "id": "a",
+            "text": "El cliente: el proveedor solo cubre la virtualización y la infraestructura"
+          },
+          {
+            "id": "b",
+            "text": "El proveedor: la máquina corre en su centro de datos"
+          },
+          {
+            "id": "c",
+            "text": "Nadie: los sistemas operativos no se parchean en la nube"
+          },
+          {
+            "id": "d",
+            "text": "Depende del antivirus que traiga la imagen"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "En IaaS el cliente controla el sistema operativo, el middleware y la configuración; el proveedor, el hardware y la virtualización. En PaaS y SaaS la frontera se desplaza hacia el proveedor.",
+        "takeaway": "Cuanto más gestionado es el servicio, más responsabilidad asume el proveedor; nunca el 100 %."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Controles que siempre son tuyos",
+        "prompt": "¿Qué controles siguen siendo responsabilidad del cliente aunque uses SaaS?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Quién de tu organización accede y con qué permisos"
+          },
+          {
+            "id": "b",
+            "text": "La clasificación y el tratamiento de los datos que subes"
+          },
+          {
+            "id": "c",
+            "text": "El mantenimiento físico de los servidores del proveedor"
+          },
+          {
+            "id": "d",
+            "text": "La configuración de autenticación, como exigir MFA"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b",
+          "d"
+        ],
+        "explanation": "Las identidades, los datos y la configuración de acceso son siempre del cliente. El mantenimiento físico de la plataforma es del proveedor.",
+        "takeaway": "Identidad, datos y configuración de acceso: responsabilidad del cliente en cualquier modelo."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Reducir el alcance del fallo",
+        "prompt": "¿Qué medida reduce el daño si se filtra una credencial de la nube?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Permisos mínimos por rol y rotación de credenciales"
+          },
+          {
+            "id": "b",
+            "text": "Compartir una sola cuenta de administración para simplificar"
+          },
+          {
+            "id": "c",
+            "text": "Guardar las claves en el repositorio de código con el resto del proyecto"
+          },
+          {
+            "id": "d",
+            "text": "Confiar en que el proveedor detecte el uso indebido"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "Con mínimo privilegio y rotación, una credencial filtrada alcanza poco y durante poco tiempo. La cuenta compartida multiplica el impacto y borra la trazabilidad.",
+        "takeaway": "El mínimo privilegio limita hasta el daño de una credencial comprometida."
+      }
+    ]
+  },
+  {
+    "id": "d3-l3",
+    "domain": 3,
+    "objectives": [
+      "3.2",
+      "3.4"
+    ],
+    "title": "La identidad es el nuevo perímetro",
+    "summary": "Con teletrabajo y SaaS, controlar quién accede importa más que defender un borde de red difuso.",
+    "estimatedMinutes": 6,
+    "difficulty": "medium",
+    "tags": [
+      "identidad",
+      "zero-trust",
+      "mfa",
+      "acceso"
+    ],
+    "steps": [
+      {
+        "id": "s1",
+        "kind": "scenario",
+        "title": "El borde ya no existe",
+        "prompt": "La plantilla trabaja desde casa y usa 40 servicios SaaS. El único control que sigue siendo viable en todos los caminos es saber con certeza quién es cada usuario y qué puede hacer.",
+        "explanation": "Cuando no hay un perímetro único, la identidad se convierte en el punto de control: todo acceso pasa por ella.",
+        "takeaway": "Sin perímetro fijo, la identidad es el control que se aplica en todas partes."
+      },
+      {
+        "id": "s2",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Un solo factor no basta",
+        "prompt": "¿Por qué la contraseña sola ya no protege una cuenta expuesta a internet?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Porque puede filtrarse, reutilizarse o capturarse con phishing: no prueba posesión"
+          },
+          {
+            "id": "b",
+            "text": "Porque los usuarios eligen contraseñas largas y difíciles de recordar"
+          },
+          {
+            "id": "c",
+            "text": "Porque el cifrado de la contraseña es reversible"
+          },
+          {
+            "id": "d",
+            "text": "Porque las contraseñas caducan demasiado rápido"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "La contraseña es un único factor que puede robarse o reutilizarse. Añadir MFA exige un segundo factor que el atacante no controla.",
+        "takeaway": "La contraseña es un secreto que se puede robar; el MFA añade algo que no se copia."
+      },
+      {
+        "id": "s3",
+        "kind": "decision",
+        "answerType": "multiple",
+        "title": "Elección de factores",
+        "prompt": "¿Qué combinaciones de MFA son resistentes al phishing?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Clave de seguridad física (FIDO2/WebAuthn) ligada al origen"
+          },
+          {
+            "id": "b",
+            "text": "Passkey o llave de plataforma que verifica el dominio"
+          },
+          {
+            "id": "c",
+            "text": "Código enviado por SMS"
+          },
+          {
+            "id": "d",
+            "text": "Código TOTP copiado de una app"
+          }
+        ],
+        "correctOptionIds": [
+          "a",
+          "b"
+        ],
+        "explanation": "FIDO2 y passkeys verifican el origen y no pueden reenviarse a un sitio falso. SMS y TOTP son mejores que nada, pero el phishing con proxy inverso puede capturarlos.",
+        "takeaway": "El factor ligado al origen resiste el phishing; el código copiable, no."
+      },
+      {
+        "id": "s4",
+        "kind": "decision",
+        "answerType": "single",
+        "title": "Acceso acorde al contexto",
+        "prompt": "Un administrador pide acceso permanente a la consola de producción «por comodidad». ¿Qué aplicas?",
+        "options": [
+          {
+            "id": "a",
+            "text": "Acceso just-in-time: privilegio elevado solo durante la tarea y auditado"
+          },
+          {
+            "id": "b",
+            "text": "Le das el acceso permanente para no bloquear su trabajo"
+          },
+          {
+            "id": "c",
+            "text": "Le das el acceso permanente pero activas la grabación de sesión"
+          },
+          {
+            "id": "d",
+            "text": "Comparte la cuenta de administrador con su compañero para cubrirse"
+          }
+        ],
+        "correctOptionIds": [
+          "a"
+        ],
+        "explanation": "El privilegio permanente amplía la ventana de ataque y borra la relación entre acción y responsable. El acceso just-in-time con grabación mantiene la operación y la trazabilidad.",
+        "takeaway": "Elevar privilegios solo cuando se necesitan reduce la exposición y no frena el trabajo."
+      }
+    ]
+  }
 ]

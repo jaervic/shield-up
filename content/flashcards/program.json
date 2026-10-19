@@ -235,5 +235,123 @@
       "politicas",
       "riesgo"
     ]
+  },
+  {
+    "id": "gov-apetito-tolerancia",
+    "domain": 5,
+    "type": "concept",
+    "front": "Diferencia entre apetito y tolerancia al riesgo",
+    "back": "El apetito es cuánto riesgo está dispuesta a asumir la organización en conjunto; la tolerancia es el desvío admisible en un indicador concreto. El primero orienta; la segunda marca cuándo saltar la alarma.",
+    "tags": [
+      "riesgo",
+      "gobernanza"
+    ]
+  },
+  {
+    "id": "gov-bia",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es un BIA y qué entrega?",
+    "back": "Business Impact Analysis: identifica los procesos críticos y el impacto de su caída en el tiempo. Entrega los RTO y RPO que deben cumplir los planes de continuidad.",
+    "tags": [
+      "bia",
+      "continuidad",
+      "impacto"
+    ]
+  },
+  {
+    "id": "gov-riesgo-residual",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es el riesgo residual?",
+    "back": "El que queda tras aplicar los controles. Nunca es cero: lo importante es que sea conocido, documentado y aceptado por quien tiene autoridad, no ignorado.",
+    "tags": [
+      "riesgo",
+      "controles"
+    ]
+  },
+  {
+    "id": "gov-bcp-drp-roles",
+    "domain": 5,
+    "type": "concept",
+    "front": "Diferencia entre continuidad (BCP) y recuperación (DRP)",
+    "back": "El BCP mantiene la actividad durante la interrupción (sede alterna, procesos manuales); el DRP restaura la tecnología. El DRP es un componente dentro del BCP, no su sustituto.",
+    "tags": [
+      "bcp",
+      "drp",
+      "continuidad"
+    ]
+  },
+  {
+    "id": "gov-tabletop",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Para qué sirve un ejercicio tabletop de continuidad?",
+    "back": "Para ensayar decisiones y comunicación entre responsables, no la infraestructura. Descubre dependencias y suposiciones que ningún documento recoge: el plan que no se prueba no se sabe si funciona.",
+    "tags": [
+      "tabletop",
+      "continuidad",
+      "simulacion"
+    ]
+  },
+  {
+    "id": "gov-tipos-informe-soc",
+    "domain": 5,
+    "type": "concept",
+    "front": "Diferencia entre SOC 1, SOC 2 y SOC 3",
+    "back": "SOC 1 se centra en controles financieros; SOC 2, en los cinco criterios de confianza (seguridad, disponibilidad, integridad, confidencialidad y privacidad); SOC 3 es un resumen público sin detalle de controles.",
+    "tags": [
+      "soc",
+      "auditoria",
+      "compliance"
+    ]
+  },
+  {
+    "id": "gov-auditoria-vs-escaneo",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué aporta una auditoría interna frente a un escaneo técnico?",
+    "back": "El escaneo encuentra vulnerabilidades técnicas; la auditoría comprueba que los procesos, evidencias y políticas se cumplen. Un sistema parcheado puede suspender la auditoría por falta de registros.",
+    "tags": [
+      "auditoria",
+      "evidencia",
+      "procesos"
+    ]
+  },
+  {
+    "id": "gov-segregacion-funciones",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Qué es la segregación de funciones (SoD)?",
+    "back": "Ninguna persona debe poder completar por sí sola una operación sensible: quien solicita un pago no lo aprueba ni lo ejecuta. Es un control contra el error y el fraude, no solo contra atacantes externos.",
+    "tags": [
+      "sod",
+      "controles",
+      "fraude"
+    ]
+  },
+  {
+    "id": "gov-minimo-privilegio",
+    "domain": 5,
+    "type": "concept",
+    "front": "¿Por qué el mínimo privilegio reduce el impacto de un compromiso?",
+    "back": "La cuenta comprometida solo alcanza lo que ya podía hacer. Sin mínimo privilegio, el atacante hereda todos los permisos del usuario, incluidos los que no necesita para su trabajo.",
+    "tags": [
+      "minimo-privilegio",
+      "control-de-acceso",
+      "iam"
+    ]
+  },
+  {
+    "id": "gov-propietario-custodio",
+    "domain": 5,
+    "type": "concept",
+    "front": "Diferencia entre propietario y custodio del dato",
+    "back": "El propietario (negocio) decide clasificación, acceso y retención; el custodio (TI) aplica y mantiene los controles. Confundir los roles hace que nadie asuma la decisión de negocio.",
+    "tags": [
+      "datos",
+      "roles",
+      "gobernanza"
+    ]
   }
 ]
