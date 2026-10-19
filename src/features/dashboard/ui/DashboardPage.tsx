@@ -1,5 +1,7 @@
 import { DOMAINS } from '@/domain/domain';
 import { formatDayMonth, formatPercent } from '@/shared/utils/format';
+import { CollapsibleSection } from '@/shared/ui/CollapsibleSection';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
 import { ActivityHeatmap } from './ActivityHeatmap';
 import { DailyGoalPanel } from './DailyGoalPanel';
@@ -19,7 +21,7 @@ export function DashboardPage() {
   const { data, isPending, isError } = useSrsStats();
 
   if (isPending) {
-    return <p role="status">Cargando métricas…</p>;
+    return <LoadingSkeleton label="Cargando métricas…" />;
   }
 
   if (isError || !data) {
@@ -83,11 +85,15 @@ export function DashboardPage() {
         </ul>
       </section>
 
-      <MilestonesPanel />
-      <ActivityHeatmap />
+      <CollapsibleSection title="Hitos" titleId="milestones-title">
+        <MilestonesPanel heading={false} />
+      </CollapsibleSection>
 
-      <section aria-labelledby="load-title">
-        <h2 id="load-title">Carga de repaso (14 días)</h2>
+      <CollapsibleSection title="Tu constancia" titleId="activity-title">
+        <ActivityHeatmap heading={false} />
+      </CollapsibleSection>
+
+      <CollapsibleSection title="Carga de repaso (14 días)" titleId="load-title">
         <div
           className="scroll-region"
           role="region"
@@ -116,9 +122,11 @@ export function DashboardPage() {
             ))}
           </ul>
         </div>
-      </section>
+      </CollapsibleSection>
 
-      <HowItWorksPanel />
+      <CollapsibleSection title="Cómo aprovechar ShieldUp" titleId="method-title">
+        <HowItWorksPanel heading={false} />
+      </CollapsibleSection>
     </div>
   );
 }

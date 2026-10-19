@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLatestDiagnostic } from '@/features/diagnostic/state/useDiagnostic';
 import { useLessonRecommendations } from '@/features/microlearning/state/useLessons';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import styles from './RecommendedLessonsPanel.module.css';
 
 /**
@@ -17,7 +18,7 @@ export function RecommendedLessonsPanel() {
       <h2 id="lessons-title">Lecciones recomendadas</h2>
 
       {isPending ? (
-        <p role="status">Cargando recomendaciones…</p>
+        <LoadingSkeleton label="Cargando recomendaciones…" lines={2} />
       ) : !recommendations || recommendations.length === 0 ? (
         <p className={styles.empty}>No hay lecciones disponibles.</p>
       ) : (

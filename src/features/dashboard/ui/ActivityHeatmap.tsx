@@ -1,8 +1,14 @@
 import { formatDayMonth } from '@/shared/utils/format';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import styles from './ActivityHeatmap.module.css';
 
 const LEVELS = [0, 1, 2, 3, 4] as const;
+
+export interface ActivityHeatmapProps {
+  /** `false` cuando el encabezado lo aporta un `CollapsibleSection`. */
+  heading?: boolean;
+}
 
 /**
  * Mapa de calor de las últimas 12 semanas.
@@ -14,18 +20,17 @@ const LEVELS = [0, 1, 2, 3, 4] as const;
  * una señal redundante, no el único canal de información (WCAG 1.1.1). Cada
  * celda lleva además su recuento en el `title`.
  */
-export function ActivityHeatmap() {
+export function ActivityHeatmap({ heading = true }: ActivityHeatmapProps = {}) {
   const { data, isPending } = useSrsStats();
 
   if (isPending || !data) {
-    return <p role="status">Cargando tu actividad…</p>;
+    return <LoadingSkeleton label="Cargando tu actividad…" />;
   }
 
   const { heatmap } = data;
 
-  return (
-    <section aria-labelledby="activity-title">
-      <h2 id="activity-title">Tu constancia</h2>
+  const content = (
+    <>
       <p className={styles.intro}>
         {heatmap.activeDays === 0
           ? 'Aún no hay actividad. El primer día es el que más cuesta.'
@@ -51,6 +56,15 @@ export function ActivityHeatmap() {
         ))}
         <span>Más</span>
       </p>
+    </>
+  );
+
+  if (!heading) return content;
+
+  return (
+    <section aria-labelledby="activity-title">
+      <h2 id="activity-title">Tu constancia</h2>
+      {content}
     </section>
   );
 }

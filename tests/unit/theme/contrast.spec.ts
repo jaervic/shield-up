@@ -188,8 +188,7 @@ const THEMES: Record<string, TokenMap> = {
 };
 
 /** Pares texto/fondo: exigen 4.5:1 (WCAG AA). */
-const TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [
-  ['color-text', 'color-bg'],
+const TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [  ['color-text', 'color-bg'],
   ['color-text', 'color-surface'],
   ['color-text', 'color-surface-2'],
   ['color-text', 'color-bg-accent'],
@@ -212,6 +211,14 @@ const TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [
   ['color-danger', 'color-bg'],
   ['color-danger', 'color-surface'],
 ];
+
+/** Los colores de dominio también se usan como TEXTO (etiqueta de dominio, por
+ * ejemplo en los resultados del examen): deben leerse sobre la superficie. */
+const DOMAIN_SURFACES = ['color-surface', 'color-bg', 'color-surface-2'] as const;
+
+const DOMAIN_TEXT_PAIRS: ReadonlyArray<readonly [string, string]> = [1, 2, 3, 4, 5].flatMap(
+  (domain) => DOMAIN_SURFACES.map((surface) => [`domain-${domain}`, surface] as const),
+);
 
 /** Elementos no textuales (bordes, barras): exigen 3:1 (WCAG 1.4.11).
  *
@@ -327,6 +334,18 @@ describe('tokens de color', () => {  it('define los dos temas con las mismas cla
 
 describe.each(Object.entries(THEMES))('contraste WCAG en tema %s', (themeName, tokens) => {
   it.each(TEXT_PAIRS)('%s sobre %s alcanza 4.5:1', (foreground, background) => {
+    const ratio = contrastRatio(
+      resolveToken(tokens, foreground),
+      resolveToken(tokens, background),
+    );
+
+    expect(
+      Number(ratio.toFixed(2)),
+      `--${foreground} sobre --${background} en tema ${themeName}`,
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it.each(DOMAIN_TEXT_PAIRS)('el texto %s sobre %s alcanza 4.5:1', (foreground, background) => {
     const ratio = contrastRatio(
       resolveToken(tokens, foreground),
       resolveToken(tokens, background),

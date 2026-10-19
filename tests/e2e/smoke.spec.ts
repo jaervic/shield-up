@@ -17,7 +17,12 @@ test('la barra inferior navega entre secciones', async ({ page }) => {
   await expect(page).toHaveURL(/\/review$/);
   await expect(page.getByRole('heading', { name: 'Antes de empezar' })).toBeVisible();
 
-  await nav.getByRole('link', { name: 'Simulaciones' }).click();
+  await nav.getByRole('link', { name: 'Evaluación' }).click();
+  await expect(page).toHaveURL(/\/evaluation$/);
+  await expect(page.getByRole('heading', { name: 'Evaluación', level: 1 })).toBeVisible();
+
+  // El hub agrupa diagnóstico, simulacro y PBQ manteniendo la barra en 4 ítems.
+  await page.getByRole('link', { name: 'Ver simulaciones' }).click();
   await expect(page).toHaveURL(/\/pbq$/);
   await expect(page.getByRole('heading', { name: 'Simulaciones' })).toBeVisible();
 

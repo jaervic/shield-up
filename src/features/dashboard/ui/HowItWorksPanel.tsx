@@ -5,6 +5,11 @@ interface MethodStep {
   description: string;
 }
 
+export interface HowItWorksPanelProps {
+  /** `false` cuando el encabezado lo aporta un `CollapsibleSection`. */
+  heading?: boolean;
+}
+
 const STEPS: MethodStep[] = [
   {
     title: 'Mide tu punto de partida',
@@ -27,10 +32,9 @@ const STEPS: MethodStep[] = [
  * Explica el método de estudio. Un entorno de aprendizaje rinde más cuando el
  * alumno entiende *por qué* hace lo que hace.
  */
-export function HowItWorksPanel() {
-  return (
-    <section className={styles.panel} aria-labelledby="method-title">
-      <h2 id="method-title">Cómo aprovechar ShieldUp</h2>
+export function HowItWorksPanel({ heading = true }: HowItWorksPanelProps = {}) {
+  const content = (
+    <>
       <p className={styles.intro}>
         Recordar cuesta; releer no. Por eso aquí decides antes de ver la respuesta: el esfuerzo de
         recuperar la información es lo que la fija en la memoria.
@@ -49,6 +53,15 @@ export function HowItWorksPanel() {
           </li>
         ))}
       </ol>
+    </>
+  );
+
+  if (!heading) return <div className={styles.panel}>{content}</div>;
+
+  return (
+    <section className={styles.panel} aria-labelledby="method-title">
+      <h2 id="method-title">Cómo aprovechar ShieldUp</h2>
+      {content}
     </section>
   );
 }

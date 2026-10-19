@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { getDomain } from '@/domain/domain';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import { usePbqCatalog } from '../state/usePbq';
 import styles from './PbqListPage.module.css';
 
@@ -13,7 +14,7 @@ export function PbqListPage() {
   const { data, isPending, isError } = usePbqCatalog();
 
   if (isPending) {
-    return <p role="status">Cargando simulaciones…</p>;
+    return <LoadingSkeleton label="Cargando simulaciones…" lines={4} />;
   }
 
   if (isError || !data) {

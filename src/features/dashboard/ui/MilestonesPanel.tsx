@@ -2,7 +2,13 @@ import { useLatestDiagnostic } from '@/features/diagnostic/state/useDiagnostic';
 import { useLessonCatalog } from '@/features/microlearning/state/useLessons';
 import { computeMilestones } from '@/features/srs/engine/milestones';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import styles from './MilestonesPanel.module.css';
+
+export interface MilestonesPanelProps {
+  /** `false` cuando el encabezado lo aporta un `CollapsibleSection`. */
+  heading?: boolean;
+}
 
 /**
  * Hitos de estudio derivados de los datos ya existentes.
@@ -11,13 +17,13 @@ import styles from './MilestonesPanel.module.css';
  * que sostiene el hábito, y el hábito es lo que hace funcionar la repetición
  * espaciada.
  */
-export function MilestonesPanel() {
+export function MilestonesPanel({ heading = true }: MilestonesPanelProps = {}) {
   const { data, isPending } = useSrsStats();
   const { data: catalog } = useLessonCatalog();
   const { data: attempt } = useLatestDiagnostic();
 
   if (isPending || !data) {
-    return <p role="status">Cargando hitos…</p>;
+    return <LoadingSkeleton label="Cargando hitos…" />;
   }
 
   const completedLessons = catalog
@@ -34,9 +40,8 @@ export function MilestonesPanel() {
 
   const achieved = milestones.filter((milestone) => milestone.achieved).length;
 
-  return (
-    <section aria-labelledby="milestones-title">
-      <h2 id="milestones-title">Hitos</h2>
+  const content = (
+    <>
       <p className={styles.intro}>
         {achieved} de {milestones.length} conseguidos. Se recalculan solos: no hay nada que
         registrar.
@@ -60,6 +65,15 @@ export function MilestonesPanel() {
           </li>
         ))}
       </ul>
+    </>
+  );
+
+  if (!heading) return content;
+
+  return (
+    <section aria-labelledby="milestones-title">
+      <h2 id="milestones-title">Hitos</h2>
+      {content}
     </section>
   );
 }

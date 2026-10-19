@@ -21,6 +21,11 @@ const DiagnosticPage = lazy(() =>
 const ExamPage = lazy(() =>
   import('@/features/exam/ui/ExamPage').then((module) => ({ default: module.ExamPage })),
 );
+const EvaluationPage = lazy(() =>
+  import('@/features/evaluation/ui/EvaluationPage').then((module) => ({
+    default: module.EvaluationPage,
+  })),
+);
 const LessonsPage = lazy(() =>
   import('@/features/microlearning/ui/LessonsPage').then((module) => ({
     default: module.LessonsPage,
@@ -53,6 +58,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       { path: 'diagnostic', element: <DiagnosticPage /> },
+      { path: 'evaluation', element: <EvaluationPage /> },
       { path: 'exam', element: <ExamPage /> },
       { path: 'lessons', element: <LessonsPage /> },
       { path: 'lessons/:lessonId', element: <LessonPage /> },

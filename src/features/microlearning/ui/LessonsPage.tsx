@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { DOMAINS } from '@/domain/domain';
 import type { Lesson, LessonProgress } from '@/domain/lesson';
 import { useLatestDiagnostic } from '@/features/diagnostic/state/useDiagnostic';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import { useLessonCatalog, useLessonRecommendations } from '../state/useLessons';
 import styles from './LessonsPage.module.css';
 
@@ -26,7 +27,7 @@ export function LessonsPage() {
   const { data: recommendations } = useLessonRecommendations(route, 3);
 
   if (isPending) {
-    return <p role="status">Cargando lecciones…</p>;
+    return <LoadingSkeleton label="Cargando lecciones…" lines={4} />;
   }
 
   if (isError || !catalog) {

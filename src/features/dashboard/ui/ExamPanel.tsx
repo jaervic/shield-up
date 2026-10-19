@@ -4,6 +4,7 @@ import { formatDateTime } from '@/shared/utils/format';
 import { planExam } from '@/features/exam/data/examService';
 import { isFullLengthExam } from '@/features/exam/engine/selection';
 import { useLatestExam } from '@/features/exam/state/useExam';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import styles from './ExamPanel.module.css';
 
 /**
@@ -22,9 +23,7 @@ export function ExamPanel() {
       <h2 id="exam-panel-title">Simulacro de examen</h2>
 
       {isPending ? (
-        <p className={styles.text} role="status">
-          Cargando…
-        </p>
+        <LoadingSkeleton label="Cargando…" lines={2} />
       ) : latest === null || latest === undefined ? (
         <p className={styles.text}>
           {plan.questionCount} preguntas · {plan.durationMinutes} min · se aprueba con{' '}

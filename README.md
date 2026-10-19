@@ -18,10 +18,11 @@ enfoque en *active recall*, *spaced repetition* y simulación de examen.
 - **Fase 3 — Microlearning.** 8 lecciones-problema (28 pasos) basadas en *active recall*,
   progreso reanudable y recomendaciones ligadas a la ruta de estudio.
 - **Diseño** — Paleta anclada a la identidad de CompTIA, temas claro/oscuro, interfaz
-  mobile-first con barra inferior, **test automático de contraste WCAG** (4 familias de pares) y
-  un entorno orientado al estudio: plan de sesión, práctica dirigida por dominio, confianza antes
-  de revelar con calibración, objetivo diario, racha, anillos de dominio, hitos, mapa de calor de
-  constancia y modo concentración.
+  mobile-first con barra inferior de cuatro secciones (diagnóstico, simulacro y PBQ agrupados en
+  "Evaluación"), secciones plegables y esqueletos de carga en móvil, **test automático de contraste
+  WCAG** (5 familias de pares) y un entorno orientado al estudio: plan de sesión, práctica dirigida
+  por dominio, confianza antes de revelar con calibración, objetivo diario, racha, anillos de
+  dominio, hitos, mapa de calor de constancia y modo concentración.
 - **Fase 5 — Simulador de examen.** Cuenta atrás, preguntas marcadas para revisar, entrega
   automática al agotarse el tiempo y **puntuación escalada sobre 900 con 750 para aprobar**,
   como el examen real. Con **139 preguntas** repartidas por dominio en la proporción del examen
@@ -77,8 +78,9 @@ src/
 │  │  └─ ui/     # LessonsPage, LessonPage, LessonStepView, LessonResults
 │  ├─ pbq/       # Fase 4
 │  │  └─ engine/ # LÓGICA PURA: scoring, topology, terminal y shell/ (parser + comandos)
+│  ├─ evaluation/ui/ # hub que agrupa diagnóstico, simulacro y PBQ
 │  └─ dashboard/ui/  # DashboardPage, ReadinessPanel, DailyGoalPanel, anillos, hitos, mapa de calor
-├─ shared/       # ui/, hooks/, utils/ y state/ reutilizables
+├─ shared/       # ui/ (Skeleton, CollapsibleSection…), hooks/, utils/ y state/ reutilizables
 └─ styles/       # tokens.css (temas claro/oscuro), reset.css, global.css
 content/
 ├─ flashcards/   # tarjetas seed (ports, acronyms, crypto, program)
@@ -261,7 +263,7 @@ propio (`BrandMark.tsx`) y el aviso de no afiliación es visible en la cabecera
 ### Test de contraste automático
 
 `tests/unit/theme/contrast.spec.ts` **lee `tokens.css`**, resuelve las referencias `var(--x)` y
-comprueba la ratio WCAG de **cuatro familias de pares**:
+comprueba la ratio WCAG de **cinco familias de pares**:
 
 | Familia | Exigencia | Qué cubre |
 |---|---|---|
@@ -269,9 +271,12 @@ comprueba la ratio WCAG de **cuatro familias de pares**:
 | Bordes e indicadores | 3:1 | Fronteras de controles y barras |
 | Texto sobre relleno de acento | 4.5:1 | Estados *hover* de los botones |
 | Texto sobre fondo translúcido | 4.5:1 | Opciones marcadas e insignias |
+| Texto de dominio sobre fondo | 4.5:1 | Etiquetas de dominio en los resultados del examen |
 
 El cuarto caso es el que más rinde: los tokens `*-soft` son `rgba`, así que su contraste real
-depende del fondo sobre el que se **componen**. El test compone el color y lo comprueba.
+depende del fondo sobre el que se **componen**. El test compone el color y lo comprueba. El quinto
+obligó a oscurecer un punto el naranja del dominio 2 en tema claro: era el único que se quedaba en
+4.43:1 sobre `--color-surface-2`.
 
 También verifica que **no hay tokens definidos y sin usar** y, para no pasar por la razón
 equivocada, incluye pruebas de la propia aritmética (negro sobre blanco = 21:1, el gris límite
@@ -284,7 +289,16 @@ fondo translúcido (ámbar 4.24:1 y verde 4.36:1 en tema claro). Todos corregido
 ### Mobile-first
 
 - **Barra de navegación inferior** fija en pantallas < 48 rem, con iconos, estado activo
-  reforzado con forma (no solo color) y `aria-current` que aporta React Router.
+  reforzado con forma (no solo color) y `aria-current` que aporta React Router. Son **cuatro
+  secciones** (Panel, Evaluación, Lecciones, Repaso): diagnóstico, simulacro y PBQ se agrupan en
+  un hub bajo "Evaluación" para no truncar etiquetas.
+- **Secciones plegables en móvil**: los bloques de apoyo del panel (hitos, actividad, carga de
+  repaso y método) usan `<details>`/`<summary>` nativo y arrancan abiertos solo a partir de 48 rem
+  (`matchMedia`). El teclado y el lector de pantalla funcionan sin código extra.
+- **Esqueletos de carga** (`Skeleton`/`LoadingSkeleton`) en el panel, las listas y el `Suspense`
+  del shell: el hueco visual ocupa el sitio del contenido, pero el anuncio sigue siendo texto para
+  lectores de pantalla (`role="status"` con texto oculto). El brillo se desactiva con
+  `prefers-reduced-motion`.
 - **Áreas táctiles de 44 px mínimo** (`--tap-min`) en botones y navegación.
 - **Tipografía fluida** con `clamp()`: no hay saltos de tamaño entre móvil y escritorio.
 - **`viewport-fit=cover`** y `env(safe-area-inset-*)` para el notch y la barra gestual.
@@ -442,8 +456,9 @@ Con más de 90 preguntas, **cada simulacro es distinto**: se muestrean 90 de las
 es la del examen real (90 minutos). También hay preguntas de **respuesta múltiple**, donde solo
 cuenta acertar el conjunto completo.
 
-El acceso está en el panel y no en la navegación: el simulacro es una actividad periódica, no
-diaria, y seis secciones no caben en la barra inferior del móvil sin truncar las etiquetas.
+El acceso está en el hub de Evaluación (y en el panel): el simulacro es una actividad periódica,
+no diaria, y por eso no ocupa un ítem propio en la barra inferior del móvil, limitada a cuatro
+secciones para no truncar las etiquetas.
 
 ---
 

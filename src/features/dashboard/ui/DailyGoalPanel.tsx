@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { DAILY_REVIEW_GOAL } from '@/features/srs/engine/stats';
 import { useSrsStats } from '@/features/srs/state/useSrsStats';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import styles from './DailyGoalPanel.module.css';
 
 interface EncouragementInput {
@@ -36,7 +37,7 @@ export function DailyGoalPanel() {
   const { data, isPending } = useSrsStats();
 
   if (isPending || !data) {
-    return <p role="status">Cargando tu progreso…</p>;
+    return <LoadingSkeleton label="Cargando tu progreso…" lines={2} />;
   }
 
   const { stats, streak, reviewedToday } = data;

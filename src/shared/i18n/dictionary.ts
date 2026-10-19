@@ -30,10 +30,29 @@ const es = {
     'Material de estudio independiente. No está afiliado ni respaldado por CompTIA.',
   'nav.label': 'Navegación principal',
   'nav.dashboard': 'Panel',
+  'nav.evaluation': 'Evaluación',
   'nav.diagnostic': 'Diagnóstico',
   'nav.lessons': 'Lecciones',
   'nav.pbq': 'Simulaciones',
   'nav.review': 'Repaso',
+
+  // Hub de evaluación
+  'evaluation.title': 'Evaluación',
+  'evaluation.lead':
+    'Mide tu punto de partida y pon a prueba lo aprendido. Estas tres actividades no se leen: se resuelven.',
+  'evaluation.diagnostic.title': 'Test de diagnóstico',
+  'evaluation.diagnostic.text':
+    'Reparte las preguntas según el peso real de cada dominio y ordena tu ruta de estudio por impacto.',
+  'evaluation.diagnostic.cta': 'Hacer el diagnóstico',
+  'evaluation.exam.title': 'Simulacro de examen',
+  'evaluation.exam.text':
+    'Condiciones reales: cuenta atrás, preguntas marcadas y puntuación escalada sobre 900.',
+  'evaluation.exam.cta': 'Hacer un simulacro',
+  'evaluation.pbq.title': 'Simulaciones (PBQ)',
+  'evaluation.pbq.text':
+    'Coloca activos en su segmento o consigue el objetivo desde la terminal, con comandos reales.',
+  'evaluation.pbq.cta': 'Ver simulaciones',
+
   'shell.skip': 'Saltar al contenido principal',
   'shell.loading': 'Cargando…',
   'shell.footer':
@@ -116,10 +135,28 @@ const en: Record<TranslationKey, string> = {
     'Independent study material. Not affiliated with or endorsed by CompTIA.',
   'nav.label': 'Main navigation',
   'nav.dashboard': 'Dashboard',
+  'nav.evaluation': 'Evaluation',
   'nav.diagnostic': 'Assessment',
   'nav.lessons': 'Lessons',
   'nav.pbq': 'Simulations',
   'nav.review': 'Review',
+
+  'evaluation.title': 'Evaluation',
+  'evaluation.lead':
+    'Measure your starting point and test what you have learned. These three activities are not read: they are solved.',
+  'evaluation.diagnostic.title': 'Diagnostic test',
+  'evaluation.diagnostic.text':
+    'Spreads the questions by each domain’s real exam weight and orders your study route by impact.',
+  'evaluation.diagnostic.cta': 'Take the diagnostic',
+  'evaluation.exam.title': 'Mock exam',
+  'evaluation.exam.text':
+    'Real conditions: countdown, flagged questions and a scaled score out of 900.',
+  'evaluation.exam.cta': 'Take a mock exam',
+  'evaluation.pbq.title': 'Simulations (PBQ)',
+  'evaluation.pbq.text':
+    'Place assets in their segment or reach the goal from the terminal, using real commands.',
+  'evaluation.pbq.cta': 'View simulations',
+
   'shell.skip': 'Skip to main content',
   'shell.loading': 'Loading…',
   'shell.footer':

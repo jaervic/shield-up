@@ -106,8 +106,8 @@
   flex-shrink: 0;
 }
 
-/* Entre el móvil y el escritorio, cinco secciones no caben con el padding
-   completo: se compacta la navegación antes de romper el layout. */
+/* Con cuatro secciones, la navegación cabe holgada; aun así se compacta un poco
+   en tablets para no empujar el logotipo. */
 @media (max-width: 64rem) {
   .navLink,
   .navLinkActive {
@@ -164,12 +164,6 @@
   color: var(--color-text);
 }
 
-.loading {
-  padding: var(--space-6);
-  text-align: center;
-  color: var(--color-text-muted);
-}
-
 /* -------------------------- Modo concentración ---------------------------- */
 /* Durante una sesión: la cabecera deja de ser fija (deja sitio al desplazarse)
    y el pie desaparece. La navegación se mantiene como vía de salida. */
@@ -208,7 +202,7 @@
 
   .navList {
     display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0;
   }
 

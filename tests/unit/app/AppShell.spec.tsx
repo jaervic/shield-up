@@ -31,9 +31,29 @@ describe('AppShell', () => {
     const nav = screen.getByRole('navigation', { name: 'Navegación principal' });
     expect(nav).toBeInTheDocument();
 
-    for (const label of ['Panel', 'Diagnóstico', 'Lecciones', 'Repaso']) {
+    for (const label of ['Panel', 'Evaluación', 'Lecciones', 'Repaso']) {
       expect(screen.getByRole('link', { name: label })).toBeInTheDocument();
     }
+
+    // Diagnóstico y PBQ se agrupan bajo "Evaluación": no son entradas de la barra.
+    expect(nav).not.toHaveTextContent('Diagnóstico');
+    expect(nav).not.toHaveTextContent('Simulaciones');
+  });
+
+  it('marca Evaluación como activa en las rutas agrupadas', async () => {
+    renderWithProviders(
+      <Routes>
+        <Route path="*" element={<AppShell />} />
+      </Routes>,
+      ['/diagnostic'],
+    );
+    await settle();
+
+    expect(screen.getByRole('link', { name: 'Evaluación' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+    expect(screen.getByRole('link', { name: 'Panel' })).not.toHaveAttribute('aria-current');
   });
 
   it('marca la sección activa para lectores de pantalla', async () => {

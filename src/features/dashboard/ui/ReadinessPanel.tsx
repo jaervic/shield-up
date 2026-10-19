@@ -3,6 +3,7 @@ import { getDomain } from '@/domain/domain';
 import { formatDateTime } from '@/shared/utils/format';
 import { DEFAULT_DIAGNOSTIC_LENGTH } from '@/features/diagnostic/engine/selection';
 import { useLatestDiagnostic } from '@/features/diagnostic/state/useDiagnostic';
+import { LoadingSkeleton } from '@/shared/ui/Skeleton';
 import styles from './ReadinessPanel.module.css';
 
 /**
@@ -13,7 +14,7 @@ export function ReadinessPanel() {
   const { data: attempt, isPending } = useLatestDiagnostic();
 
   if (isPending) {
-    return <p role="status">Cargando diagnóstico…</p>;
+    return <LoadingSkeleton label="Cargando diagnóstico…" lines={2} />;
   }
 
   if (!attempt) {
